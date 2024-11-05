@@ -1,0 +1,39 @@
+body {
+  margin: 0px;
+}
+
+.content-policy {
+  overflow: scroll;
+  gap: 21px;
+}
+
+.content-policy::-webkit-scrollbar {
+  display: none;
+}
+
+h1 {
+  margin-bottom: 0pc;
+  margin-top: 0;
+  font-size: 61px;
+  font-weight: 700;
+  margin-top: 0;
+  font-size: 61px;
+  font-weight: 700;
+}
+
+.policeLink {
+  height: 46px;
+  display: flex;
+  width: 100%;
+  background-color: #091931;
+  align-items: center;
+  font-weight: 400;
+  color: #a8a8a8;
+}
+
+.headline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
