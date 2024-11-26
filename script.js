@@ -1,5 +1,5 @@
 const BASE_URL =
-  "https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/";
+  "https://join-portfolio-8346a-default-rtdb.europe-west1.firebasedatabase.app/";
 let activeUser = getActiveUser();
 
 /**
