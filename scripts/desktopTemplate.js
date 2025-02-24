@@ -20,7 +20,7 @@ document.addEventListener("click", handleClickUserMenu);
  * @returns {Promise<void>}
  */
 async function loadTemplate() {
-  const response = await fetch("../assets/templates/desktopTemplate.html");
+  let response = await fetch("../assets/templates/desktopTemplate.html");
   document.getElementById("desktop_template").innerHTML = await response.text();
 }
 
@@ -40,8 +40,8 @@ function initializeUserInterface() {
  * Updates the icons in the sidebar based on the current page.
  */
 function updateSidebarIcons() {
-  const currentPage = window.location.pathname.split("/").pop();
-  const pages = ["summary", "board", "contacts", "addTask"];
+  let currentPage = window.location.pathname.split("/").pop();
+  let pages = ["summary", "board", "contacts", "addTask"];
   pages.forEach((page) => updateIconState(page, currentPage));
   updatePageState("privacyPolicy.html", ".privacy-policy-link", currentPage);
   updatePageState("legalNotice.html", ".legal-notice-link", currentPage);
@@ -53,9 +53,9 @@ function updateSidebarIcons() {
  * @param {string} currentPage - The name of the current page.
  */
 function updateIconState(page, currentPage) {
-  const link = document.querySelector(`.${page}-link`);
-  const icon = link?.querySelector("img");
-  const isActive = currentPage === `${page}.html`;
+  let link = document.querySelector(`.${page}-link`);
+  let icon = link?.querySelector("img");
+  let isActive = currentPage === `${page}.html`;
   if (link && icon) {
     icon.src = `../assets/img/png/${page}-${isActive ? "white" : "grey"}.png`;
     link.classList.toggle("active", isActive);
@@ -70,9 +70,9 @@ function updateIconState(page, currentPage) {
  * @param {string} currentPage - The name of the current page.
  */
 function updatePageState(page, selector, currentPage) {
-  const link = document.querySelector(selector);
+  let link = document.querySelector(selector);
   if (link) {
-    const isActive = currentPage === page;
+    let isActive = currentPage === page;
     link.classList.toggle("active", isActive);
     link.classList.toggle("disabled", isActive);
   }
@@ -101,9 +101,9 @@ function hideSidebarAtMobile() {
  * Adds the help element to the menu based on screen size.
  */
 function addHelpToMenu() {
-  const isMobile = window.matchMedia("(max-width: 1240px)").matches;
-  const helpDiv = document.getElementById("help_mobile");
-  const logOutDiv = document.getElementById("log_out");
+  let isMobile = window.matchMedia("(max-width: 1240px)").matches;
+  let helpDiv = document.getElementById("help_mobile");
+  let logOutDiv = document.getElementById("log_out");
   if (isMobile) {
     logOutDiv.insertBefore(helpDiv, logOutDiv.firstChild);
     helpDiv.classList.remove("d-none");
@@ -128,7 +128,7 @@ function initializeLinks() {
  * @param {Function} clickHandler - The click handler for the link.
  */
 function setupLink(id, page, clickHandler) {
-  const link = document.getElementById(id);
+  let link = document.getElementById(id);
   if (link && !window.location.pathname.includes(page)) {
     link.addEventListener("click", clickHandler);
   } else {
@@ -143,7 +143,7 @@ function setupLink(id, page, clickHandler) {
  */
 function handleLinkClick(event) {
   event.preventDefault();
-  const link = event.currentTarget;
+  let link = event.currentTarget;
   link.classList.add("disabled");
   localStorage.setItem(`${link.id}_disabled`, "true");
   setTimeout(() => {
@@ -156,8 +156,8 @@ function handleLinkClick(event) {
  * @param {Event} event - The click event.
  */
 function handleClickUserMenu(event) {
-  const initials = document.getElementById("user_profile_initials");
-  const logOut = document.getElementById("log_out");
+  let initials = document.getElementById("user_profile_initials");
+  let logOut = document.getElementById("log_out");
   if (initials.contains(event.target)) {
     toggleVisibility(logOut, initials);
   } else if (!logOut.classList.contains("d-none") && !logOut.contains(event.target)) {
@@ -180,7 +180,7 @@ function toggleVisibility(logOut, initials) {
  * Updates the user's initials in the user interface.
  */
 function updateInitials() {
-  const initials = JSON.parse(localStorage.getItem("activeUser"))?.initials;
+  let initials = JSON.parse(localStorage.getItem("activeUser"))?.initials;
   document.getElementById("user_profile_initials").textContent = initials || "";
 }
 
@@ -192,7 +192,7 @@ function updateInitials() {
  * by adding the 'd-none' class to them.
  */
 function legalNoticeWithoutUser() {
-  const checkIfUserIsLogged = localStorage.getItem("activeUser");
+  let checkIfUserIsLogged = localStorage.getItem("activeUser");
   if (!checkIfUserIsLogged) {
     document.getElementById('header_icons').classList.add('d-none');
     document.getElementById('icon_bar').classList.add('d-none');

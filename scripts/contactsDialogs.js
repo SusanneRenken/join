@@ -19,7 +19,7 @@ function validateFields(fields) {
  * @returns {Promise<void>} - Executes the contact addition logic if validation is successful.
  */
 async function validateForm() {
-  const fields = [
+  let fields = [
     {
       id: "name",
       regex: /^[A-Za-zÄäÖöÜüß]+(\s+[A-Za-zÄäÖöÜüß]+){1,}$/,
@@ -34,7 +34,7 @@ async function validateForm() {
       message: "Invalid email (test@test.de)",
     },
   ];
-  const valid = validateFields(fields);
+  let valid = validateFields(fields);
   if (valid) {
     await addContact();
   }
@@ -46,7 +46,7 @@ async function validateForm() {
  * @returns {Promise<void>} - Executes the contact editing logic if validation is successful.
  */
 async function validateEditForm(contactId) {
-  const fields = [
+  let fields = [
     {
       id: "inputEditName",
       regex: /^[A-Za-zÄäÖöÜüß]+(\s+[A-Za-zÄäÖöÜüß]+){1,}$/,
@@ -61,7 +61,7 @@ async function validateEditForm(contactId) {
       message: "Invalid email (test@test.de)",
     },
   ];
-  const valid = validateFields(fields);
+  let valid = validateFields(fields);
   if (valid) {
     await editContact(contactId);
   }
@@ -72,7 +72,7 @@ async function validateEditForm(contactId) {
  * @returns {Promise<void>} - Displays the dialog.
  */
 async function openDialog() {
-  const dialogContainer = document.getElementById("dialog_contacts");
+  let dialogContainer = document.getElementById("dialog_contacts");
   dialogContainer.open = true;
   dialogContainer.classList.add("d-flex");
   await sleep(10);
@@ -86,15 +86,15 @@ async function openDialog() {
  * @returns {Promise<void>} - Displays the edit dialog and fills the form fields with existing contact information.
  */
 async function openDialogEdit(contactId) {
-  const contact = await getContact(contactId);
-  const menu = document.getElementById("mobile_menu");
+  let contact = await getContact(contactId);
+  let menu = document.getElementById("mobile_menu");
   if (menu.classList.contains("d-flex")) {
     menu.classList.remove("d-flex");
   }
   if (contact.id === 0) {
     document.getElementById("user_display_info").classList.add("d-none")
   }
-  const dialogContainer = document.getElementById("dialog_edit");
+  let dialogContainer = document.getElementById("dialog_edit");
   dialogContainer.open = true;
   dialogContainer.classList.add("d-flex");
   document.getElementById("grey_background").classList.remove("hidden");
@@ -109,7 +109,7 @@ async function openDialogEdit(contactId) {
  * @returns {Promise<void>} - Hides the dialog and clears the form.
  */
 async function closeDialog() {
-  const dialogContainer = document.getElementById("dialog_contacts");
+  let dialogContainer = document.getElementById("dialog_contacts");
   dialogContainer.classList.remove("dialog-open");
   document.getElementById("grey_background").classList.add("hidden");
   await sleep(300);
@@ -123,7 +123,7 @@ async function closeDialog() {
  * @returns {Promise<void>} - Hides the dialog and clears the edit form.
  */
 async function closeDialogEdit() {
-  const dialogContainer = document.getElementById("dialog_edit");
+  let dialogContainer = document.getElementById("dialog_edit");
   dialogContainer.classList.remove("dialog-open");
   document.getElementById("grey_background").classList.add("hidden");
   await sleep(300);
@@ -170,7 +170,7 @@ function dialogBigLetterCircle(contact) {
  * @returns {Promise<void>} A promise that resolves when the dialog has been fully displayed and closed.
  */
 async function openDialogSuccessfully(operation) {
-  const dialogContainer = document.getElementById("succesfully_created");
+  let dialogContainer = document.getElementById("succesfully_created");
   dialogContainer.innerHTML = generateSuccesssfullyHtml(operation);
   setTimeout(async () => {
     dialogContainer.open = true;
@@ -202,7 +202,7 @@ function getInputValue(id) {
  * @param {string} alertElementId - The ID of the element displaying the error message.
  */
 function setError(inputElement, message, alertElementId) {
-  const alertElement = document.getElementById(alertElementId);
+  let alertElement = document.getElementById(alertElementId);
   alertElement.innerText = message;
   alertElement.style.display = "block";
   inputElement.classList.add("error");
@@ -214,7 +214,7 @@ function setError(inputElement, message, alertElementId) {
  * @param {string} alertElementId - The ID of the element displaying the error message.
  */
 function clearError(inputElement, alertElementId) {
-  const alertElement = document.getElementById(alertElementId);
+  let alertElement = document.getElementById(alertElementId);
   alertElement.innerText = "";
   alertElement.style.display = "none";
   inputElement.classList.remove("error");
@@ -224,9 +224,9 @@ function clearError(inputElement, alertElementId) {
  * Clears all inputs in the form and removes any error displays.
  */
 function clearForm() {
-  const nameInput = document.getElementById("name");
-  const emailInput = document.getElementById("email");
-  const phoneInput = document.getElementById("phone");
+  let nameInput = document.getElementById("name");
+  let emailInput = document.getElementById("email");
+  let phoneInput = document.getElementById("phone");
   nameInput.value = "";
   emailInput.value = "";
   phoneInput.value = "";
@@ -239,9 +239,9 @@ function clearForm() {
  * Clears all inputs in the edit form and removes any error displays.
  */
 function clearEditForm() {
-  const nameEditInput = document.getElementById("inputEditName");
-  const emailEditInput = document.getElementById("inputEditEmail");
-  const phoneEditInput = document.getElementById("inputEditPhone");
+  let nameEditInput = document.getElementById("inputEditName");
+  let emailEditInput = document.getElementById("inputEditEmail");
+  let phoneEditInput = document.getElementById("inputEditPhone");
   clearError(nameEditInput, "edit_field_alert_name");
   clearError(emailEditInput, "edit_field_alert_email");
   clearError(phoneEditInput, "edit_field_alert_phone");
@@ -257,7 +257,7 @@ function clearEditForm() {
  * @returns {boolean} - Returns `true` if the input is valid, otherwise `false`.
  */
 function validateInput(input, regex, errorMsg, errorId, maxLength) {
-  const valid = maxLength
+  let valid = maxLength
     ? input.value.match(regex) && input.value.length <= maxLength
     : input.value.match(regex);
   if (!valid) {
@@ -273,7 +273,7 @@ function validateInput(input, regex, errorMsg, errorId, maxLength) {
  * Updates the source of the close icon based on screen width.
  */
 function updateCrossImage() {
-  const imgElements = document.querySelectorAll(".cross");
+  let imgElements = document.querySelectorAll(".cross");
   imgElements.forEach((imgElement) => {
     if (window.innerWidth < 1024) {
       imgElement.src = "../assets/img/png/close-white.png"; 
@@ -288,13 +288,13 @@ function updateCrossImage() {
  * @param {number} contactId - The ID of the contact being edited.
  */
 async function editContact(contactId) {
-  const existingContact = await getContact(contactId);
+  let existingContact = await getContact(contactId);
   if(contactId === 0) {
-    const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+    let activeUser = JSON.parse(localStorage.getItem("activeUser"));
     existingContact.id = activeUser.id;
   }
-  const updatedContact = createUpdatedContact(existingContact);
-  const endpoint =
+  let updatedContact = createUpdatedContact(existingContact);
+  let endpoint =
     existingContact.color === "#ffffff"
       ? `users/${existingContact.id - 1}/`
       : `contacts/${existingContact.id - 1}/`;
@@ -319,7 +319,7 @@ async function editContact(contactId) {
  */
 function checkDisplayForInfo(existingContact){
   if (window.innerWidth <= 777) {
-    const infoDiv = document.getElementById("mobile_contact_info");
+    let infoDiv = document.getElementById("mobile_contact_info");
     infoDiv.classList.add("d-none");
     infoDiv.classList.remove("pos-abs");
   } else {
@@ -336,10 +336,10 @@ function checkDisplayForInfo(existingContact){
  * @returns {Object} - The updated contact object.
  */
 function createUpdatedContact(existingContact) {
-    const updatedName = document.getElementById("inputEditName").value;
-    const updatedEmail = document.getElementById("inputEditEmail").value;
-    const updatedPhone = document.getElementById("inputEditPhone").value;
-    const updatedInitials = getInitials(updatedName);
+  let updatedName = document.getElementById("inputEditName").value;
+  let updatedEmail = document.getElementById("inputEditEmail").value;
+  let updatedPhone = document.getElementById("inputEditPhone").value;
+  let updatedInitials = getInitials(updatedName);
     return {
       ...existingContact,
       name: updatedName,

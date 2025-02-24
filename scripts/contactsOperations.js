@@ -3,12 +3,12 @@
  * @returns {number} The ID of the newly created contact.
  */
 async function postNewContact() {
-  const name = getInputValue("name");
-  const email = getInputValue("email");
-  const phone = getInputValue("phone");
+  let name = getInputValue("name");
+  let email = getInputValue("email");
+  let phone = getInputValue("phone");
   if (!name || !email) return;
-  const contactId = await getNewId("contacts");
-  const contactData = createContact(name, email, phone, contactId);
+  let contactId = await getNewId("contacts");
+  let contactData = createContact(name, email, phone, contactId);
   await postData(`contacts/${contactId - 1}/`, contactData);
   return contactId;
 }
@@ -20,7 +20,7 @@ async function postNewContact() {
  * @param {Object} activeUser - The currently logged-in user.
  */
 async function addContactToUser(contactId, activeUser) {
-  const user = await searchForUser(activeUser.id);
+  let user = await searchForUser(activeUser.id);
   if (user && !user.contacts.includes(contactId)) {
     user.contacts.push(contactId);
     await postData(`users/${user.id - 1}/`, { ...user });
@@ -33,7 +33,7 @@ async function addContactToUser(contactId, activeUser) {
  * @param {number} contactId - The ID of the contact to be added.
  */
 function addContactToUserLocal(contactId) {
-  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  let activeUser = JSON.parse(localStorage.getItem("activeUser"));
   activeUser.contacts.push(contactId);
   localStorage.setItem("activeUser", JSON.stringify(activeUser));
 }
@@ -100,8 +100,8 @@ async function deleteContactOnlyforUser(contactId, users) {
  * @param {number} contactId - The ID of the contact to be deleted.
  */
 async function deleteContactFromTasks(contactId) {
-  const allTasks = await fetchData("tasks");
-  const updatedTasks = allTasks.map((task) => {
+  let allTasks = await fetchData("tasks");
+  let updatedTasks = allTasks.map((task) => {
     if (task.assigned && Array.isArray(task.assigned)) {
       return {
         ...task,
@@ -151,9 +151,9 @@ function deleteContactInLocalStorage(contactId) {
  * @returns {Object} The found contact.
  */
 async function searchForContact(contactId) {
-  const data = await fetchData("contacts");
-  const contacts = Object.values(data);
-  const contact = contacts.find((c) => c && c.id === contactId);
+  let data = await fetchData("contacts");
+  let contacts = Object.values(data);
+  let contact = contacts.find((c) => c && c.id === contactId);
   return contact;
 }
 
@@ -164,9 +164,9 @@ async function searchForContact(contactId) {
  * @returns {Object} The found user.
  */
 async function searchForUser(contactId) {
-  const data = await fetchData("users");
-  const contacts = Object.values(data);
-  const contact = contacts.find((c) => c && c.id === contactId);
+  let data = await fetchData("users");
+  let contacts = Object.values(data);
+  let contact = contacts.find((c) => c && c.id === contactId);
   return contact;
 }
 

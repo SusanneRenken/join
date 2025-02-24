@@ -8,8 +8,8 @@
  * @returns {string} The HTML string representing the active user's contact.
  */
 function generateActiveUserContact(user){
-  const limitNameLength = limitTextLength(user.name);
-  const limitEmailLength = limitTextLength(user.email);
+  let limitNameLength = limitTextLength(user.name);
+  let limitEmailLength = limitTextLength(user.email);
   return `
       <div id="contact${user.id}" class="contacts" onclick="displayContactInfo(${user.id})">
         <div class="letter-circle letter-circel-user" style="background-color: white;">${user.initials}</div>
@@ -32,8 +32,8 @@ function generateActiveUserContact(user){
  * @returns {string} The HTML string representing the contact.
  */
 function generateContact(contact) {
-  const limitNameLength = limitTextLength(contact.name);
-  const limitEmailLength = limitTextLength(contact.email);
+  let limitNameLength = limitTextLength(contact.name);
+  let limitEmailLength = limitTextLength(contact.email);
 
   return `
       <div id="contact${contact.id}" class="contacts" onclick="displayContactInfo(${contact.id})">
@@ -68,7 +68,7 @@ function generateLetterBox(initials) {
  * @returns {string} The HTML string representing the contact information.
  */
 function generateContactInfo(contact) {
-  const phone = contact.phone !== undefined ? contact.phone : "";
+  let phone = contact.phone !== undefined ? contact.phone : "";
   return `
     <div class="contacts-info">
         <div class="contacts-info-name">

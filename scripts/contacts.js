@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
  * This function groups the contacts by their initials and displays them in the UI.
  */
 async function renderContent() {
-  const groupedContacts = await groupContacts();
+  let groupedContacts = await groupContacts();
   renderContactsList(groupedContacts);
 }
 
@@ -41,10 +41,10 @@ async function groupContacts() {
  * @returns {Array} A list of the filtered contacts of the active user.
  */
 async function filterUserContacts() {
-  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
-  const data = await fetchData("contacts");
-  const contacts = Object.values(data);
-  const userContacts = contacts.filter((contact) =>
+  // let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  let data = await fetchData("contacts");
+  let contacts = Object.values(data);
+  let userContacts = contacts.filter((contact) =>
     activeUser.contacts.includes(contact.id)
   );
   return userContacts;
@@ -57,10 +57,10 @@ async function filterUserContacts() {
  * @param {Object} groupedContacts - An object containing the contacts grouped by initials.
  */
 async function renderContactsList(groupedContacts) {
-  const contactList = document.getElementById("contact_list");
+  let contactList = document.getElementById("contact_list");
   contactList.innerHTML = "";
   await initActiveUser(contactList);
-  const sortedInitials = sortInitials(Object.keys(groupedContacts));
+  let sortedInitials = sortInitials(Object.keys(groupedContacts));
   sortedInitials.forEach((initial) => {
     initLetterBox(initial, contactList);
     renderContactsByInitial(groupedContacts[initial], contactList);
@@ -72,8 +72,8 @@ async function renderContactsList(groupedContacts) {
  * @param {HTMLElement} contactList - The HTML element of the contact list.
  */
 async function initActiveUser(contactList) {
-  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
-  const user = await searchForUser(activeUser.id);
+  // let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  let user = await searchForUser(activeUser.id);
   if (user) {
     user.id = 0;
     contactList.innerHTML = generateActiveUserContact(user);
@@ -96,7 +96,7 @@ function sortInitials(initials) {
  */
 function renderContactsByInitial(contacts, contactList) {
   contacts.forEach(({ contact }) => {
-    const contactHtml = generateContact(contact);
+    let contactHtml = generateContact(contact);
     contactList.innerHTML += contactHtml;
   });
 }
@@ -107,7 +107,7 @@ function renderContactsByInitial(contacts, contactList) {
  * @param {HTMLElement} contactList - The HTML element of the contact list.
  */
 function initLetterBox(initial, contactList) {
-  const letterBoxHtml = generateLetterBox(initial);
+  let letterBoxHtml = generateLetterBox(initial);
   contactList.innerHTML += letterBoxHtml;
 }
 
@@ -117,7 +117,7 @@ function initLetterBox(initial, contactList) {
  * updated contact list.
  */
 async function addContact() {
-  const contactId = await postNewContact();
+  let contactId = await postNewContact();
   addContactToUser(contactId, activeUser);
   addContactToUserLocal(contactId, activeUser);
   closeDialog();
@@ -150,7 +150,7 @@ function createContact(name, email, phone, contactId) {
  * @returns {string} A hexadecimal color code.
  */
 function generateRandomColor() {
-  const darkLetters = "0123456789ABC";
+  let darkLetters = "0123456789ABC";
   let color = "#";
   for (let i = 0; i < 6; i++) {
     color += darkLetters[Math.floor(Math.random() * darkLetters.length)];
@@ -165,12 +165,12 @@ function generateRandomColor() {
  * @param {number} contactId - The ID of the contact whose information should be displayed.
  */
 async function displayContactInfo(contactId) {
-  const contact = await getContact(contactId);
+  let contact = await getContact(contactId);
   if (window.innerWidth <= 777) {
     return displayContactInfoMobile(contactId);
   }
-  const contactInfoDiv = document.querySelector(".contacts-info-box");
-  const contactInfoButtons = document.getElementById("button_edit_dialog");
+  let contactInfoDiv = document.querySelector(".contacts-info-box");
+  let contactInfoButtons = document.getElementById("button_edit_dialog");
   contactInfoDiv.innerHTML = generateContactInfo(contact);
   contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact);
   if (contact.id === 0) {
@@ -188,8 +188,8 @@ async function displayContactInfo(contactId) {
  */
 async function getContact(contactId) {
   if (contactId === 0) {
-    const activeUser = JSON.parse(localStorage.getItem("activeUser"));
-    const contact = await searchForUser(activeUser.id);
+    // let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+    let contact = await searchForUser(activeUser.id);
     contact.id = 0;
     return contact;
   } else {
@@ -203,7 +203,7 @@ async function getContact(contactId) {
  * @param {Object} contact - The contact to be highlighted.
  */
 function highlightContact(contact) {
-  const contacts = document.getElementsByClassName("contacts");
+  let contacts = document.getElementsByClassName("contacts");
   for (let i = 0; i < contacts.length; i++) {
     contacts[i].style.backgroundColor = "";
     contacts[i].style.color = "black";
@@ -220,12 +220,12 @@ function highlightContact(contact) {
  * @returns {string} The initials of the name.
  */
 function getInitials(name) {
-  const names = name.split(" ");
+  let names = name.split(" ");
   if (names.length === 1) {
     return names[0].charAt(0).toUpperCase();
   }
-  const firstInitial = names[0].charAt(0).toUpperCase();
-  const lastInitial = names[names.length - 1].charAt(0).toUpperCase();
+  let firstInitial = names[0].charAt(0).toUpperCase();
+  let lastInitial = names[names.length - 1].charAt(0).toUpperCase();
   return firstInitial + lastInitial;
 }
 

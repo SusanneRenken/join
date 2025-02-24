@@ -27,7 +27,7 @@ function greeting() {
  * @returns {string} The greeting message ("Good morning", "Good afternoon", or "Good evening").
  */
 function getGreetingMessage() {
-  const currentHour = new Date().getHours();
+  let currentHour = new Date().getHours();
   if (currentHour < 12) {
     return "Good morning";
   } else if (currentHour < 18) {
