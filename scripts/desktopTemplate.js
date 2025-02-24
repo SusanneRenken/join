@@ -25,6 +25,7 @@ async function loadTemplate() {
 }
 
 //------------------------------------------------------------
+//------------------------------------------------------------
 
 function initHeader(){
   let initialContainer = document.getElementById("user_profile_initials");
