@@ -5,15 +5,14 @@
  */
 document.addEventListener("DOMContentLoaded", async () => {
   await loadTemplate();
+  // initHeader();
+  // initSidebar();
+
+
   initializeUserInterface();
   legalNoticeWithoutUser();
   window.addEventListener("resize", handleResize);
 });
-
-/**
- * Adds an event listener that is triggered on clicks in the user menu.
- */
-document.addEventListener("click", handleClickUserMenu);
 
 /**
  * Loads the desktop template and inserts the content into the corresponding HTML element.
@@ -22,23 +21,21 @@ document.addEventListener("click", handleClickUserMenu);
 async function loadTemplate() {
   let response = await fetch("../assets/templates/desktopTemplate.html");
   document.getElementById("desktop_template").innerHTML = await response.text();
-}
-
-/**
- * Initializes the user interface by updating the user's initials,
- * setting the body's visibility to visible, updating sidebar icons, and initializing links.
- */
-function initializeUserInterface() {
-  updateInitials();
   document.body.style.visibility = "visible";
-  updateSidebarIcons();
-  initializeLinks();
-  handleResize(); 
 }
 
-/**
- * Updates the icons in the sidebar based on the current page.
- */
+//------------------------------------------------------------
+
+function initHeader(){
+  let initialContainer = document.getElementById("user_profile_initials");
+  initialContainer.textContent = activeUser.initials || "";
+}
+
+//------------------------------------------------------------
+function initSidebar(){
+  updateSidebarIcons();
+}
+
 function updateSidebarIcons() {
   let currentPage = window.location.pathname.split("/").pop();
   let pages = ["summary", "board", "contacts", "addTask"];
@@ -47,13 +44,10 @@ function updateSidebarIcons() {
   updatePageState("legalNotice.html", ".legal-notice-link", currentPage);
 }
 
-/**
- * Updates the icon status based on the current page.
- * @param {string} page - The name of the page.
- * @param {string} currentPage - The name of the current page.
- */
 function updateIconState(page, currentPage) {
   let link = document.querySelector(`.${page}-link`);
+  console.log(link);
+  
   let icon = link?.querySelector("img");
   let isActive = currentPage === `${page}.html`;
   if (link && icon) {
@@ -63,20 +57,42 @@ function updateIconState(page, currentPage) {
   }
 }
 
-/**
- * Updates the status of a link in the sidebar based on the current page.
- * @param {string} page - The name of the page.
- * @param {string} selector - The CSS selector of the link.
- * @param {string} currentPage - The name of the current page.
- */
 function updatePageState(page, selector, currentPage) {
   let link = document.querySelector(selector);
+  console.log(link);
+  
   if (link) {
     let isActive = currentPage === page;
     link.classList.toggle("active", isActive);
     link.classList.toggle("disabled", isActive);
   }
 }
+
+
+
+
+
+
+/**
+ * Initializes the user interface by updating the user's initials,
+ * setting the body's visibility to visible, updating sidebar icons, and initializing links.
+ */
+function initializeUserInterface() {
+  initHeader();  
+  updateSidebarIcons();
+  initializeLinks();
+  handleResize();
+}
+
+/**
+ * Updates the user's initials in the user interface.
+ */
+
+
+/**
+ * Updates the icons in the sidebar based on the current page.
+ */
+
 
 /**
  * Handles window resizing and adjusts the display accordingly.
@@ -91,7 +107,9 @@ function handleResize() {
  */
 function hideSidebarAtMobile() {
   if (!localStorage.getItem("activeUser") && window.innerWidth < 770) {
-    document.getElementById("sidebar")?.style.setProperty("display", "none", "important");
+    document
+      .getElementById("sidebar")
+      ?.style.setProperty("display", "none", "important");
     document.getElementById("arrow_back")?.classList.add("d-none");
     document.querySelector(".content")?.style.setProperty("height", "100%");
   }
@@ -153,49 +171,24 @@ function handleLinkClick(event) {
 
 /**
  * Handles clicks in the user menu and shows or hides the logout option.
- * @param {Event} event - The click event.
  */
-function handleClickUserMenu(event) {
-  let initials = document.getElementById("user_profile_initials");
-  let logOut = document.getElementById("log_out");
-  if (initials.contains(event.target)) {
-    toggleVisibility(logOut, initials);
-  } else if (!logOut.classList.contains("d-none") && !logOut.contains(event.target)) {
-    logOut.classList.add("d-none");
-    initials.classList.remove("bg-color");
-  }
-}
-
-/**
- * Toggles the visibility of the logout element.
- * @param {HTMLElement} logOut - The logout element.
- * @param {HTMLElement} initials - The initials element.
- */
-function toggleVisibility(logOut, initials) {
+function handleClickUserMenu() {
+  let logOut = document.getElementById("log_out_overlay");
   logOut.classList.toggle("d-none");
-  initials.classList.toggle("bg-color");
-}
-
-/**
- * Updates the user's initials in the user interface.
- */
-function updateInitials() {
-  let initials = JSON.parse(localStorage.getItem("activeUser"))?.initials;
-  document.getElementById("user_profile_initials").textContent = initials || "";
 }
 
 /**
  * Hides specific HTML elements if no active user is found in the local storage.
- * 
- * This function checks if an "activeUser" exists in local storage. If not, 
- * it hides the elements with the IDs 'header_icons', 'icon_bar', and 'arrow_back' 
+ *
+ * This function checks if an "activeUser" exists in local storage. If not,
+ * it hides the elements with the IDs 'header_icons', 'icon_bar', and 'arrow_back'
  * by adding the 'd-none' class to them.
  */
 function legalNoticeWithoutUser() {
   let checkIfUserIsLogged = localStorage.getItem("activeUser");
   if (!checkIfUserIsLogged) {
-    document.getElementById('header_icons').classList.add('d-none');
-    document.getElementById('icon_bar').classList.add('d-none');
-    document.getElementById('arrow_back').classList.add('d-none');
+    document.getElementById("header_icons").classList.add("d-none");
+    document.getElementById("icon_bar").classList.add("d-none");
+    document.getElementById("arrow_back").classList.add("d-none");
   }
 }

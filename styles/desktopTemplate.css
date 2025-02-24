@@ -51,6 +51,14 @@ header {
   align-items: center;
 }
 
+.overlay{
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  z-index: 999;
+}
+
 .log-out {
   z-index: 1;
   display: flex;
@@ -68,13 +76,13 @@ header {
   border-top: none;
 }
 
-#log_out a {
+.log-out a {
   text-decoration: none;
   padding: 8px 16px;
   color: #cdcdcd;
 }
 
-#log_out a:hover {
+.log-out a:hover {
   background-color: #2a3d59;
 }
 

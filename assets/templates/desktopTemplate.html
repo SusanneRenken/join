@@ -3,20 +3,24 @@
     <img class="logo-mobile" src="../assets/img/png/logo_mobile.png" alt="logo">
     <span>Kanban Project Management Tool</span>
   </div>
-  <div id="header_icons" class="icon-box">
+  <div id="header_icons" class="icon-box" onclick="handleClickUserMenu()">
     <a id="help_page" href="../html/help.html">
       <img class="help" src="../assets/img/png/help.png" alt="help" />
     </a>
-    <div  id="user_profile_initials" class="user-profile-initials-box" ></div>
+    <div  id="user_profile_initials" class="user-profile-initials-box"></div>
   </div>
 
-  <div id="log_out" class="log-out d-none">
+ 
+</header>
+
+<div id="log_out_overlay" class="overlay d-none" onclick="handleClickUserMenu()">
+   <div id="log_out" class="log-out">
     <a id="help_mobile" class="d-none" href="../html/help.html">Help</a>
     <a href="../html/legalNotice.html">Legal Notice</a>
     <a href="../html/privacyPolicy.html">Privacy Policy</a>
     <a onclick="logOut()">Log Out</a>
   </div>
-</header>
+</div>
 
 <aside id="sidebar">
   <img
