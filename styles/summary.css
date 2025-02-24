@@ -269,3 +269,7 @@ span {
   flex-direction: column;
   font-size: clamp(24px, 5vw, 36px);
 }
+
+.d-none{
+  display: none;
+}

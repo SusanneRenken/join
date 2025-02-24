@@ -4,6 +4,19 @@
     left: clamp(100px, 15vw, 144px);
     padding: 20px 40px 20px 63px;
   }
+
+  .icon-box {
+    justify-content: flex-end;
+  }
+
+  .help {
+    display: none;
+  }
+
+  .help-menu{
+    display: block;
+  }
+
   aside {
     width: clamp(100px, 15vw, 144px);
   }
@@ -12,40 +25,21 @@
     height: unset;
   }
 
-  .box-icons {
-    margin-bottom: 30px;
-    width: clamp(100px, 15vw, 144px);
+  .link-sidebar {
+    height: auto;
+    padding: 12px 0px 12px 0px;
+    font-size: clamp(12px, 2vw, 16px);
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 8px;
-    height: 46px;
-    padding: 13px 0px 0px 0px;
-    box-sizing: border-box;
-    font-size: clamp(12px, 2vw, 16px);
-    flex-direction: column;
-  }
-
-  .link-legal-credits {
-    padding-left: clamp(0px, 1vw, 18px);
-  }
-
-  .link-policy-credits {
-    padding-left: clamp(0px, 1vw, 18px);
-  }
-
-  .help {
-    display: none;
-  }
-
-  .icon-box {
-    justify-content: flex-end;
   }
 
   .credit-box {
     width: unset;
   }
 
-  .credit {
+  .link-credits {
     display: none;
   }
 }
@@ -60,14 +54,6 @@
   }
 
   header span {
-    display: none;
-  }
-
-  .icon-box {
-    width: unset;
-  }
-
-  .icon-box a {
     display: none;
   }
 
@@ -88,6 +74,10 @@
     padding: 0px 9px;
   }
 
+  .hide-mobile {
+    display: none;
+  }
+
   .icon-bar {
     height: 80px;
     gap: 10px;
@@ -96,7 +86,6 @@
   }
 
   .box-icons {
-    width: clamp(66px, 13vw, 99px);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -106,8 +95,10 @@
     flex-direction: column;
   }
 
-  .link-sidebar.disabled {
-    margin: 4px 0px 2px;
+  .link-sidebar {
+    width: clamp(66px, 13vw, 99px);
+    margin: 4px;
+    border-radius: 8px;
   }
 
   .logo-sidebar {
@@ -118,33 +109,7 @@
     display: none;
   }
 
-  .summary-link {
-    padding: 15px 0px;
-    display: flex;
-    border-radius: 9px;
-    gap: 10px;
-  }
-
-  .addTask-link {
-    padding: 15px 0px;
-    display: flex;
-    border-radius: 9px;
-    gap: 10px;
-  }
-
-  .board-link {
-    padding: 15px 0px;
-    display: flex;
-    border-radius: 9px;
-    gap: 10px;
-  }
-
-  .contacts-link {
-    padding: 15px 0px;
-    display: flex;
-    border-radius: 9px;
-    gap: 10px;
-  }
+  /* Greeting ist nicht im Desktop Template vorhanden */
   .greeting {
     display: none;
   }

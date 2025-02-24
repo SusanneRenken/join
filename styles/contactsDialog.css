@@ -89,6 +89,7 @@ h2 {
   display: flex;
 }
 
+
 .unknown-user {
   margin-top: 204px;
   margin-left: clamp(27px, 3vw, 83px);
@@ -397,4 +398,8 @@ button {
 
 .clear-button:active img {
   content: url(../assets/img/png/clear-button-darkblue.png);
+}
+
+.d-none {
+  display: none;
 }

@@ -49,16 +49,6 @@ span {
   flex-direction: column;
 }
 
-.noticeLink {
-  height: 46px;
-  display: flex;
-  width: 100%;
-  background-color: #091931;
-  align-items: center;
-  font-weight: 400;
-  color: #a8a8a8;
-}
-
 .headline {
   display: flex;
   align-items: center;
