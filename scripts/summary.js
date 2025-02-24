@@ -17,22 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
 function greeting() {
   let greeting = document.getElementById("greetings");
   let greetingMobile = document.getElementById("greeting_mobile");
-  let greetingUser = getNameFromLocalStorage();
+  let greetingUser = activeUser.name;
   let greetingMassage = getGreetingMessage();
   greeting.innerHTML = "";
   greetingMobile.innerHTML = "";
   greeting.innerHTML = greetingHtml(greetingMassage, greetingUser);
   greetingMobile.innerHTML = greetingHtml(greetingMassage, greetingUser);
-}
-
-/**
- * Retrieves the user's name from local storage.
- * @returns {string} - The name of the logged-in user.
- */
-function getNameFromLocalStorage() {
-  let activeUser = localStorage.getItem("activeUser");
-  const loggedInUser = JSON.parse(activeUser);
-  return loggedInUser.name;
 }
 
 /**
