@@ -1,6 +1,6 @@
 /**
  * Adds an event listener that is triggered when the DOM is fully loaded.
- * Upon triggering, the greeting is displayed, tasks are rendered, and 
+ * Upon triggering, the greeting is displayed, tasks are rendered, and
  * the mobile greeting is checked.
  */
 document.addEventListener("DOMContentLoaded", () => {
@@ -55,93 +55,32 @@ function greetingHtml(greetingMassage, greetingUser) {
  * @returns {Promise<void>}
  */
 async function renderTasks() {
-  const tasks = await loadTasks();
-  countToDo(tasks);
-  countDone(tasks);
-  countUrgent(tasks);
+  let tasks = await loadTasks();
+  countTasks(tasks, "count_to_do", "todo", "status");
+  countTasks(tasks, "count_done", "done", "status");
+  countTasks(tasks, "count_progress", "inprogress", "status");
+  countTasks(tasks, "count_feedback", "awaitfeedback", "status");
+  countTasks(tasks, "count_priority_urgent", "urgent", "priority");
+  countTasks(tasks, "count_tasks", "", "length");
   deadlineDate(tasks);
-  countTaskInBoard(tasks);
-  countTaskInProgress(tasks);
-  countTaskInFeedback(tasks);
 }
 
-/**
- * Loads the active user's tasks from local storage.
- * @returns {Promise<Array>} - An array of tasks.
- */
 async function loadTasks() {
-  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
-  if (activeUser && activeUser.tasks) {
-    const taskIds = activeUser.tasks;
-    const tasks = await Promise.all(
-      taskIds.map(async (taskId) => {
-        const allTasks = await fetchData("tasks");
-        return allTasks.find((t) => t.id === taskId) || null;
-      })
-    );
-    return tasks.filter((task) => task !== null);
+  let userTasks = activeUser.tasks;
+  let allTasks = await fetchData("tasks");
+  let tasksToRender = allTasks.filter((task) => userTasks.includes(task.id));
+  return tasksToRender;
+}
+
+function countTasks(tasks, element, taskStatus, taskCategorie) {
+  let eachSummary = document.getElementById(element);
+  let count = "";
+  if (taskCategorie === "length") {
+    count = tasks[taskCategorie];
+  } else {
+    count = tasks.filter((task) => task[taskCategorie] === taskStatus).length;
   }
-  return [];
-}
-
-/**
- * Counts the number of tasks with the status "todo" and updates the display.
- * @param {Array} tasks - The list of tasks.
- */
-function countToDo(tasks) {
-  let toDo = document.getElementById("count_to_do");
-  let count = tasks.filter((task) => task.status === "todo").length;
-  toDo.innerHTML = `${count}`;
-}
-
-/**
- * Counts the number of completed tasks and updates the display.
- * @param {Array} tasks - The list of tasks.
- */
-function countDone(tasks) {
-  let done = document.getElementById("count_done");
-  let count = tasks.filter((task) => task.status === "done").length;
-  done.innerHTML = `${count}`;
-}
-
-/**
- * Counts the number of tasks with a due date and updates the display.
- * @param {Array} tasks - The list of tasks.
- */
-function countUrgent(tasks) {
-  let urgent = document.getElementById("count_priority_urgent");
-  let count = tasks.filter((task) => task.priority === "urgent").length;
-  urgent.innerHTML = `${count}`;
-}
-
-/**
- * Counts the total number of tasks and updates the display.
- * @param {Array} tasks - The list of tasks.
- */
-function countTaskInBoard(tasks) {
-  let taskInBoard = document.getElementById("count_tasks");
-  let count = tasks.length;
-  taskInBoard.innerHTML = `${count}`;
-}
-
-/**
- * Counts the number of tasks in the "in progress" status and updates the display.
- * @param {Array} tasks - The list of tasks.
- */
-function countTaskInProgress(tasks) {
-  let taskInProgress = document.getElementById("count_progress");
-  let count = tasks.filter((task) => task.status === "inprogress").length;
-  taskInProgress.innerHTML = `${count}`;
-}
-
-/**
- * Counts the number of tasks in the "await feedback" status and updates the display.
- * @param {Array} tasks - The list of tasks.
- */
-function countTaskInFeedback(tasks) {
-  let taskInFeedback = document.getElementById("count_feedback");
-  let count = tasks.filter((task) => task.status === "awaitfeedback").length;
-  taskInFeedback.innerHTML = `${count}`;
+  eachSummary.innerHTML = `${count}`;
 }
 
 /**
@@ -149,17 +88,17 @@ function countTaskInFeedback(tasks) {
  * @param {Array} tasks - The list of tasks.
  */
 function deadlineDate(tasks) {
-  const tasksWithDueDate = tasks.filter((task) => task.date);
+  let tasksWithDueDate = tasks.filter((task) => task.date);
   tasksWithDueDate.sort((a, b) => new Date(a.date) - new Date(b.date));
-  const nextDueDate = tasksWithDueDate[0]?.date; 
-  const [year, month, day] = nextDueDate.split("-");
-  const dateObj = new Date(year, month - 1, day);
-  const formattedDate = dateObj.toLocaleDateString('en-US', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
+  let nextDueDate = tasksWithDueDate[0]?.date;
+  let [year, month, day] = nextDueDate.split("-");
+  let dateObj = new Date(year, month - 1, day);
+  let formattedDate = dateObj.toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
   });
-  const deadlineElement = document.getElementById("deadline_date");
+  let deadlineElement = document.getElementById("deadline_date");
   deadlineElement.innerHTML = `${formattedDate}`;
 }
 
@@ -171,26 +110,26 @@ function navigatonToBoard() {
 }
 
 /**
+ * Checks if the mobile greeting should be displayed and shows it if necessary.
+ */
+function checkAndShowGreeting() {
+  let greetingShown = localStorage.getItem("greetingShown");
+  if (greetingShown === "false" || !greetingShown) {
+    mobileGreeting();
+    localStorage.setItem("greetingShown", "true");
+  }
+}
+
+/**
  * Displays the mobile greeting and hides it after 2.5 seconds.
  */
 function mobileGreeting() {
-  const greetingDialog = document.getElementById("greeting_mobile");
+  let greetingDialog = document.getElementById("greeting_mobile");
   if (greetingDialog) {
     greetingDialog.classList.remove("d-none");
     setTimeout(() => {
       greetingDialog.classList.add("d-none");
       greetingDialog.close();
-    }, 2500); 
-  }
-}
-
-/**
- * Checks if the mobile greeting should be displayed and shows it if necessary.
- */
-function checkAndShowGreeting() {
-  const greetingShown = localStorage.getItem("greetingShown");
-  if (greetingShown === "false" || !greetingShown) {
-    mobileGreeting();
-    localStorage.setItem("greetingShown", "true");
+    }, 2500);
   }
 }
