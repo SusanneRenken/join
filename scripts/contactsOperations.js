@@ -145,32 +145,6 @@ function deleteContactInLocalStorage(contactId) {
 }
 
 /**
- * Searches for a contact by its ID.
- * This function returns the contact data that corresponds to the specified contact ID.
- * @param {number} contactId - The ID of the contact being searched for.
- * @returns {Object} The found contact.
- */
-async function searchForContact(contactId) {
-  let data = await fetchData("contacts");
-  let contacts = Object.values(data);
-  let contact = contacts.find((c) => c && c.id === contactId);
-  return contact;
-}
-
-/**
- * Searches for a user by its ID.
- * This function returns the user data that corresponds to the specified user ID.
- * @param {number} contactId - The ID of the user being searched for.
- * @returns {Object} The found user.
- */
-async function searchForUser(contactId) {
-  let data = await fetchData("users");
-  let contacts = Object.values(data);
-  let contact = contacts.find((c) => c && c.id === contactId);
-  return contact;
-}
-
-/**
  * opens the delete window and adds the "YES" button
  *
  * @param {number} contactId - Contact Id

@@ -119,6 +119,7 @@ async function loadUserData(user) {
     name: user.name,
     initials: user.initials,
     id: user.id,
+    email: user.email,
     color: user.color,
     tasks: user.tasks,
     contacts: user.contacts,

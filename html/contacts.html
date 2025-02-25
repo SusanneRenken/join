@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="../styles/media/mediaDesktopTemplate.css" />
     <script src="../script.js"></script>
     <script src="../scripts/contacts.js"></script>
-    <script src="../scripts/contactsOperations.js"></script>
-    <script src="../scripts/contactsMobile.js"></script>
-    <script src="../scripts/contactsDialogs.js"></script>
+    <!-- <script src="../scripts/contactsOperations.js"></script> -->
+    <!-- <script src="../scripts/contactsMobile.js"></script> -->
+    <!-- <script src="../scripts/contactsDialogs.js"></script> -->
     <script src="../scripts/contactsTemplates.js"></script>
     <script src="../scripts/desktopTemplate.js"></script>
     <script src="../scripts/dbBackup.js"></script>
@@ -25,26 +25,36 @@
       type="image/x-icon"
       href="../assets/img/png/favicon2.png"
     />
-    <title>contacts</title>
+    <title>Contacts</title>
   </head>
-  <body>
+
+  <body onload="renderContacts()">
     <div id="desktop_template"></div>
+
     <div class="content">
       <div class="d-flex">
-        <div class="contact-box">
+        <div id="contact_box" class="contact-box">
           <button onclick="openDialog()" class="add-contact">
             Add new contact
             <img src="../assets/img/png/person_add.png" alt="" />
           </button>
           <div id="contact_list"></div>
         </div>
-        <div id="contact_info">
+
+        <div id="contact_info" class="contact-info-content">
           <div class="text-box">
             <h1>Contacts</h1>
             <div class="text-seperator"></div>
             <span class="info-text">Better with a Team</span>
+            <img
+              id="arrow_back"
+              onclick="goBackMobile()"
+              class="arrow-back"
+              src="../assets/img/png/arrow-left-line.png"
+              alt=""
+            />
           </div>
-          <div class="contacts-info-box"></div>
+          <div id="contact_info_box" class="contacts-info-box"></div>
         </div>
       </div>
     </div>
@@ -58,7 +68,9 @@
         class="delete-contact d-flex-column-center gap-32"
         onclick="bubblingPrevention(event)"
       >
-        <div class="font-w-700 font-c-66-82-110">Delete contact permanently?</div>
+        <div class="font-w-700 font-c-66-82-110">
+          Delete contact permanently?
+        </div>
         <div class="delte-contact-button-area d-flex-center">
           <div class="delete-btn" id="delete_yes_btn"></div>
           <button
@@ -214,25 +226,6 @@
       id="grey_background"
       class="grey-background hidden"
     ></div>
-
-    <div id="mobile_contact_info" class="mobile-contact-info d-none">
-      <div class="text-box">
-        <h1>Contacts</h1>
-        <div class="text-seperator"></div>
-        <span class="info-text">Better with a Team</span>
-        <img
-          id="arrow_back"
-          onclick="goBackMobile()"
-          class="arrow-back"
-          src="../assets/img/png/arrow-left-line.png"
-          alt=""
-        />
-      </div>
-      <div class="mobile-contacts-info-box"></div>
-      <div onclick="openMobileMenu()" class="mobile-delete-edit">
-        <img src="../assets/img/png/three_dots.png" alt="" />
-      </div>
-    </div>
 
     <div id="mobile_menu" class="mobile-menu">
       <img

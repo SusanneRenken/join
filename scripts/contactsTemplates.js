@@ -7,39 +7,12 @@
  * @param {string} user.email - The email address of the user.
  * @returns {string} The HTML string representing the active user's contact.
  */
-function generateActiveUserContact(user){
-  let limitNameLength = limitTextLength(user.name);
-  let limitEmailLength = limitTextLength(user.email);
+function generateActiveUserContact(user, limitNameLength, limitEmailLength) {
   return `
       <div id="contact${user.id}" class="contacts" onclick="displayContactInfo(${user.id})">
         <div class="letter-circle letter-circel-user" style="background-color: white;">${user.initials}</div>
         <div class="contact-info">
           <span>${limitNameLength}(YOU)</span>
-          <a class="contact-email" href="#">${limitEmailLength}</a>
-        </div>
-      </div>
-    `;
-}
-
-/**
- * Generates HTML for a general contact.
- * @param {Object} contact - The contact object.
- * @param {number} contact.id - The unique ID of the contact.
- * @param {string} contact.initials - The initials of the contact.
- * @param {string} contact.name - The full name of the contact.
- * @param {string} contact.email - The email address of the contact.
- * @param {string} contact.color - The background color for the initials.
- * @returns {string} The HTML string representing the contact.
- */
-function generateContact(contact) {
-  let limitNameLength = limitTextLength(contact.name);
-  let limitEmailLength = limitTextLength(contact.email);
-
-  return `
-      <div id="contact${contact.id}" class="contacts" onclick="displayContactInfo(${contact.id})">
-        <div class="letter-circle" style="background-color: ${contact.color};">${contact.initials}</div>
-        <div class="contact-info">
-          <span>${limitNameLength}</span>
           <a class="contact-email" href="#">${limitEmailLength}</a>
         </div>
       </div>
@@ -54,6 +27,28 @@ function generateContact(contact) {
 function generateLetterBox(initials) {
   return `<div class="letter-box">${initials}</div>
               <div class="contact-seperator"></div>`;
+}
+
+/**
+ * Generates HTML for a general contact.
+ * @param {Object} contact - The contact object.
+ * @param {number} contact.id - The unique ID of the contact.
+ * @param {string} contact.initials - The initials of the contact.
+ * @param {string} contact.name - The full name of the contact.
+ * @param {string} contact.email - The email address of the contact.
+ * @param {string} contact.color - The background color for the initials.
+ * @returns {string} The HTML string representing the contact.
+ */
+function generateContact(contact, limitNameLength, limitEmailLength) {
+  return `
+      <div id="contact${contact.id}" class="contacts" onclick="displayContactInfo(${contact.id})">
+        <div class="letter-circle" style="background-color: ${contact.color};">${contact.initials}</div>
+        <div class="contact-info">
+          <span>${limitNameLength}</span>
+          <a class="contact-email" href="#">${limitEmailLength}</a>
+        </div>
+      </div>
+    `;
 }
 
 /**
@@ -150,10 +145,9 @@ function generateButtonsInContactInfo(contact) {
  * @param {number} contact.id - The unique ID of the contact.
  * @returns {string} The HTML string for the mobile menu.
  */
-function generateMobileMenu(contact){
+function generateMobileMenu(contact) {
   return ` <img onclick="openDialogEdit(${contact.id})" class="mobile-edit-img" src="../assets/img/png/edit-default.png" alt="edit">
       <img onclick="openDeleteDialog(${contact.id})" id="user_delete_mobile" class="mobile-delete-img" src="../assets/img/png/delete-default.png" alt="delete"></img>`;
-  
 }
 
 /**
@@ -178,6 +172,6 @@ function generateDeleteButton(contactId) {
  *                              - "deleted" for a removed contact.
  * @returns {string} An HTML string that displays a success message.
  */
-function generateSuccesssfullyHtml(operation){
+function generateSuccesssfullyHtml(operation) {
   return `<span>Contacts successfully ${operation}</span>`;
 }
