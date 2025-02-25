@@ -78,8 +78,11 @@ h3 {
 }
 
 .is-selected {
-  cursor: not-allowed;
-  pointer-events: none;
+  background-color: #2a3647;
+  color: white;
+}
+
+.is-selected:hover {
   background-color: #2a3647;
   color: white;
 }

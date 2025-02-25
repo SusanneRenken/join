@@ -12,15 +12,17 @@ async function displayContactInfoMobile(contactId) {
   let contactInfoButtons = document.getElementById("button_edit_dialog");
   contactInfoDiv.innerHTML = generateContactInfo(contact);
   if (contact.id === 0) {
-    document.getElementById("for_active_user").classList.add("letter-circel-user");
-    document.getElementById("user_delete_display_info").classList.add("d-none")
+    document
+      .getElementById("for_active_user")
+      .classList.add("letter-circel-user");
+    document.getElementById("user_delete_display_info").classList.add("d-none");
   }
   contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact);
   mobileEditContact();
   let menu = document.getElementById("mobile_menu");
   menu.innerHTML = generateMobileMenu(contact);
   if (contact.id === 0) {
-    document.getElementById("user_delete_mobile").classList.add("d-none")
+    document.getElementById("user_delete_mobile").classList.add("d-none");
   }
 }
 
@@ -29,21 +31,8 @@ async function displayContactInfoMobile(contactId) {
  * This function disables the edit button in the mobile contact view.
  */
 function mobileEditContact() {
-  let contactMobileButton = document.querySelector(
-    ".contact-box-edit-delete"
-  );
+  let contactMobileButton = document.querySelector(".contact-box-edit-delete");
   contactMobileButton.classList.add("d-none");
-}
-
-/**
- * Hides the mobile contact information and resets the display.
- * This function removes the mobile contact view and clears the contents.
- */
-function goBackMobile() {
-  document.getElementById("mobile_contact_info").classList.add("d-none");
-  document.getElementById("mobile_contact_info").classList.remove("pos-abs");
-  let contactInfoDiv = document.querySelector(".mobile-contacts-info-box");
-  contactInfoDiv.innerHTML = "";
 }
 
 /**
@@ -53,9 +42,11 @@ function goBackMobile() {
 function openMobileMenu() {
   let menu = document.getElementById("mobile_menu");
   menu.classList.add("d-flex");
+  menu.classList.remove("d-none");
   let handleClickOutside = (event) => {
     if (!menu.contains(event.target)) {
       menu.classList.remove("d-flex");
+      menu.classList.add("d-none");
       document.removeEventListener("click", handleClickOutside);
     }
   };

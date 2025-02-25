@@ -146,11 +146,9 @@ async function displayContactInfo(contactId) {
 
   designeUserInitial(contact);
   highlightContact(contact);
-
-  let contactListContainer = document.getElementById("contact_box");
-  contactListContainer.classList.add("handle-display");
-  let contactContentContainer = document.getElementById("contact_info");
-  contactContentContainer.classList.add("is-shown");
+  toggleContactInfo();
+  toggleAddContactBtn();
+  toggleEditContactBtn();
 }
 
 /**
@@ -190,6 +188,34 @@ function highlightContact(contact) {
     contactsContainer[i].classList.remove("is-selected");
   }
   document.getElementById(`contact${contact.id}`).classList.add("is-selected");
+}
+
+/**
+ * Hides the mobile contact information and resets the display.
+ * This function removes the mobile contact view and clears the contents.
+ */
+function goBackMobile() {
+  toggleContactInfo();
+  toggleAddContactBtn();
+  toggleEditContactBtn();
+}
+
+function toggleContactInfo() {
+  let contactListContainer = document.getElementById("contact_box");
+  contactListContainer.classList.toggle("handle-display");
+  let contactContentContainer = document.getElementById("contact_info");
+  contactContentContainer.classList.toggle("is-shown");
+}
+
+function toggleAddContactBtn() {
+  let addContactBtn = document.getElementById("mobile_add_contact");
+  addContactBtn.classList.toggle("d-none");
+  addContactBtn.classList.toggle("mobile-add-contact");
+}
+
+function toggleEditContactBtn() {
+  let addContactBtn = document.getElementById("mobile_delete_edit");
+  addContactBtn.classList.toggle("d-none");
 }
 
 // /**
@@ -255,12 +281,12 @@ function highlightContact(contact) {
 //   return firstInitial + lastInitial;
 // }
 
-// /**
-//  * Waits for a specified amount of time.
-//  * This function returns a promise that resolves after the specified time.
-//  * @param {number} ms - The wait time in milliseconds.
-//  * @returns {Promise} A promise that resolves after the wait time.
-//  */
-// function sleep(ms) {
-//   return new Promise((resolve) => setTimeout(resolve, ms));
-// }
+/**
+ * Waits for a specified amount of time.
+ * This function returns a promise that resolves after the specified time.
+ * @param {number} ms - The wait time in milliseconds.
+ * @returns {Promise} A promise that resolves after the wait time.
+ */
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}

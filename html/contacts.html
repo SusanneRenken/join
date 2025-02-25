@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="../styles/media/mediaDesktopTemplate.css" />
     <script src="../script.js"></script>
     <script src="../scripts/contacts.js"></script>
-    <!-- <script src="../scripts/contactsOperations.js"></script> -->
-    <!-- <script src="../scripts/contactsMobile.js"></script> -->
-    <!-- <script src="../scripts/contactsDialogs.js"></script> -->
+    <script src="../scripts/contactsOperations.js"></script>
+    <script src="../scripts/contactsMobile.js"></script>
+    <script src="../scripts/contactsDialogs.js"></script>
     <script src="../scripts/contactsTemplates.js"></script>
     <script src="../scripts/desktopTemplate.js"></script>
     <script src="../scripts/dbBackup.js"></script>
@@ -227,7 +227,7 @@
       class="grey-background hidden"
     ></div>
 
-    <div id="mobile_menu" class="mobile-menu">
+    <div id="mobile_menu" class="mobile-menu d-none">
       <img
         class="mobile-edit-img"
         src="../assets/img/png/edit-default.png"
@@ -240,7 +240,11 @@
       />
     </div>
 
-    <div onclick="openDialog()" class="mobile-add-contact">
+    <div onclick="openMobileMenu()" id="mobile_delete_edit" class="mobile-delete-edit d-none">
+      <img src="../assets/img/png/three_dots.png" alt="" />
+    </div>
+
+    <div onclick="openDialog()" id="mobile_add_contact" class="mobile-add-contact">
       <img src="../assets/img/png/person_add.png" alt="" />
     </div>
   </body>

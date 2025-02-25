@@ -206,6 +206,14 @@
     display: flex;
   }
 
+  .edit-link {
+    display: none;
+  }
+  
+  .delete-link {
+    display: none;
+  }
+
   .contact-box-name {
     justify-content: center;
   }
