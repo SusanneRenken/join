@@ -31,12 +31,12 @@
   }
   
   .mobile-delete-edit {
-    display: flex;
+    display: none;
     border-radius: 30px;
     width: 56px;
     height: 56px;
     right: 16px;
-    bottom: 88px;
+    bottom: 8px;
     background-color: rgb(41, 53, 71);
     position: absolute;
     align-items: center;

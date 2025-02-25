@@ -164,11 +164,11 @@
     display: none;
   }
 
-  .handle-display{
+  .handle-display {
     display: none;
   }
 
-  .is-shown{
+  .is-shown {
     width: 100%;
     position: relative;
     display: flex;
@@ -206,10 +206,15 @@
     display: flex;
   }
 
+  .mobile-delete-edit {
+    display: flex;
+    bottom: 88px;
+  }
+
   .edit-link {
     display: none;
   }
-  
+
   .delete-link {
     display: none;
   }

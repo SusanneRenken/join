@@ -215,7 +215,7 @@ function toggleAddContactBtn() {
 
 function toggleEditContactBtn() {
   let addContactBtn = document.getElementById("mobile_delete_edit");
-  addContactBtn.classList.toggle("d-none");
+  addContactBtn.classList.toggle("d-flex");
 }
 
 // /**
