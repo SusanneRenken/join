@@ -30,11 +30,10 @@ function initHeader() {
 function initSidebar() {
   let currentPage = window.location.pathname.split("/").pop().split(".")[0];
   let link = document.getElementById(`link_${currentPage}`);
+  link.classList.add("selected");
 
   editImage(link, currentPage);
   hideElements(currentPage);
-
-  link.classList.add("selected");
 }
 
 /**
