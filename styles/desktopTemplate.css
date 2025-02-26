@@ -55,7 +55,7 @@ header {
   cursor: pointer;
 }
 
-.overlay {
+.overlay-template {
   position: absolute;
   top: 0;
   right: 0;

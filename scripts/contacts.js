@@ -129,8 +129,6 @@ function limitTextLength(text, maxLength = 15) {
   return text;
 }
 
-//---------------------------------------------------------------------------------------------------------------
-
 /**
  * Displays the information of a contact on the desktop.
  * This function loads the contact data and shows it in the contact info area.
@@ -217,20 +215,164 @@ function toggleEditContactBtn() {
   addContactBtn.classList.toggle("d-flex");
 }
 
-// /**
-//  * Adds a new contact and updates the user interface.
-//  * This function creates a new contact, adds it to the active user, and renders the
-//  * updated contact list.
-//  */
-// async function addContact() {
-//   let contactId = await postNewContact();
-//   addContactToUser(contactId, activeUser);
-//   addContactToUserLocal(contactId, activeUser);
-//   closeDialog();
-//   await openDialogSuccessfully('created');
-//   clearForm();
-//   renderContacts();
-// }
+//---------------------------------------------------------------------------------------------------------------
+
+/**
+ * Toggles the visibility of an overlay section and adjusts the body scroll.
+ *
+ * @param {string} section - The ID of the overlay section to toggle.
+ */
+function toggleOverlay(section) {
+  let refOverlay = document.getElementById(section);
+  refOverlay.classList.toggle("d-none");
+  if (!refOverlay.classList.contains("d-none")) {
+    document.body.style.overflow = "hidden";
+    setTimeout(() => {
+      refOverlay.classList.add("active", "visible");
+    }, 50);
+  } else {
+    document.body.style.overflow = "auto";
+    refOverlay.classList.remove("active", "visible");
+  }
+}
+
+/**
+ * Clears all inputs in the form and removes any error displays.
+ */
+function clearAddContactForm() {
+  let nameInput = document.getElementById("contact_name");
+  let emailInput = document.getElementById("contact_email");
+  let phoneInput = document.getElementById("contact_phone");
+  nameInput.value = "";
+  emailInput.value = "";
+  phoneInput.value = "";
+  clearError(nameInput, "field_alert_name");
+  clearError(emailInput, "field_alert_email");
+}
+
+/**
+ * Removes the error message and error styling from the input field.
+ * @param {HTMLElement} inputElement - The input field for which to reset the error.
+ * @param {string} alertElementId - The ID of the element displaying the error message.
+ */
+function clearError(inputElement, alertElementId) {
+  let alertElement = document.getElementById(alertElementId);
+  alertElement.innerText = "";
+  inputElement.classList.remove("error");
+}
+
+
+function createContact(){   
+  resetAlert();
+
+  let nameInput = document.getElementById("contact_name").value.trim();
+  let emailInput = document.getElementById("contact_email").value.trim();
+  let phoneInput = document.getElementById("contact_phone").value.trim();
+  let initials = getContactInitials(nameInput);
+
+  createContactProcess(nameInput, emailInput, phoneInput, initials); 
+}
+
+function resetAlert(){
+  let nameInputContent = document.getElementById("contact_name");
+  let emailInputContent = document.getElementById("contact_email");  
+ 
+  clearError(nameInputContent, "field_alert_name");
+  clearError(emailInputContent, "field_alert_email");
+}
+
+async function createContactProcess(nameInput, emailInput, phoneInput, initials){
+
+  validateContactInputs(emailInput, nameInput);
+
+  // addContact();
+
+  toggleOverlay('dialog_contacts_overlay');
+  // closeDialog();
+
+  // await openDialogSuccessfully('created');
+
+
+  // clearAddContactForm();  
+  // renderContacts();
+
+}
+
+
+/**
+ * Adds a new contact and updates the user interface.
+ * This function creates a new contact, adds it to the active user, and renders the
+ * updated contact list.
+ */
+async function addContact() {
+
+  let contactId = await postNewContact();
+
+  addContactToUser(contactId, activeUser);
+  addContactToUserLocal(contactId, activeUser);
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Opens the edit dialog for a contact.
+ * @param {number} contactId - The ID of the contact to be edited.
+ * @returns {Promise<void>} - Displays the edit dialog and fills the form fields with existing contact information.
+ */
+async function openDialogEdit(contactId) {
+  let contact = await getContact(contactId);
+
+  let menu = document.getElementById("mobile_menu");
+
+  if (menu.classList.contains("d-flex")) {
+    menu.classList.remove("d-flex");
+  }
+  if (contact.id === 0) {
+    document.getElementById("user_display_info").classList.add("d-none");
+  }
+  let dialogContainer = document.getElementById("dialog_edit");
+  dialogContainer.open = true;
+  dialogContainer.classList.add("d-flex");
+  document.getElementById("grey_background").classList.remove("hidden");
+  populateFormFields(contact);
+  await sleep(10);
+  dialogContainer.classList.add("dialog-open");
+  dialogBigLetterCircle(contact);
+}
+
+/**
+ * Closes the edit dialog.
+ * @returns {Promise<void>} - Hides the dialog and clears the edit form.
+ */
+async function closeDialogEdit() {
+  let dialogContainer = document.getElementById("dialog_edit");
+  dialogContainer.classList.remove("dialog-open");
+  document.getElementById("grey_background").classList.add("hidden");
+  await sleep(300);
+  dialogContainer.classList.remove("d-flex");
+  dialogContainer.open = false;
+  clearEditForm();
+}
+
+//---------------------------------------------------------------------------------------------------------------
+
+
 
 // /**
 //  * Creates a contact object with the provided data.

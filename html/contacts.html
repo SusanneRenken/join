@@ -14,9 +14,10 @@
     <link rel="stylesheet" href="../styles/media/mediaDesktopTemplate.css" />
     <script src="../script.js"></script>
     <script src="../scripts/contacts.js"></script>
-    <script src="../scripts/contactsOperations.js"></script>
+    <!-- <script src="../scripts/contactsOperations.js"></script>
     <script src="../scripts/contactsMobile.js"></script>
-    <script src="../scripts/contactsDialogs.js"></script>
+    <script src="../scripts/contactsDialogs.js"></script> -->
+    <script src="../scripts/contactsValidation.js"></script>
     <script src="../scripts/contactsTemplates.js"></script>
     <script src="../scripts/desktopTemplate.js"></script>
     <script src="../scripts/dbBackup.js"></script>
@@ -34,7 +35,10 @@
     <div class="content">
       <div class="d-flex">
         <div id="contact_box" class="contact-box">
-          <button onclick="openDialog()" class="add-contact">
+          <button
+            onclick="toggleOverlay('dialog_contacts_overlay')"
+            class="add-contact"
+          >
             Add new contact
             <img src="../assets/img/png/person_add.png" alt="" />
           </button>
@@ -83,141 +87,110 @@
       </div>
     </section>
 
-    <dialog id="dialog_contacts">
-      <div class="dialog-left">
-        <img
-          class="logo-dialog"
-          src="../assets/img/png/Join logo vector.png"
-          alt=""
-        />
-        <h2>Add contact</h2>
-        <span class="dialog-text">Tasks are better with a team!</span>
-        <div class="dialo-text-seperator"></div>
-      </div>
-      <div class="dialog-right">
-        <img
-          class="unknown-user"
-          src="../assets/img/png/unknown-user.png"
-          alt=""
-        />
-        <div class="dialog-content-right">
-          <div onclick="closeDialog()" class="close-cross">
-            <img class="cross" src="../assets/img/png/close.png" alt="" />
-          </div>
-          <div class="input-fields-contacts">
-            <div>
-              <input
-                id="name"
-                class="input-name"
-                type="text"
-                placeholder="Name"
-              />
-              <div class="field-alert" id="field_alert_name"></div>
+    <section
+      class="overlay d-flex-center d-none"
+      id="dialog_contacts_overlay"
+      onclick="toggleOverlay('dialog_contacts_overlay')"
+    >
+      <dialog
+        id="dialog_contacts"
+        class="dialog-contacts"
+        onclick="bubblingPrevention(event)"
+      >
+        <div class="dialog-left">
+          <img
+            class="logo-dialog"
+            src="../assets/img/png/Join logo vector.png"
+            alt=""
+          />
+          <h2>Add contact</h2>
+          <span class="dialog-text">Tasks are better with a team!</span>
+          <div class="dialo-text-seperator"></div>
+        </div>
+        <div class="dialog-right">
+          <img
+            class="unknown-user"
+            src="../assets/img/png/unknown-user.png"
+            alt=""
+          />
+          <div class="dialog-content-right">
+            <div
+              onclick="toggleOverlay('dialog_contacts_overlay')"
+              class="close-cross"
+            >
+              <img class="cross" src="../assets/img/png/close.png" alt="" />
             </div>
-            <div>
-              <input
-                id="email"
-                class="input-email"
-                type="email"
-                placeholder="Email"
-              />
-              <div class="field-alert" id="field_alert_email"></div>
-            </div>
-            <div>
-              <input
-                id="phone"
-                class="input-phone"
-                type="number"
-                min="0"
-                placeholder="Phone"
-              />
-              <div class="field-alert" id="field_alert_phone"></div>
-            </div>
-          </div>
-
-          <div class="button-contacts">
-            <button onclick="closeDialog()" class="button-cancel">
-              Cancel
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  class="close-icon-button"
-                  d="M7.06917 7.00008L12.3122 12.2431M1.82617 12.2431L7.06917 7.00008L1.82617 12.2431ZM12.3122 1.75708L7.06817 7.00008L12.3122 1.75708ZM7.06817 7.00008L1.82617 1.75708L7.06817 7.00008Z"
-                  stroke="#2A3647"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  ƒ
+            <div class="input-fields-contacts">
+              <div>
+                <input
+                  id="contact_name"
+                  class="input-name"
+                  type="text"
+                  placeholder="Name"
                 />
-              </svg>
-            </button>
-            <button onclick="validateForm()" class="button-create">
-              Create contact
-              <img
-                class="check-icon-button"
-                src="../assets/img/png/check.png"
-                alt="check"
-              />
-            </button>
-          </div>
-        </div>
-      </div>
-    </dialog>
+                <div class="field-alert" id="field_alert_name"></div>
+              </div>
+              <div>
+                <input
+                  id="contact_email"
+                  class="input-email"
+                  type="email"
+                  placeholder="Email"
+                />
+                <div class="field-alert" id="field_alert_email"></div>
+              </div>
+              <div>
+                <input
+                  id="contact_phone"
+                  class="input-phone"
+                  type="number"
+                  min="0"
+                  placeholder="Phone"
+                />
+              </div>
+            </div>
 
-    <dialog id="dialog_edit">
-      <div class="dialog-left">
-        <img
-          class="logo-dialog"
-          src="../assets/img/png/Join logo vector.png"
-          alt=""
-        />
-        <h2>Edit contact</h2>
-        <div class="dialo-text-seperator"></div>
-      </div>
-      <div class="dialog-right">
-        <div id="big_letter_circle"></div>
-        <div class="dialog-content-right">
-          <div onclick="closeDialogEdit()" class="close-cross">
-            <img class="cross" src="../assets/img/png/close.png" alt="" />
-          </div>
-          <div class="input-fields-contacts">
-            <div>
-              <input
-                id="inputEditName"
-                class="input-name"
-                type="text"
-                placeholder="Name"
-              />
-              <div class="field-alert" id="edit_field_alert_name"></div>
-            </div>
-            <div>
-              <input
-                id="inputEditEmail"
-                class="input-email"
-                type="email"
-                placeholder="Email"
-              />
-              <div class="field-alert" id="edit_field_alert_email"></div>
-            </div>
-            <div>
-              <input
-                id="inputEditPhone"
-                class="input-phone"
-                type="number"
-                min="0"
-                placeholder="Phone"
-              />
-              <div class="field-alert" id="edit_field_alert_phone"></div>
+            <div class="button-contacts">
+              <button onclick="toggleOverlay('dialog_contacts_overlay'), clearAddContactForm()" class="button-cancel">
+                Cancel
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    class="close-icon-button"
+                    d="M7.06917 7.00008L12.3122 12.2431M1.82617 12.2431L7.06917 7.00008L1.82617 12.2431ZM12.3122 1.75708L7.06817 7.00008L12.3122 1.75708ZM7.06817 7.00008L1.82617 1.75708L7.06817 7.00008Z"
+                    stroke="#2A3647"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    ƒ
+                  />
+                </svg>
+              </button>
+              <button onclick="createContact()" class="button-create">
+                Create contact
+                <img
+                  class="check-icon-button"
+                  src="../assets/img/png/check.png"
+                  alt="check"
+                />
+              </button>
             </div>
           </div>
-          <div id="button_edit_dialog" class="button-delete-save"></div>
         </div>
-      </div>
-    </dialog>
+      </dialog>
+    </section>
+
+    <section
+      class="overlay d-flex-center d-none"
+      id="dialog_edit_overlay"
+      onclick="toggleOverlay('dialog_edit_overlay')"
+    >
+      <dialog class="dialog-edit" onclick="bubblingPrevention(event)"></dialog>
+    </section>
 
     <dialog id="succesfully_created"></dialog>
 
@@ -240,11 +213,19 @@
       />
     </div>
 
-    <div onclick="openMobileMenu()" id="mobile_delete_edit" class="mobile-delete-edit">
+    <div
+      onclick="openMobileMenu()"
+      id="mobile_delete_edit"
+      class="mobile-delete-edit"
+    >
       <img src="../assets/img/png/three_dots.png" alt="" />
     </div>
 
-    <div onclick="openDialog()" id="mobile_add_contact" class="mobile-add-contact">
+    <div
+      onclick="openDialog()"
+      id="mobile_add_contact"
+      class="mobile-add-contact"
+    >
       <img src="../assets/img/png/person_add.png" alt="" />
     </div>
   </body>

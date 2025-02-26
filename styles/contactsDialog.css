@@ -1,38 +1,28 @@
-#dialog_contacts {
+dialog {
+  position: relative;
+  width: clamp(900px, 69vw, 1212px);
+  height: 592px;
   font-family: "inter", Arial, sans-serif;
-  z-index: 99;
-  position: fixed;
+  text-align: center;
+  border-radius: 33px;
+  padding: 0;
+  border: 0px;
+  display: flex;  
+  transform: translateX(100vw);
+  transition: transform 0.5s ease;
+}
+
+/* #dialog_edit {
+  font-family: "inter", Arial, sans-serif;
   width: clamp(900px, 69vw, 1212px);
   height: 592px;
   text-align: center;
-  top: 50%;
-  left: 200%;
   transform: translate(-50%, -50%);
   border-radius: 33px;
   padding: 0;
   border: 0px;
   transition: left 0.4s ease-out;
-}
-
-#dialog_contacts.dialog-open {
-  left: 50%;
-}
-
-#dialog_edit {
-  font-family: "inter", Arial, sans-serif;
-  z-index: 99;
-  position: fixed;
-  width: clamp(900px, 69vw, 1212px);
-  height: 592px;
-  text-align: center;
-  top: 50%;
-  left: 200%;
-  transform: translate(-50%, -50%);
-  border-radius: 33px;
-  padding: 0;
-  border: 0px;
-  transition: left 0.4s ease-out;
-}
+} */
 
 #dialog_edit.dialog-open {
   left: 50%;

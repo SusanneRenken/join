@@ -71,7 +71,7 @@ function generateContactInfo(contact) {
           <div class="contact-box-name">
             <h3>${contact.name}</h3>
             <div class="contact-box-edit-delete">
-              <div onclick="openDialogEdit(${contact.id})" class="edit-link">
+              <div onclick="toggleOverlay('dialog_edit_overlay') " class="edit-link">
                 <svg class="icon-edit" width="18" height="18" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
                   <path d="M2 17H3.4L12.025 8.375L10.625 6.975L2 15.6V17ZM16.3 6.925L12.05 2.725L13.45 1.325C13.8333 0.941667 14.3042 0.75 14.8625 0.75C15.4208 0.75 15.8917 0.941667 16.275 1.325L17.675 2.725C18.0583 3.10833 18.2583 3.57083 18.275 4.1125C18.2917 4.65417 18.1083 5.11667 17.725 5.5L16.3 6.925ZM14.85 8.4L4.25 19H0V14.75L10.6 4.15L14.85 8.4Z" />
                 </svg>Edit
@@ -137,6 +137,59 @@ function generateButtonsInContactInfo(contact) {
     />
   </button>
     `;
+}
+
+function generateEditContactDialog() {
+  return `
+      <div class="dialog-left">
+        <img
+          class="logo-dialog"
+          src="../assets/img/png/Join logo vector.png"
+          alt=""
+        />
+        <h2>Edit contact</h2>
+        <div class="dialo-text-seperator"></div>
+      </div>
+      <div class="dialog-right">
+        <div id="big_letter_circle"></div>
+        <div class="dialog-content-right">
+          <div onclick="toggleOverlay('dialog_edit_overlay')" class="close-cross">
+            <img class="cross" src="../assets/img/png/close.png" alt="" />
+          </div>
+          <div class="input-fields-contacts">
+            <div>
+              <input
+                id="inputEditName"
+                class="input-name"
+                type="text"
+                placeholder="Name"
+              />
+              <div class="field-alert" id="edit_field_alert_name"></div>
+            </div>
+            <div>
+              <input
+                id="inputEditEmail"
+                class="input-email"
+                type="email"
+                placeholder="Email"
+              />
+              <div class="field-alert" id="edit_field_alert_email"></div>
+            </div>
+            <div>
+              <input
+                id="inputEditPhone"
+                class="input-phone"
+                type="number"
+                min="0"
+                placeholder="Phone"
+              />
+              <div class="field-alert" id="edit_field_alert_phone"></div>
+            </div>
+          </div>
+          <div id="button_edit_dialog" class="button-delete-save"></div>
+        </div>
+      </div>
+`;
 }
 
 /**

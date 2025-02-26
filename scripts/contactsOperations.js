@@ -154,22 +154,3 @@ function openDeleteDialog(contactId) {
   let yesButton = document.getElementById("delete_yes_btn");
   yesButton.innerHTML = generateDeleteButton(contactId);
 }
-
-/**
- * Toggles the visibility of an overlay section and adjusts the body scroll.
- *
- * @param {string} section - The ID of the overlay section to toggle.
- */
-function toggleOverlay(section) {
-  let refOverlay = document.getElementById(section);
-  refOverlay.classList.toggle("d-none");
-  if (!refOverlay.classList.contains("d-none")) {
-    document.body.style.overflow = "hidden";
-    setTimeout(() => {
-      refOverlay.classList.add("active", "visible");
-    }, 50);
-  } else {
-    document.body.style.overflow = "auto";
-    refOverlay.classList.remove("active", "visible");
-  }
-}
