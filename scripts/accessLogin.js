@@ -7,6 +7,7 @@ function loginAsGuest() {
     name: "Guest",
     initials: "G",
     id: 0,
+    email: "guest@gmail.com",
     color: "#ffffff",
     tasks: [1, 2, 3, 4, 5],
     contacts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],

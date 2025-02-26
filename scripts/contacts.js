@@ -4,7 +4,6 @@
  */
 async function renderContacts() {
   let contactList = await getContactList();
-  // console.log('contactList', contactList);
 
   renderContactsList(contactList);
 }
