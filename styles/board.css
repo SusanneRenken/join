@@ -205,7 +205,7 @@
   margin-right: -8px;
 }
 
-.overlay {
+/* .overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -221,7 +221,7 @@
 
 .overlay.visible {
   opacity: 1;
-}
+} */
 
 .overlay.visible .single-task,
 .overlay.visible .add-task-board {

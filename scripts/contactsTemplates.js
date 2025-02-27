@@ -225,6 +225,6 @@ function generateDeleteButton(contactId) {
  *                              - "deleted" for a removed contact.
  * @returns {string} An HTML string that displays a success message.
  */
-function generateSuccesssfullyHtml(operation) {
-  return `<span>Contacts successfully ${operation}</span>`;
+function generateContactFeedback(operation) {
+  return `<div class="contact-feedback">Contacts successfully ${operation}</div>`;
 }

@@ -261,8 +261,7 @@ function clearError(inputElement, alertElementId) {
   inputElement.classList.remove("error");
 }
 
-
-function createContact(){   
+function createContact() {
   resetAlert();
 
   let nameInput = document.getElementById("contact_name").value.trim();
@@ -270,48 +269,111 @@ function createContact(){
   let phoneInput = document.getElementById("contact_phone").value.trim();
   let initials = getContactInitials(nameInput);
 
-  createContactProcess(nameInput, emailInput, phoneInput, initials); 
+  createContactProcess(nameInput, emailInput, phoneInput, initials);
 }
 
-function resetAlert(){
+function resetAlert() {
   let nameInputContent = document.getElementById("contact_name");
-  let emailInputContent = document.getElementById("contact_email");  
- 
+  let emailInputContent = document.getElementById("contact_email");
+
   clearError(nameInputContent, "field_alert_name");
   clearError(emailInputContent, "field_alert_email");
 }
 
-async function createContactProcess(nameInput, emailInput, phoneInput, initials){
-
+async function createContactProcess(
+  nameInput,
+  emailInput,
+  phoneInput,
+  initials
+) {
   validateContactInputs(emailInput, nameInput);
 
-  // addContact();
+  await addContact(nameInput, emailInput, phoneInput, initials);
 
-  toggleOverlay('dialog_contacts_overlay');
-  // closeDialog();
+  clearAddContactForm();
 
-  // await openDialogSuccessfully('created');
+  await openDialogSuccessfully('created');
 
+  toggleOverlay("dialog_contacts_overlay");
 
-  // clearAddContactForm();  
-  // renderContacts();
-
+  renderContacts();
 }
-
 
 /**
  * Adds a new contact and updates the user interface.
  * This function creates a new contact, adds it to the active user, and renders the
  * updated contact list.
  */
-async function addContact() {
+async function addContact(nameInput, emailInput, phoneInput, initials) {
+  let contactId = await getNewId("contacts");
 
-  let contactId = await postNewContact();
+  await postNewContact(nameInput, emailInput, phoneInput, contactId, initials);
 
-  addContactToUser(contactId, activeUser);
-  addContactToUserLocal(contactId, activeUser);
+  addContactToUser(contactId);
 
+}
 
+/**
+ * Posts a new contact to the database and returns the contact ID.
+ * @returns {number} The ID of the newly created contact.
+ */
+async function postNewContact(name, email, phone, contactId, initials) {
+  let contactData = {
+    id: contactId,
+    name: name,
+    email: email,
+    phone: phone,
+    color: generateRandomColor(),
+    initials: initials,
+  };
+
+  await postData(`contacts/${contactId - 1}/`, contactData);
+}
+
+/**
+ * Generates a random color in a dark shade.
+ * @returns {string} A hexadecimal color code.
+ */
+function generateRandomColor() {
+  let darkLetters = "0123456789ABC";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += darkLetters[Math.floor(Math.random() * darkLetters.length)];
+  }
+  return color;
+}
+
+/**
+ * Adds a contact to the user and saves it in the database.
+ * This function checks if the user already has the contact and adds it if it does not exist.
+ * @param {number} contactId - The ID of the contact to be added.
+ * @param {Object} activeUser - The currently logged-in user.
+ */
+async function addContactToUser(contactId) {
+  if (!activeUser.contacts.includes(contactId)) {
+    activeUser.contacts.push(contactId);
+    await postData(`users/${activeUser.id - 1}/`, { ...activeUser });
+    localStorage.setItem("activeUser", JSON.stringify(activeUser));
+  }
+}
+
+function openDialogSuccessfully(operation) {  
+  return new Promise((resolve) => {
+    
+    let overlay = document.getElementById("succesfully_created");
+    overlay.innerHTML = generateContactFeedback(operation);
+    overlay.classList.remove("d-none");
+    overlay.classList.add("active");
+
+    setTimeout(() => {
+      overlay.classList.add("visible");
+      setTimeout(() => {
+        overlay.classList.remove("active", "visible");
+        overlay.classList.add("d-none");
+        resolve();
+      }, 1500);
+    }, 50);
+  });
 }
 
 
@@ -326,9 +388,7 @@ async function addContact() {
 
 
 
-
-
-
+//---------------------------------------------------------------------------------------------------------------
 
 /**
  * Opens the edit dialog for a contact.
@@ -370,57 +430,84 @@ async function closeDialogEdit() {
   clearEditForm();
 }
 
-//---------------------------------------------------------------------------------------------------------------
+/**
+ * Edits a contact's information and updates it in the database.
+ * @param {number} contactId - The ID of the contact being edited.
+ */
+async function editContact(contactId) {
+  let existingContact = await getContact(contactId);
+  if(contactId === 0) {
+    let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+    existingContact.id = activeUser.id;
+  }
+  let updatedContact = createUpdatedContact(existingContact);
+  let endpoint =
+    existingContact.color === "#ffffff"
+      ? `users/${existingContact.id - 1}/`
+      : `contacts/${existingContact.id - 1}/`;
+  await postData(endpoint, updatedContact);
+  closeDialogEdit();
+  openDialogSuccessfully('edited');
+  await renderContent();
+  checkDisplayForInfo(existingContact)
+}
 
 
+/**
+ * Clears all inputs in the edit form and removes any error displays.
+ */
+function clearEditForm() {
+  let nameEditInput = document.getElementById("inputEditName");
+  let emailEditInput = document.getElementById("inputEditEmail");
+  let phoneEditInput = document.getElementById("inputEditPhone");
+  clearError(nameEditInput, "edit_field_alert_name");
+  clearError(emailEditInput, "edit_field_alert_email");
+  clearError(phoneEditInput, "edit_field_alert_phone");
+}
 
-// /**
-//  * Creates a contact object with the provided data.
-//  * @param {string} name - The name of the contact.
-//  * @param {string} email - The email address of the contact.
-//  * @param {string} phone - The phone number of the contact.
-//  * @param {number} contactId - The ID of the contact.
-//  * @returns {Object} The created contact object.
-//  */
-// function createContact(name, email, phone, contactId) {
-//   return {
-//     id: contactId,
-//     name: name,
-//     email: email,
-//     phone: phone,
-//     color: generateRandomColor(),
-//     initials: getInitials(name),
-//   };
-// }
+/**
+ * Creates an updated contact object based on the edited inputs.
+ * @param {Object} existingContact - The existing contact object being edited.
+ * @returns {Object} - The updated contact object.
+ */
+function createUpdatedContact(existingContact) {
+  let updatedName = document.getElementById("inputEditName").value;
+  let updatedEmail = document.getElementById("inputEditEmail").value;
+  let updatedPhone = document.getElementById("inputEditPhone").value;
+  let updatedInitials = getInitials(updatedName);
+    return {
+      ...existingContact,
+      name: updatedName,
+      email: updatedEmail,
+      phone: updatedPhone,
+      initials: updatedInitials,
+    };
+  }
 
-// /**
-//  * Generates a random color in a dark shade.
-//  * @returns {string} A hexadecimal color code.
-//  */
-// function generateRandomColor() {
-//   let darkLetters = "0123456789ABC";
-//   let color = "#";
-//   for (let i = 0; i < 6; i++) {
-//     color += darkLetters[Math.floor(Math.random() * darkLetters.length)];
-//   }
-//   return color;
-// }
-
-// /**
-//  * Returns the initials of a name.
-//  * This function extracts the first letters from the name and returns them as initials.
-//  * @param {string} name - The name from which the initials should be extracted.
-//  * @returns {string} The initials of the name.
-//  */
-// function getInitials(name) {
-//   let names = name.split(" ");
-//   if (names.length === 1) {
-//     return names[0].charAt(0).toUpperCase();
-//   }
-//   let firstInitial = names[0].charAt(0).toUpperCase();
-//   let lastInitial = names[names.length - 1].charAt(0).toUpperCase();
-//   return firstInitial + lastInitial;
-// }
+  /**
+ * Überprüft die Displaygröße und passt das Layout sowie die Kontaktinformationen an.
+ * 
+ * - Wenn die Fensterbreite kleiner oder gleich 777px ist, wird die Informationsanzeige
+ *   für mobile Geräte versteckt und positionelle Klassen entfernt.
+ * - Andernfalls wird bei großen Bildschirmen der Kontakt basierend auf seiner ID angezeigt.
+ *   Wenn die Farbe des Kontakts weiß ist, wird die Kontakt-ID auf 0 gesetzt.
+ * 
+ * @param {Object} existingContact - Das bestehende Kontaktobjekt, das Informationen über den Kontakt enthält.
+ * @param {number} existingContact.id - Die eindeutige ID des Kontakts.
+ * @param {string} existingContact.color - Die Farbe des Kontakts (im Hex-Format).
+ */
+function checkDisplayForInfo(existingContact){
+  if (window.innerWidth <= 777) {
+    let infoDiv = document.getElementById("mobile_contact_info");
+    infoDiv.classList.add("d-none");
+    infoDiv.classList.remove("pos-abs");
+  } else {
+    if ( existingContact.color === "#ffffff") {
+      existingContact.id = 0;
+    }
+    displayContactInfo(existingContact.id);
+  }
+}
 
 /**
  * Waits for a specified amount of time.

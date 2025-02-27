@@ -7,7 +7,7 @@ dialog {
   border-radius: 33px;
   padding: 0;
   border: 0px;
-  display: flex;  
+  display: flex;
   transform: translateX(100vw);
   transition: transform 0.5s ease;
 }
@@ -78,7 +78,6 @@ h2 {
 .d-flex {
   display: flex;
 }
-
 
 .unknown-user {
   margin-top: 204px;
@@ -273,25 +272,34 @@ button {
   color: #29abe2;
 }
 
-#succesfully_created {
-  padding: 0px;
-  font-size: 20px;
+.succesfully-created {
+  position: relative;
   width: 326px;
   height: 74px;
-  background-color: #2a3647;
-  color: white;
-  position: absolute;
-  top: 73%;
-  left: 111%;
-  align-items: center;
-  justify-content: center;
-  border-radius: 20px;
-  transform: translate(-50%, -50%);
-  transition: left 0.4s ease-out;
   margin: 0;
+  padding: 0px;
+  font-size: 20px;
+  color: white;
+  background-color: #2a3647;
+  border-radius: 20px;
+  transform: translateX(100vw);
+  transition: transform 0.5s ease;
 }
 
-#succesfully_created.dialog-open {
+.contact-feedback {
+  height: 74px;
+  padding: 8px 24px;
+  color: #ffffff;
+  border-radius: 20px;
+  background-color: rgb(42, 54, 71);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(100vh);
+  transition: transform 0.5s ease;
+}
+
+.succesfully-created.dialog-open {
   left: 60%;
 }
 

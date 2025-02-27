@@ -1,42 +1,4 @@
-/**
- * Posts a new contact to the database and returns the contact ID.
- * @returns {number} The ID of the newly created contact.
- */
-async function postNewContact() {
-  let name = getInputValue("name");
-  let email = getInputValue("email");
-  let phone = getInputValue("phone");
-  if (!name || !email) return;
-  let contactId = await getNewId("contacts");
-  let contactData = createContact(name, email, phone, contactId);
-  await postData(`contacts/${contactId - 1}/`, contactData);
-  return contactId;
-}
 
-/**
- * Adds a contact to the user and saves it in the database.
- * This function checks if the user already has the contact and adds it if it does not exist.
- * @param {number} contactId - The ID of the contact to be added.
- * @param {Object} activeUser - The currently logged-in user.
- */
-async function addContactToUser(contactId, activeUser) {
-  let user = await searchForUser(activeUser.id);
-  if (user && !user.contacts.includes(contactId)) {
-    user.contacts.push(contactId);
-    await postData(`users/${user.id - 1}/`, { ...user });
-  }
-}
-
-/**
- * Adds a contact to the local storage of the active user.
- * This function updates the user's list of contacts in Local Storage.
- * @param {number} contactId - The ID of the contact to be added.
- */
-function addContactToUserLocal(contactId) {
-  let activeUser = JSON.parse(localStorage.getItem("activeUser"));
-  activeUser.contacts.push(contactId);
-  localStorage.setItem("activeUser", JSON.stringify(activeUser));
-}
 
 /**
  * Deletes a contact if the contact ID is not 0.

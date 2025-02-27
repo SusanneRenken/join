@@ -192,7 +192,9 @@
       <dialog class="dialog-edit" onclick="bubblingPrevention(event)"></dialog>
     </section>
 
-    <dialog id="succesfully_created"></dialog>
+    <section id="succesfully_created" class="overlay d-flex-center d-none">
+      
+    </section>
 
     <div
       onclick="closeDialog(), closeDialogEdit()"
@@ -222,7 +224,7 @@
     </div>
 
     <div
-      onclick="openDialog()"
+      onclick="toggleOverlay('dialog_contacts_overlay')"
       id="mobile_add_contact"
       class="mobile-add-contact"
     >
