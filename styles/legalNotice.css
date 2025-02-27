@@ -58,3 +58,12 @@ span {
 li {
   margin: 0px 16px;
 }
+
+a{
+  color: black;
+}
+
+.portfolio-link{
+  padding-left: 38px;
+  color: rgb(42, 54, 71);
+}
