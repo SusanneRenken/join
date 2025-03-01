@@ -4,6 +4,7 @@
  * @param {number} taskId - Id of the opened task
  */
 async function openSingleTask(taskId) {
+  
   let tasks = await fetchData("tasks");
   let singleTask = tasks.find((task) => task.id === taskId);
   let categoryColor = singleTask.category.replace(/\s+/g, "").toLowerCase();
@@ -12,6 +13,7 @@ async function openSingleTask(taskId) {
   displaySingleTask(singleTask, categoryColor);
   displaySingleAssinees(singleTask, contacts);
   displaySingleSubtasks(singleTask.subtasks, taskId);
+ 
   toggleOverlay("board_task_overlay");
 }
 

@@ -4,23 +4,23 @@ let activeUser = getActiveUser();
 
 /**
  * Downloads the data from the database depending on the deposit and ID.
- * 
+ *
  * @param {string} path - The path in the database from where to load the data.
  * @returns {Array} - Downloaded data.
  */
 async function fetchData(path = "") {
   let response = await fetch(`${BASE_URL}/${path}/.json`);
   let datas = await response.json();
-  if(datas === null){
+  if (datas === null) {
     return null;
-  };
+  }
   let dataArray = Array.isArray(datas) ? datas : Object.values(datas);
-  return dataArray.filter(data => data !== null);
+  return dataArray.filter((data) => data !== null);
 }
 
 /**
  * Uploads the data from the database depending on the deposit and ID.
- * 
+ *
  * @param {string} path - The path in the database for which a new ID should be generated.
  * @param {*} data - Data to be uploaded
  */
@@ -41,7 +41,7 @@ async function postData(path = "", data = {}) {
 
 /**
  * Deletes the data from the database depending on the deposit and the ID.
- * 
+ *
  * @param {string} path - The path in the database for which a new ID should be generated.
  * @param {*} id - Id of the element to be deleted
  */
@@ -58,7 +58,7 @@ async function deleteData(path = "", id) {
 
 /**
  * Fetches data from the specified path and generates a new unique ID.
- * 
+ *
  * @param {string} path - The API endpoint path
  * @returns {Number} - New ID
  */
@@ -76,7 +76,7 @@ async function getNewId(path = "") {
 
 /**
  * Calculates the next available ID based on the last entry in the response.
- * 
+ *
  * @param {Object} responseToJson - The JSON response object containing existing entries
  * @returns {number} - The next available ID
  */
@@ -90,8 +90,8 @@ function countId(responseToJson) {
 
 /**
  * Loads the user's data for the activeUser into the LocalStorage.
- * 
- * @returns {Objekt} - ActiveUser data 
+ *
+ * @returns {Objekt} - ActiveUser data
  */
 function getActiveUser() {
   try {
@@ -112,14 +112,14 @@ function getActiveUser() {
  */
 async function resetTheDatabase() {
   for (let index = 0; index < dbBackupTask.length; index++) {
-      await postData(`tasks/${index}/`, dbBackupTask[index]);
-      await postData(`contacts/${index}/`, dbBackupContacts[index]);
-  }  
+    await postData(`tasks/${index}/`, dbBackupTask[index]);
+    await postData(`contacts/${index}/`, dbBackupContacts[index]);
+  }
 }
 
 /**
  * Changes the image of the check button.
- * 
+ *
  * @param {number} CheckButtonId - Id of the check-button
  * @param {HTMLElement} CheckTaskButton - The HTML element where the button is displayed
  */
@@ -133,7 +133,7 @@ function toggleCheckButton(CheckButtonId, CheckTaskButton) {
 
 /**
  * Opens a specified URL in a new browser tab.
- * 
+ *
  * @param {string} LinkToSide - The URL to be opened in a new tab.
  */
 function openLegal(LinkToSide) {
@@ -150,7 +150,7 @@ function goBack() {
 
 /**
  * Prevents event bubbling up the DOM tree.
- * 
+ *
  * @param {Event} event - The event object
  */
 function bubblingPrevention(event) {
@@ -162,5 +162,26 @@ function bubblingPrevention(event) {
  */
 function logOut() {
   localStorage.removeItem("activeUser");
-  window.location.href = "../index.html";  
+  window.location.href = "../index.html";
+}
+
+/**
+ * Toggles the visibility of an overlay section and adjusts the body scroll.
+ *
+ * @param {string} section - The ID of the overlay section to toggle.
+ */
+function toggleOverlay(section) {
+  let refOverlay = document.getElementById(section);
+
+  refOverlay.classList.toggle("d-none");
+
+  if (!refOverlay.classList.contains("d-none")) {
+    document.body.style.overflow = "hidden";
+    setTimeout(() => {
+      refOverlay.classList.add("active", "visible");
+    }, 50);
+  } else {
+    document.body.style.overflow = "auto";
+    refOverlay.classList.remove("active", "visible");
+  }
 }

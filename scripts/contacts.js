@@ -221,25 +221,6 @@ function toggleEditContactBtn() {
 //---------------------------------------------------------------------------------------------------------------
 
 /**
- * Toggles the visibility of an overlay section and adjusts the body scroll.
- *
- * @param {string} section - The ID of the overlay section to toggle.
- */
-function toggleOverlay(section) {
-  let refOverlay = document.getElementById(section);
-  refOverlay.classList.toggle("d-none");
-  if (!refOverlay.classList.contains("d-none")) {
-    document.body.style.overflow = "hidden";
-    setTimeout(() => {
-      refOverlay.classList.add("active", "visible");
-    }, 50);
-  } else {
-    document.body.style.overflow = "auto";
-    refOverlay.classList.remove("active", "visible");
-  }
-}
-
-/**
  * Clears all inputs in the form and removes any error displays.
  */
 function clearAddContactForm() {
@@ -264,15 +245,21 @@ function clearError(inputElement, alertElementId) {
   inputElement.classList.remove("error");
 }
 
-function createContact() {  
-  resetAlert('contact_name', 'contact_email', 'field_alert_name', 'field_alert_email');
+async function createContact() {
+  resetAlert(
+    "contact_name",
+    "contact_email",
+    "field_alert_name",
+    "field_alert_email"
+  );
 
   let nameInput = document.getElementById("contact_name").value.trim();
   let emailInput = document.getElementById("contact_email").value.trim();
   let phoneInput = document.getElementById("contact_phone").value.trim();
   let initials = getContactInitials(nameInput);
 
-  createContactProcess(nameInput, emailInput, phoneInput, initials);
+  await createContactProcess(nameInput, emailInput, phoneInput, initials);
+  window.location.reload();
 }
 
 function resetAlert(inputName, inputEmail, alertName, alertEmail) {
@@ -298,8 +285,6 @@ async function createContactProcess(
   await openDialogSuccessfully("created");
 
   toggleOverlay("dialog_contacts_overlay");
-
-  renderContacts();
 }
 
 /**
@@ -352,19 +337,21 @@ function generateRandomColor() {
  * @param {Object} activeUser - The currently logged-in user.
  */
 async function addContactToUser(contactId) {
-
-  //-----------------------------------------------------------------------------------
-
+  let activeUser = JSON.parse(localStorage.getItem("activeUser"));
 
   if (!activeUser.contacts.includes(contactId)) {
     activeUser.contacts.push(contactId);
-    await postData(`users/${activeUser.id - 1}/`, { ...activeUser });
     localStorage.setItem("activeUser", JSON.stringify(activeUser));
+
+    if (activeUser !== 0) {
+      let path = `users/${activeUser.id - 1}/contacts/${
+        activeUser.contacts.length - 1
+      }`;
+      await postData(path, contactId);
+    }
   }
-
-
-
 }
+//-----------------------------------------------------------------------------------
 
 function openDialogSuccessfully(operation) {
   return new Promise((resolve) => {
@@ -388,7 +375,6 @@ function openDialogSuccessfully(operation) {
 //---------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-
 
 async function openEditContact(contactId) {
   toggleOverlay("dialog_edit_overlay");
@@ -419,13 +405,10 @@ async function getEditContactData(contactId) {
   phone.value = contact.phone;
 }
 
-
-
 //---------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-
 
 /**
  * opens the delete window and adds the "YES" button
@@ -452,7 +435,6 @@ async function deleteContact(contactId) {
   await openDialogSuccessfully("deleted");
   document.getElementById("contact_info_box").innerHTML = "";
   window.location.reload();
-
 }
 
 /**
@@ -549,119 +531,71 @@ function deleteContactInLocalStorage(contactId) {
 //---------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
 
-
-
 /**
  * Edits a contact's information and updates it in the database.
  * @param {number} contactId - The ID of the contact being edited.
  */
-async function editContact(contactId) {  
-  resetAlert('input_edit_name', 'input_edit_email', 'edit_field_alert_name', 'edit_field_alert_email');
+async function editContact(contactId) {
+  resetAlert(
+    "input_edit_name",
+    "input_edit_email",
+    "edit_field_alert_name",
+    "edit_field_alert_email"
+  );
 
   let nameInput = document.getElementById("input_edit_name").value.trim();
   let emailInput = document.getElementById("input_edit_email").value.trim();
   let phoneInput = document.getElementById("input_edit_phone").value.trim();
   let initials = getContactInitials(nameInput);
 
-    if (contactId === 0) {
-        editUserProcess(nameInput, emailInput, phoneInput, initials);
-    } else {
-        // editContactProcess(nameInput, emailInput, phoneInput, initials);
-    }
+  if (contactId === 0) {
+    await editUserProcess(nameInput, emailInput, phoneInput, initials);
+  } else {
+    await editContactProcess(
+      nameInput,
+      emailInput,
+      phoneInput,
+      initials,
+      contactId
+    );
+  }
+
+  await openDialogSuccessfully("edit");
+
+  window.location.reload();
 }
 
-async function editUserProcess(name, email, phone, initials){
+async function editUserProcess(name, email, phone, initials) {
   let activeUser = JSON.parse(localStorage.getItem("activeUser"));
-  console.log(activeUser);
-  
-  if (activeUser === 0) {
-
-
-    localStorage.setItem("activeUser", JSON.stringify(activeUser));
-  } else {
-      let contactData = {
-    id: activeUser.id,
+  let userData = {
+    ...activeUser,
     name: name,
     email: email,
     phone: phone,
-    color: generateRandomColor(),
     initials: initials,
   };
 
-  await postData(`users/${activeUser.id - 1}/`, contactData);
+  localStorage.setItem("activeUser", JSON.stringify(userData));
+
+  if (activeUser !== 0) {
+    for (let [key, value] of Object.entries(userData)) {
+      await postData(`users/${activeUser.id - 1}/${key}`, value);
+    }
   }
-
-
-
 }
 
+async function editContactProcess(name, email, phone, initials, contactId) {
+  let contact = await getContact(contactId);
 
-// function BLÖDSINN(){  
-//   let existingContact = await getContact(contactId);
+  let contactData = {
+    ...contact,
+    name: name,
+    email: email,
+    phone: phone,
+    initials: initials,
+  };
 
-//   if (contactId === 0) {
-//     let activeUser = JSON.parse(localStorage.getItem("activeUser"));
-//     existingContact.id = activeUser.id;
-//   } 
-
-//   let updatedContact = createUpdatedContact(existingContact);
-
-//   let endpoint =
-//     existingContact.color === "#ffffff"
-//       ? `users/${existingContact.id - 1}/`
-//       : `contacts/${existingContact.id - 1}/`;
-
-//   await postData(endpoint, updatedContact);
-
-//   closeDialogEdit();
-
-//   openDialogSuccessfully("edited");
-
-//   await renderContacts();
-
-//   checkDisplayForInfo(existingContact);
-
-//   return {
-//     ...existingContact,
-//     name: updatedName,
-//     email: updatedEmail,
-//     phone: updatedPhone,
-//     initials: updatedInitials,
-//   };
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * Überprüft die Displaygröße und passt das Layout sowie die Kontaktinformationen an.
- *
- * - Wenn die Fensterbreite kleiner oder gleich 777px ist, wird die Informationsanzeige
- *   für mobile Geräte versteckt und positionelle Klassen entfernt.
- * - Andernfalls wird bei großen Bildschirmen der Kontakt basierend auf seiner ID angezeigt.
- *   Wenn die Farbe des Kontakts weiß ist, wird die Kontakt-ID auf 0 gesetzt.
- *
- * @param {Object} existingContact - Das bestehende Kontaktobjekt, das Informationen über den Kontakt enthält.
- * @param {number} existingContact.id - Die eindeutige ID des Kontakts.
- * @param {string} existingContact.color - Die Farbe des Kontakts (im Hex-Format).
- */
-function checkDisplayForInfo(existingContact) {
-  if (window.innerWidth <= 777) {
-    let infoDiv = document.getElementById("mobile_contact_info");
-    infoDiv.classList.add("d-none");
-    infoDiv.classList.remove("pos-abs");
-  } else {
-    if (existingContact.color === "#ffffff") {
-      existingContact.id = 0;
-    }
-    displayContactInfo(existingContact.id);
+  for (let [key, value] of Object.entries(contactData)) {
+    await postData(`contacts/${contact.id - 1}/${key}`, value);
   }
 }

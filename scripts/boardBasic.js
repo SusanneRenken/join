@@ -2,27 +2,6 @@ const STATUSES = ["todo", "inprogress", "awaitfeedback", "done"];
 let currentDraggedElement;
 
 /**
- * Toggles the visibility of an overlay section and adjusts the body scroll.
- *
- * @param {string} section - The ID of the overlay section to toggle.
- */
-function toggleOverlay(section) {
-  let refOverlay = document.getElementById(section);
-
-  refOverlay.classList.toggle("d-none");
-
-  if (!refOverlay.classList.contains("d-none")) {
-    document.body.style.overflow = "hidden";
-    setTimeout(() => {
-      refOverlay.classList.add("active", "visible");
-    }, 50);
-  } else {
-    document.body.style.overflow = "auto";
-    refOverlay.classList.remove("active", "visible");
-  }
-}
-
-/**
  * Moves a task to a new status in the kanban board.
  *
  * @param {number|string} taskId - The ID of the task to be moved.
