@@ -71,7 +71,7 @@ function generateContactInfo(contact) {
           <div class="contact-box-name">
             <h3>${contact.name}</h3>
             <div class="contact-box-edit-delete">
-              <div onclick="toggleOverlay('dialog_edit_overlay') " class="edit-link">
+              <div onclick="openEditContact(${contact.id}) " class="edit-link">
                 <svg class="icon-edit" width="18" height="18" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
                   <path d="M2 17H3.4L12.025 8.375L10.625 6.975L2 15.6V17ZM16.3 6.925L12.05 2.725L13.45 1.325C13.8333 0.941667 14.3042 0.75 14.8625 0.75C15.4208 0.75 15.8917 0.941667 16.275 1.325L17.675 2.725C18.0583 3.10833 18.2583 3.57083 18.275 4.1125C18.2917 4.65417 18.1083 5.11667 17.725 5.5L16.3 6.925ZM14.85 8.4L4.25 19H0V14.75L10.6 4.15L14.85 8.4Z" />
                 </svg>Edit
@@ -123,23 +123,23 @@ function generateBigLetterCircle(contact) {
  * @param {number} contact.id - The unique ID of the contact.
  * @returns {string} The HTML string for the buttons (Delete and Save).
  */
-function generateButtonsInContactInfo(contact) {
-  return `
-    <button onclick="openDeleteDialog(${contact.id})" id="user_display_info" class="button-delete">
-    Delete
-  </button>
-  <button onclick="validateEditForm(${contact.id})" class="button-save">
-    Save
-    <img
-      class="check-icon-button"
-      src="../assets/img/png/check.png"
-      alt="check"
-    />
-  </button>
-    `;
-}
+// function generateButtonsInContactInfo(contact) {
+//   return `
+//     <button onclick="openDeleteDialog(${contact.id})" id="user_display_info" class="button-delete">
+//     Delete
+//   </button>
+//   <button onclick="validateEditForm(${contact.id})" class="button-save">
+//     Save
+//     <img
+//       class="check-icon-button"
+//       src="../assets/img/png/check.png"
+//       alt="check"
+//     />
+//   </button>
+//     `;
+// }
 
-function generateEditContactDialog() {
+function generateEditContactDialog(contactId) {
   return `
       <div class="dialog-left">
         <img
@@ -159,7 +159,7 @@ function generateEditContactDialog() {
           <div class="input-fields-contacts">
             <div>
               <input
-                id="inputEditName"
+                id="input_edit_name"
                 class="input-name"
                 type="text"
                 placeholder="Name"
@@ -168,7 +168,7 @@ function generateEditContactDialog() {
             </div>
             <div>
               <input
-                id="inputEditEmail"
+                id="input_edit_email"
                 class="input-email"
                 type="email"
                 placeholder="Email"
@@ -177,16 +177,23 @@ function generateEditContactDialog() {
             </div>
             <div>
               <input
-                id="inputEditPhone"
+                id="input_edit_phone"
                 class="input-phone"
                 type="number"
                 min="0"
                 placeholder="Phone"
               />
-              <div class="field-alert" id="edit_field_alert_phone"></div>
             </div>
           </div>
-          <div id="button_edit_dialog" class="button-delete-save"></div>
+          <div id="button_edit_dialog" class="button-delete-save">
+            <button onclick="openDeleteDialog(${contactId})" id="user_display_info" class="button-delete">
+              Delete
+            </button>
+            <button onclick="editContact(${contactId})" class="button-save">
+              Save
+              <img class="check-icon-button" src="../assets/img/png/check.png" alt="check" />
+            </button>
+          </div>
         </div>
       </div>
 `;
@@ -210,9 +217,7 @@ function generateMobileMenu(contact) {
  * @returns {string} HTML string representing a delete button with an onclick event.
  */
 function generateDeleteButton(contactId) {
-  return `<button class="clear-button"
-           onclick="deleteContact(${contactId});toggleOverlay('contact_delete_overlay'); closeDialogEdit() ">YES
-      </button>`;
+  return `<button class="clear-button" onclick="deleteContact(${contactId})">YES</button>`;
 }
 
 /**

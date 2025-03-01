@@ -65,30 +65,6 @@
 
     <section
       class="overlay d-flex-center d-none"
-      id="contact_delete_overlay"
-      onclick="toggleOverlay('contact_delete_overlay')"
-    >
-      <div
-        class="delete-contact d-flex-column-center gap-32"
-        onclick="bubblingPrevention(event)"
-      >
-        <div class="font-w-700 font-c-66-82-110">
-          Delete contact permanently?
-        </div>
-        <div class="delte-contact-button-area d-flex-center">
-          <div class="delete-btn" id="delete_yes_btn"></div>
-          <button
-            class="clear-button"
-            onclick="toggleOverlay('contact_delete_overlay')"
-          >
-            NO
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <section
-      class="overlay d-flex-center d-none"
       id="dialog_contacts_overlay"
       onclick="toggleOverlay('dialog_contacts_overlay')"
     >
@@ -151,7 +127,10 @@
             </div>
 
             <div class="button-contacts">
-              <button onclick="toggleOverlay('dialog_contacts_overlay'), clearAddContactForm()" class="button-cancel">
+              <button
+                onclick="toggleOverlay('dialog_contacts_overlay'), clearAddContactForm()"
+                class="button-cancel"
+              >
                 Cancel
                 <svg
                   width="14"
@@ -189,11 +168,11 @@
       id="dialog_edit_overlay"
       onclick="toggleOverlay('dialog_edit_overlay')"
     >
-      <dialog class="dialog-edit" onclick="bubblingPrevention(event)"></dialog>
-    </section>
-
-    <section id="succesfully_created" class="overlay d-flex-center d-none">
-      
+      <dialog
+        id="dialog_edit_contacts_overlay"
+        class="dialog-edit"
+        onclick="bubblingPrevention(event)"
+      ></dialog>
     </section>
 
     <div
@@ -230,5 +209,33 @@
     >
       <img src="../assets/img/png/person_add.png" alt="" />
     </div>
+
+    <section
+      class="overlay d-flex-center d-none"
+      id="contact_delete_overlay"
+      onclick="toggleOverlay('contact_delete_overlay')"
+    >
+      <div
+        class="delete-contact d-flex-column-center gap-32"
+        onclick="bubblingPrevention(event)"
+      >
+        <div class="font-w-700 font-c-66-82-110">
+          Delete contact permanently?
+        </div>
+        <div class="delte-contact-button-area d-flex-center">
+          <div class="delete-btn" id="delete_yes_btn_contact"></div>
+          <button
+            class="clear-button"
+            onclick="toggleOverlay('contact_delete_overlay')"
+          >
+            NO
+          </button>
+        </div>
+      </div>
+    </section>
+    <section
+      id="succesfully_created"
+      class="overlay d-flex-center d-none"
+    ></section>
   </body>
 </html>

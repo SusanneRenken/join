@@ -216,6 +216,9 @@ function toggleEditContactBtn() {
 }
 
 //---------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
 
 /**
  * Toggles the visibility of an overlay section and adjusts the body scroll.
@@ -261,8 +264,8 @@ function clearError(inputElement, alertElementId) {
   inputElement.classList.remove("error");
 }
 
-function createContact() {
-  resetAlert();
+function createContact() {  
+  resetAlert('contact_name', 'contact_email', 'field_alert_name', 'field_alert_email');
 
   let nameInput = document.getElementById("contact_name").value.trim();
   let emailInput = document.getElementById("contact_email").value.trim();
@@ -272,12 +275,12 @@ function createContact() {
   createContactProcess(nameInput, emailInput, phoneInput, initials);
 }
 
-function resetAlert() {
-  let nameInputContent = document.getElementById("contact_name");
-  let emailInputContent = document.getElementById("contact_email");
+function resetAlert(inputName, inputEmail, alertName, alertEmail) {
+  let nameInputContent = document.getElementById(inputName);
+  let emailInputContent = document.getElementById(inputEmail);
 
-  clearError(nameInputContent, "field_alert_name");
-  clearError(emailInputContent, "field_alert_email");
+  clearError(nameInputContent, alertName);
+  clearError(emailInputContent, alertEmail);
 }
 
 async function createContactProcess(
@@ -292,7 +295,7 @@ async function createContactProcess(
 
   clearAddContactForm();
 
-  await openDialogSuccessfully('created');
+  await openDialogSuccessfully("created");
 
   toggleOverlay("dialog_contacts_overlay");
 
@@ -310,7 +313,6 @@ async function addContact(nameInput, emailInput, phoneInput, initials) {
   await postNewContact(nameInput, emailInput, phoneInput, contactId, initials);
 
   addContactToUser(contactId);
-
 }
 
 /**
@@ -350,16 +352,22 @@ function generateRandomColor() {
  * @param {Object} activeUser - The currently logged-in user.
  */
 async function addContactToUser(contactId) {
+
+  //-----------------------------------------------------------------------------------
+
+
   if (!activeUser.contacts.includes(contactId)) {
     activeUser.contacts.push(contactId);
     await postData(`users/${activeUser.id - 1}/`, { ...activeUser });
     localStorage.setItem("activeUser", JSON.stringify(activeUser));
   }
+
+
+
 }
 
-function openDialogSuccessfully(operation) {  
+function openDialogSuccessfully(operation) {
   return new Promise((resolve) => {
-    
     let overlay = document.getElementById("succesfully_created");
     overlay.innerHTML = generateContactFeedback(operation);
     overlay.classList.remove("d-none");
@@ -376,145 +384,284 @@ function openDialogSuccessfully(operation) {
   });
 }
 
+//---------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
 
 
+async function openEditContact(contactId) {
+  toggleOverlay("dialog_edit_overlay");
 
+  await loadEditContactForm(contactId);
 
+  getEditContactData(contactId);
+}
 
+function loadEditContactForm(contactId) {
+  let editForm = document.getElementById("dialog_edit_contacts_overlay");
+  editForm.innerHTML = generateEditContactDialog(contactId);
+}
 
+async function getEditContactData(contactId) {
+  let contact = await getContact(contactId);
 
+  let name = document.getElementById("input_edit_name");
+  let email = document.getElementById("input_edit_email");
+  let phone = document.getElementById("input_edit_phone");
 
+  name.value = "";
+  email.value = "";
+  phone.value = "";
 
+  name.value = contact.name;
+  email.value = contact.email;
+  phone.value = contact.phone;
+}
 
 
 
 //---------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+
 
 /**
- * Opens the edit dialog for a contact.
- * @param {number} contactId - The ID of the contact to be edited.
- * @returns {Promise<void>} - Displays the edit dialog and fills the form fields with existing contact information.
+ * opens the delete window and adds the "YES" button
+ *
+ * @param {number} contactId - Contact Id
  */
-async function openDialogEdit(contactId) {
-  let contact = await getContact(contactId);
+function openDeleteDialog(contactId) {
+  toggleOverlay("contact_delete_overlay");
 
-  let menu = document.getElementById("mobile_menu");
+  let yesButton = document.getElementById("delete_yes_btn_contact");
+  console.log(yesButton);
 
-  if (menu.classList.contains("d-flex")) {
-    menu.classList.remove("d-flex");
-  }
-  if (contact.id === 0) {
-    document.getElementById("user_display_info").classList.add("d-none");
-  }
-  let dialogContainer = document.getElementById("dialog_edit");
-  dialogContainer.open = true;
-  dialogContainer.classList.add("d-flex");
-  document.getElementById("grey_background").classList.remove("hidden");
-  populateFormFields(contact);
-  await sleep(10);
-  dialogContainer.classList.add("dialog-open");
-  dialogBigLetterCircle(contact);
+  yesButton.innerHTML = generateDeleteButton(contactId);
 }
 
 /**
- * Closes the edit dialog.
- * @returns {Promise<void>} - Hides the dialog and clears the edit form.
+ * Deletes a contact if the contact ID is not 0.
+ * This function checks if the contact ID is 0 (indicating that the active user cannot be deleted).
+ * It deletes the contact and updates the display of contacts.
+ * @param {number} contactId - The ID of the contact to be deleted.
  */
-async function closeDialogEdit() {
-  let dialogContainer = document.getElementById("dialog_edit");
-  dialogContainer.classList.remove("dialog-open");
-  document.getElementById("grey_background").classList.add("hidden");
-  await sleep(300);
-  dialogContainer.classList.remove("d-flex");
-  dialogContainer.open = false;
-  clearEditForm();
+async function deleteContact(contactId) {
+  await deleteContactInData(contactId);
+  await openDialogSuccessfully("deleted");
+  document.getElementById("contact_info_box").innerHTML = "";
+  window.location.reload();
+
 }
+
+/**
+ * Deletes a contact from user data.
+ * This function determines whether the contact should be deleted only for the user or for all users,
+ * and performs the appropriate deletion actions.
+ * @param {number} contactId - The ID of the contact to be deleted.
+ */
+async function deleteContactInData(contactId) {
+  let users = await fetchData("users");
+  if (contactId >= 1 && contactId <= 10) {
+    await deleteContactOnlyforUser(contactId, users);
+  } else {
+    await deleteContactforAllUsers(contactId, users);
+  }
+  await deleteContactFromTasks(contactId);
+  deleteContactInLocalStorage(contactId);
+}
+
+/**
+ * Deletes a contact only for the active user.
+ * This function removes the contact from the active user's contact list.
+ * @param {number} contactId - The ID of the contact to be deleted.
+ * @param {Array} users - The list of all users.
+ */
+async function deleteContactOnlyforUser(contactId, users) {
+  if (activeUser.id === 0) {
+    return;
+  }
+  users = users.map((user) => {
+    if (user.id === activeUser.id) {
+      return {
+        ...user,
+        contacts: user.contacts.filter((contact) => contact !== contactId),
+      };
+    }
+    return user;
+  });
+  await postData("users", users);
+}
+
+/**
+ * Deletes a contact from all tasks.
+ * This function removes the contact ID from the list of assigned users for all tasks.
+ * @param {number} contactId - The ID of the contact to be deleted.
+ */
+async function deleteContactFromTasks(contactId) {
+  let allTasks = await fetchData("tasks");
+  let updatedTasks = allTasks.map((task) => {
+    if (task.assigned && Array.isArray(task.assigned)) {
+      return {
+        ...task,
+        assigned: task.assigned.filter((id) => id !== contactId),
+      };
+    }
+    return task;
+  });
+  await postData("tasks", updatedTasks);
+}
+
+/**
+ * Deletes a contact for all users.
+ * This function deletes the contact from the database and removes it from the contact lists of all users.
+ * @param {number} contactId - The ID of the contact to be deleted.
+ * @param {Array} users - The list of all users.
+ */
+async function deleteContactforAllUsers(contactId, users) {
+  await deleteData("contacts", contactId);
+  if (activeUser.id === 0) {
+    return;
+  }
+  users = users.map((user) => ({
+    ...user,
+    contacts: user.contacts.filter((contact) => contact !== contactId),
+  }));
+  await postData("users", users);
+}
+
+/**
+ * Deletes a contact from the local storage of the active user.
+ * This function removes the contact ID from the list of contacts in Local Storage.
+ * @param {number} contactId - The ID of the contact to be deleted.
+ */
+function deleteContactInLocalStorage(contactId) {
+  let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  activeUser.contacts = activeUser.contacts.filter(
+    (contact) => contact !== contactId
+  );
+  localStorage.setItem("activeUser", JSON.stringify(activeUser));
+}
+
+//---------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+
+
 
 /**
  * Edits a contact's information and updates it in the database.
  * @param {number} contactId - The ID of the contact being edited.
  */
-async function editContact(contactId) {
-  let existingContact = await getContact(contactId);
-  if(contactId === 0) {
-    let activeUser = JSON.parse(localStorage.getItem("activeUser"));
-    existingContact.id = activeUser.id;
+async function editContact(contactId) {  
+  resetAlert('input_edit_name', 'input_edit_email', 'edit_field_alert_name', 'edit_field_alert_email');
+
+  let nameInput = document.getElementById("input_edit_name").value.trim();
+  let emailInput = document.getElementById("input_edit_email").value.trim();
+  let phoneInput = document.getElementById("input_edit_phone").value.trim();
+  let initials = getContactInitials(nameInput);
+
+    if (contactId === 0) {
+        editUserProcess(nameInput, emailInput, phoneInput, initials);
+    } else {
+        // editContactProcess(nameInput, emailInput, phoneInput, initials);
+    }
+}
+
+async function editUserProcess(name, email, phone, initials){
+  let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  console.log(activeUser);
+  
+  if (activeUser === 0) {
+
+
+    localStorage.setItem("activeUser", JSON.stringify(activeUser));
+  } else {
+      let contactData = {
+    id: activeUser.id,
+    name: name,
+    email: email,
+    phone: phone,
+    color: generateRandomColor(),
+    initials: initials,
+  };
+
+  await postData(`users/${activeUser.id - 1}/`, contactData);
   }
-  let updatedContact = createUpdatedContact(existingContact);
-  let endpoint =
-    existingContact.color === "#ffffff"
-      ? `users/${existingContact.id - 1}/`
-      : `contacts/${existingContact.id - 1}/`;
-  await postData(endpoint, updatedContact);
-  closeDialogEdit();
-  openDialogSuccessfully('edited');
-  await renderContent();
-  checkDisplayForInfo(existingContact)
+
+
+
 }
 
 
-/**
- * Clears all inputs in the edit form and removes any error displays.
- */
-function clearEditForm() {
-  let nameEditInput = document.getElementById("inputEditName");
-  let emailEditInput = document.getElementById("inputEditEmail");
-  let phoneEditInput = document.getElementById("inputEditPhone");
-  clearError(nameEditInput, "edit_field_alert_name");
-  clearError(emailEditInput, "edit_field_alert_email");
-  clearError(phoneEditInput, "edit_field_alert_phone");
-}
+// function BLÖDSINN(){  
+//   let existingContact = await getContact(contactId);
+
+//   if (contactId === 0) {
+//     let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+//     existingContact.id = activeUser.id;
+//   } 
+
+//   let updatedContact = createUpdatedContact(existingContact);
+
+//   let endpoint =
+//     existingContact.color === "#ffffff"
+//       ? `users/${existingContact.id - 1}/`
+//       : `contacts/${existingContact.id - 1}/`;
+
+//   await postData(endpoint, updatedContact);
+
+//   closeDialogEdit();
+
+//   openDialogSuccessfully("edited");
+
+//   await renderContacts();
+
+//   checkDisplayForInfo(existingContact);
+
+//   return {
+//     ...existingContact,
+//     name: updatedName,
+//     email: updatedEmail,
+//     phone: updatedPhone,
+//     initials: updatedInitials,
+//   };
+// }
+
+
+
+
+
+
+
+
+
+
+
 
 /**
- * Creates an updated contact object based on the edited inputs.
- * @param {Object} existingContact - The existing contact object being edited.
- * @returns {Object} - The updated contact object.
- */
-function createUpdatedContact(existingContact) {
-  let updatedName = document.getElementById("inputEditName").value;
-  let updatedEmail = document.getElementById("inputEditEmail").value;
-  let updatedPhone = document.getElementById("inputEditPhone").value;
-  let updatedInitials = getInitials(updatedName);
-    return {
-      ...existingContact,
-      name: updatedName,
-      email: updatedEmail,
-      phone: updatedPhone,
-      initials: updatedInitials,
-    };
-  }
-
-  /**
  * Überprüft die Displaygröße und passt das Layout sowie die Kontaktinformationen an.
- * 
+ *
  * - Wenn die Fensterbreite kleiner oder gleich 777px ist, wird die Informationsanzeige
  *   für mobile Geräte versteckt und positionelle Klassen entfernt.
  * - Andernfalls wird bei großen Bildschirmen der Kontakt basierend auf seiner ID angezeigt.
  *   Wenn die Farbe des Kontakts weiß ist, wird die Kontakt-ID auf 0 gesetzt.
- * 
+ *
  * @param {Object} existingContact - Das bestehende Kontaktobjekt, das Informationen über den Kontakt enthält.
  * @param {number} existingContact.id - Die eindeutige ID des Kontakts.
  * @param {string} existingContact.color - Die Farbe des Kontakts (im Hex-Format).
  */
-function checkDisplayForInfo(existingContact){
+function checkDisplayForInfo(existingContact) {
   if (window.innerWidth <= 777) {
     let infoDiv = document.getElementById("mobile_contact_info");
     infoDiv.classList.add("d-none");
     infoDiv.classList.remove("pos-abs");
   } else {
-    if ( existingContact.color === "#ffffff") {
+    if (existingContact.color === "#ffffff") {
       existingContact.id = 0;
     }
     displayContactInfo(existingContact.id);
   }
-}
-
-/**
- * Waits for a specified amount of time.
- * This function returns a promise that resolves after the specified time.
- * @param {number} ms - The wait time in milliseconds.
- * @returns {Promise} A promise that resolves after the wait time.
- */
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }

@@ -2,14 +2,14 @@
  * Fills the edit form fields with the contact's information.
  * @param {Object} contact - The contact object with properties name, email, and phone.
  */
-function populateFormFields(contact) {
-  document.getElementById("inputEditName").value = contact.name;
-  document.getElementById("inputEditEmail").value = contact.email;
-  if (contact.phone === undefined) {
-    contact.phone = "";
-  }
-  document.getElementById("inputEditPhone").value = contact.phone;
-}
+// function populateFormFields(contact) {
+//   document.getElementById("inputEditName").value = contact.name;
+//   document.getElementById("inputEditEmail").value = contact.email;
+//   if (contact.phone === undefined) {
+//     contact.phone = "";
+//   }
+//   document.getElementById("inputEditPhone").value = contact.phone;
+// }
 
 /**
  * Generates and displays the big letter circle for the dialog.
