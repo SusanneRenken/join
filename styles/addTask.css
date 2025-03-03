@@ -184,7 +184,7 @@ textarea {
 }
 
 ul {
-  max-height: 120px;
+  max-height: 90px;
   overflow-y: auto;
 }
 
@@ -213,12 +213,12 @@ li {
   display: none;
 }
 
-.list-item{
+.list-item {
   margin-bottom: 12px;
 }
 
 .list-item:hover .list-imgs-activ {
-  display: flex
+  display: flex;
 }
 
 .hover-circle-subtask-active:hover {
@@ -240,7 +240,6 @@ li {
 }
 
 .space-bottom {
-  min-height: 215px;
   margin-bottom: 16px;
 }
 
@@ -276,10 +275,6 @@ li {
 .addTask-link {
   background-color: #091931;
   color: white;
-}
-
-.space-bottom {
-  height: 77px;
 }
 
 .select-field {

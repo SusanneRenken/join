@@ -2,12 +2,14 @@
   .content {
     padding-inline: 96px;
   }
+  .content-order {
+    overflow-y: auto;
+    margin: 0;
+  }
 }
 @media screen and (max-width: 1280px) {
   .content-order {
     display: flex;
-    margin-top: 25px;
-    overflow-y: auto;
     max-height: calc(100vh - 285px);
   }
 }

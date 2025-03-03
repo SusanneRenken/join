@@ -11,7 +11,7 @@ function generateActiveUserContact(user, limitNameLength, limitEmailLength) {
   return `
       <div id="contact${user.id}" class="contacts" onclick="displayContactInfo(${user.id})">
         <div class="letter-circle letter-circel-user" style="background-color: white;">${user.initials}</div>
-        <div class="contact-info">
+        <div class="contact-info-content">
           <span>${limitNameLength}(YOU)</span>
           <a class="contact-email" href="#">${limitEmailLength}</a>
         </div>
@@ -122,28 +122,6 @@ function generateBigLetterCircle(contact) {
       </div>
       `;
 }
-
-/**
- * Generates the buttons for editing and deleting a contact.
- * @param {Object} contact - The contact object.
- * @param {number} contact.id - The unique ID of the contact.
- * @returns {string} The HTML string for the buttons (Delete and Save).
- */
-// function generateButtonsInContactInfo(contact) {
-//   return `
-//     <button onclick="openDeleteDialog(${contact.id})" id="user_display_info" class="button-delete">
-//     Delete
-//   </button>
-//   <button onclick="validateEditForm(${contact.id})" class="button-save">
-//     Save
-//     <img
-//       class="check-icon-button"
-//       src="../assets/img/png/check.png"
-//       alt="check"
-//     />
-//   </button>
-//     `;
-// }
 
 function generateEditContactDialog(contactId) {
   return `

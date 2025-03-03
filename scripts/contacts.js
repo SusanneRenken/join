@@ -396,8 +396,6 @@ function openDeleteDialog(contactId) {
   toggleOverlay("contact_delete_overlay");
 
   let yesButton = document.getElementById("delete_yes_btn_contact");
-  console.log(yesButton);
-
   yesButton.innerHTML = generateDeleteButton(contactId);
 }
 
