@@ -144,8 +144,6 @@ async function displayContactInfo(contactId) {
   designeUserInitial(contact);
   highlightContact(contact);
   toggleContactInfo();
-  toggleAddContactBtn();
-  toggleEditContactBtn();
 }
 
 /**
@@ -187,32 +185,11 @@ function highlightContact(contact) {
   document.getElementById(`contact${contact.id}`).classList.add("is-selected");
 }
 
-/**
- * Hides the mobile contact information and resets the display.
- * This function removes the mobile contact view and clears the contents.
- */
-function goBackMobile() {
-  toggleContactInfo();
-  toggleAddContactBtn();
-  toggleEditContactBtn();
-}
-
 function toggleContactInfo() {
   let contactListContainer = document.getElementById("contact_box");
-  contactListContainer.classList.toggle("handle-display");
   let contactContentContainer = document.getElementById("contact_info");
+  contactListContainer.classList.toggle("handle-display");
   contactContentContainer.classList.toggle("is-shown");
-}
-
-function toggleAddContactBtn() {
-  let addContactBtn = document.getElementById("mobile_add_contact");
-  addContactBtn.classList.toggle("d-none");
-  addContactBtn.classList.toggle("mobile-add-contact");
-}
-
-function toggleEditContactBtn() {
-  let addContactBtn = document.getElementById("mobile_delete_edit");
-  addContactBtn.classList.toggle("d-flex");
 }
 
 //---------------------------------------------------------------------------------------------------------------
@@ -598,4 +575,10 @@ async function editContactProcess(name, email, phone, initials, contactId) {
   for (let [key, value] of Object.entries(contactData)) {
     await postData(`contacts/${contact.id - 1}/${key}`, value);
   }
+}
+
+function openMobileMenu(contactId) {
+  toggleOverlay("dialog_mobilemenue_overlay");
+  let menuContainer = document.getElementById("mobile_menu");
+  menuContainer.innerHTML = generateMobileMenu(contactId);
 }

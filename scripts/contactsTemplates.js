@@ -99,8 +99,14 @@ function generateContactInfo(contact) {
             <span>${phone}</span>
           </div>
         </div>
+        <div
+          onclick= "openMobileMenu(${contact.id})"
+          id="mobile_delete_edit"
+          class="mobile-delete-edit">
+          <img src="../assets/img/png/three_dots.png" alt="" />
         </div>
-      `;
+    </div>
+  `;
 }
 
 /**
@@ -205,9 +211,9 @@ function generateEditContactDialog(contactId) {
  * @param {number} contact.id - The unique ID of the contact.
  * @returns {string} The HTML string for the mobile menu.
  */
-function generateMobileMenu(contact) {
-  return ` <img onclick="openDialogEdit(${contact.id})" class="mobile-edit-img" src="../assets/img/png/edit-default.png" alt="edit">
-      <img onclick="openDeleteDialog(${contact.id})" id="user_delete_mobile" class="mobile-delete-img" src="../assets/img/png/delete-default.png" alt="delete"></img>`;
+function generateMobileMenu(contactId) {
+  return ` <img onclick="openEditContact(${contactId})" class="mobile-edit-img" src="../assets/img/png/edit-default.png" alt="edit">
+      <img onclick="openDeleteDialog(${contactId})" id="user_delete_mobile" class="mobile-delete-img" src="../assets/img/png/delete-default.png" alt="delete"></img>`;
 }
 
 /**

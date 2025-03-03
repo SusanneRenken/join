@@ -42,7 +42,7 @@
     height: clamp(584px, 67vh, 760px);
     flex-direction: column;
   }
-
+  
   .dialog-left {
     width: clamp(290px, 88vw, 396px);
     height: 352px;
@@ -104,6 +104,7 @@
     background-position: 330px 12px;
   }
 
+
   .button-cancel {
     display: none;
   }
@@ -141,6 +142,7 @@
 }
 
 @media screen and (max-width: 777px) {
+
   .content {
     height: calc(100% - 160px);
     width: 100%;
@@ -157,6 +159,15 @@
   }
 
   .add-contact {
+    position: absolute;
+    right: 16px;
+    bottom: 88px;
+    border-radius: 30px;
+    width: 56px;
+    height: 56px;
+  }
+
+  .add-contact-title{
     display: none;
   }
 
@@ -200,10 +211,6 @@
   .contact-seperator {
     margin-left: clamp(0px, 77vw, 12px);
     width: clamp(270px, 83vw, 95%);
-  }
-
-  .mobile-add-contact {
-    display: flex;
   }
 
   .mobile-delete-edit {

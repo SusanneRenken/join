@@ -159,6 +159,7 @@ h3 {
 }
 
 .contacts-info {
+  position: relative;
   display: flex;
   width: clamp(300px, 44vw, 801px);
   gap: 21px;
