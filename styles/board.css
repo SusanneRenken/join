@@ -205,24 +205,6 @@
   margin-right: -8px;
 }
 
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 1002;
-}
-
-.overlay.active {
-  display: flex;
-}
-
-.overlay.visible {
-  opacity: 1;
-}
-
 .overlay.visible .single-task,
 .overlay.visible .add-task-board {
   transform: translateY(0);

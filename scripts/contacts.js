@@ -166,7 +166,7 @@ function designeUserInitial(contact) {
   if (contact.id === 0) {
     document
       .getElementById("for_active_user")
-      .classList.add("letter-circel-user");
+      .classList.add("big-letter-circel-user");
     document.getElementById("user_delete_display_info").classList.add("d-none");
   }
 }
@@ -177,7 +177,7 @@ function designeUserInitial(contact) {
  * @param {Object} contact - The contact to be highlighted.
  */
 function highlightContact(contact) {
-  let contactsContainer = document.getElementsByClassName("contacts");
+  let contactsContainer = document.getElementsByClassName("contact");
 
   for (let i = 0; i < contactsContainer.length; i++) {
     contactsContainer[i].classList.remove("is-selected");

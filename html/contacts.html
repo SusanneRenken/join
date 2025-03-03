@@ -29,34 +29,36 @@
     <div id="desktop_template"></div>
 
     <div class="content">
+      <div id="contact_box" class="contact-box">
+        <button
+          onclick="toggleOverlay('dialog_contacts_overlay')"
+          class="add-contact-btn d-flex-center gap-16"
+        >
+          <span class="add-contact-title"> Add new contact</span>
+          <img src="../assets/img/png/person_add.png" alt="" />
+        </button>
+        <div id="contact_list" class="contact-list d-flex-column"></div>
+      </div>
 
-        <div id="contact_box" class="contact-box">
-          <button
-            onclick="toggleOverlay('dialog_contacts_overlay')"
-            class="add-contact-btn"
-          >
-            <span class="add-contact-title"> Add new contact</span>
-            <img src="../assets/img/png/person_add.png" alt="" />
-          </button>
-          <div id="contact_list"></div>
+      <div id="contact_info" class="contact-info d-flex-column gap-20 pos-rel">
+        <div class="contact-info-text">
+          <h1>Contacts</h1>
+
+          <div class="text-seperator"></div>
+
+          <span class="info-text">Better with a Team</span>
+
+          <img
+            id="arrow_back"
+            onclick="toggleContactInfo()"
+            class="arrow-back"
+            src="../assets/img/png/arrow-left-line.png"
+            alt=""
+          />
         </div>
 
-        <div id="contact_info" class="contact-info">
-          <div class="text-box">
-            <h1>Contacts</h1>
-            <div class="text-seperator"></div>
-            <span class="info-text">Better with a Team</span>
-            <img
-              id="arrow_back"
-              onclick="toggleContactInfo()"
-              class="arrow-back"
-              src="../assets/img/png/arrow-left-line.png"
-              alt=""
-            />
-          </div>
-          <div id="contact_info_box" class="contacts-info-box"></div>
-        </div>
-
+        <div id="contact_info_box" class="contacts-info-box"></div>
+      </div>
     </div>
 
     <section
