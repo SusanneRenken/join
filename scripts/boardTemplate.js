@@ -146,7 +146,7 @@ function generateArrowBottom(task) {
 function generateSingleTasks(singleTask, categoryColor) {
   return `
             <div
-                class="litte-button singel-task-close-btn wh-24 d-flex-center"
+                class="little-button singel-task-close-btn wh-24 d-flex-center"
                 onclick="toggleOverlay('board_task_overlay'); updateTasksOnBoard(); clearButton()">
                 <img src="../assets/img/png/close.png" alt="" />
             </div>        
@@ -254,7 +254,7 @@ function generateSingleSubtasks(subtask, id) {
           <div onclick="updateSubtaskStatus(${id}, ${subtask.subId})" class="single-task-subtasks cursor-p">
             <img            
             id="task_${id}_subtask_${subtask.subId}"
-            class="litte-button"
+            class="little-button"
             src="../assets/img/png/check-button-${subtask.done}.png"
             alt=""/>
             ${subtask.subTaskName}

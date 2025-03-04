@@ -355,19 +355,19 @@ function openDialogSuccessfully(operation) {
 
 async function openEditContact(contactId) {
   toggleOverlay("dialog_edit_overlay");
-
-  await loadEditContactForm(contactId);
-
-  getEditContactData(contactId);
-}
-
-function loadEditContactForm(contactId) {
-  let editForm = document.getElementById("dialog_edit_contacts_overlay");
-  editForm.innerHTML = generateEditContactDialog(contactId);
-}
-
-async function getEditContactData(contactId) {
   let contact = await getContact(contactId);
+
+  await loadEditContactForm(contact);
+
+  getEditContactData(contact);
+}
+
+function loadEditContactForm(contact) {
+  let editForm = document.getElementById("dialog_edit_contacts_overlay");
+  editForm.innerHTML = generateEditContactDialog(contact);
+}
+
+async function getEditContactData(contact) {
 
   let name = document.getElementById("input_edit_name");
   let email = document.getElementById("input_edit_email");

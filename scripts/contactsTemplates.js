@@ -112,76 +112,73 @@ function generateContactInfo(contact) {
   `;
 }
 
-/**
- * Generates the large letter circle for displaying the active contact.
- * @param {Object} contact - The contact object.
- * @param {string} contact.initials - The initials of the contact.
- * @param {string} contact.color - The background color for the initials.
- * @returns {string} The HTML string for the large letter circle.
- */
-function generateBigLetterCircle(contact) {
+function generateEditContactDialog(contact) {
   return `
-      <div id="for_active_use_dialog_circel" class="edit-big-letter-circle" style="background-color: ${contact.color}";>${contact.initials}
-      </div>
-      `;
-}
-
-function generateEditContactDialog(contactId) {
-  return `
-      <div class="dialog-left">
-        <img
-          class="logo-dialog"
-          src="../assets/img/png/Join logo vector.png"
-          alt=""
-        />
-        <h2>Edit contact</h2>
-        <div class="dialo-text-seperator"></div>
-      </div>
-      <div class="dialog-right">
-        <div id="big_letter_circle"></div>
-        <div class="dialog-content-right">
-          <div onclick="toggleOverlay('dialog_edit_overlay')" class="close-cross">
-            <img class="cross" src="../assets/img/png/close.png" alt="" />
+        <div class="dialog-left">
+          <img
+            class="logo-dialog"
+            src="../assets/img/png/Join logo vector.png"
+            alt=""
+          />
+          <div class="d-flex-column gap-16">
+            <div class="dialog-headline font-w-700 font-c-white">Edit contact</div>
+            <div class="dialo-text-seperator"></div>
           </div>
-          <div class="input-fields-contacts">
+        </div>
+
+        <div class="user-logo d-flex-center">
+          <div class="big-letter-circle font-c-white d-flex-center" style="background-color: ${contact.color}";>${contact.initials}
+          </div>
+        </div>
+
+
+      <div class="dialog-right d-flex-column">        
+        
+          <div
+            class="close-cross little-button d-flex-center wh-24"
+            onclick="toggleOverlay('dialog_edit_overlay')">
+            <img src="../assets/img/png/close.png" alt="" />
+          </div>
+
+          <div class="input-fields d-flex-column gap-16">
             <div>
               <input
                 id="input_edit_name"
-                class="input-name"
+                class="input-background input-name-img"
                 type="text"
                 placeholder="Name"
               />
-              <div class="field-alert" id="edit_field_alert_name"></div>
+              <div class="field-alert font-s-12" id="edit_field_alert_name"></div>
             </div>
             <div>
               <input
                 id="input_edit_email"
-                class="input-email"
+                class="input-background input-email-img"
                 type="email"
                 placeholder="Email"
               />
-              <div class="field-alert" id="edit_field_alert_email"></div>
+              <div class="field-alert font-s-12" id="edit_field_alert_email"></div>
             </div>
             <div>
               <input
                 id="input_edit_phone"
-                class="input-phone"
+                class="input-background input-phone-img"
                 type="number"
                 min="0"
                 placeholder="Phone"
               />
             </div>
           </div>
-          <div id="button_edit_dialog" class="button-delete-save">
-            <button onclick="openDeleteDialog(${contactId})" id="user_display_info" class="button-delete">
+
+          <div class="dialog-btns">
+            <button onclick="openDeleteDialog(${contact.id})" id="user_display_info" class="clear-button">
               Delete
             </button>
-            <button onclick="editContact(${contactId})" class="button-save">
+            <button onclick="editContact(${contact.id})" class="button-save">
               Save
               <img class="check-icon-button" src="../assets/img/png/check.png" alt="check" />
             </button>
           </div>
-        </div>
       </div>
 `;
 }
@@ -194,7 +191,7 @@ function generateEditContactDialog(contactId) {
  */
 function generateMobileMenu(contactId) {
   return ` <img onclick="openEditContact(${contactId})" class="mobile-edit-img" src="../assets/img/png/edit-default.png" alt="edit">
-      <img onclick="openDeleteDialog(${contactId})" id="user_delete_mobile" class="mobile-delete-img" src="../assets/img/png/delete-default.png" alt="delete"></img>`;
+      <img onclick="openDeleteDialog(${contactId})" class="mobile-delete-img" src="../assets/img/png/delete-default.png" alt="delete"></img>`;
 }
 
 /**
@@ -218,5 +215,5 @@ function generateDeleteButton(contactId) {
  * @returns {string} An HTML string that displays a success message.
  */
 function generateContactFeedback(operation) {
-  return `<div class="contact-feedback">Contacts successfully ${operation}</div>`;
+  return `<div class="contact-feedback font-c-white d-flex-center">Contacts successfully ${operation}</div>`;
 }

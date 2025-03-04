@@ -17,10 +17,11 @@
 
 .add-contact-btn {
   width: 100%;
-  border: none;
+  height: 56px;
 }
 
 .contact-list {
+  flex: 1;
   width: 100%;
   overflow: scroll;
   margin-top: 9px;
@@ -187,19 +188,84 @@
 
 /* -------------------------------------------- */
 
-.overlay.visible .dialog-contacts,
+.overlay.visible .dialog-add-contact,
 .overlay.visible .dialog-edit,
 .overlay.visible .contact-feedback {
   transform: translateY(0);
 }
 
+dialog {
+  position: relative;
+  width: 960px;
+  height: 560px;
+  border-radius: 33px;
+  padding: 0px;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  transform: translateX(100vw);
+  transition: transform 0.5s ease;
+}
 
-/* -------------------------------------------- */
-/* -------------------------------------------- */
-/* -------------------------------------------- */
+.dialog-left {
+  width: 320px;
+  height: 100%;
+  padding: 32px;
+  background-color: #2a3647;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-.error {
-  border-color: red;
+.logo-dialog {
+  position: absolute;
+  width: 56px;
+  top: 32px;
+  left: 32px;
+  height: auto;
+}
+
+.dialog-headline {
+  font-size: 61px;
+}
+
+.dialog-text {
+  font-size: 27px;
+}
+
+.dialo-text-seperator {
+  width: 90px;
+  border: 1px solid #29abe2;
+}
+
+.user-logo {
+  height: 100%;
+}
+
+.new-user-img {
+  width: 120px;
+  height: 120px;
+}
+
+.dialog-right {
+  position: relative;
+  width: 422px;
+  margin-right: 32px;
+  border-radius: 30px;
+  justify-content: center;
+  gap: 48px;
+}
+
+.close-cross {
+  position: absolute;
+  top: 45px;
+  right: 0px;
+}
+
+.input-fields {
+  width: 100%;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -207,363 +273,58 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-
-dialog {
-  position: relative;
-  width: clamp(900px, 69vw, 1212px);
-  height: 592px;
-  font-family: "inter", Arial, sans-serif;
-  text-align: center;
-  border-radius: 33px;
-  padding: 0;
-  border: 0px;
-  display: flex;
-  transform: translateX(100vw);
-  transition: transform 0.5s ease;
-}
-
-.dialog-left {
-  display: flex;
-  width: 467px;
-  height: 594px;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
-  background-color: #2a3647;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 66px 48px 66px 48px;
-  box-sizing: border-box;
-  gap: 12px;
-}
-
-.dialog-right {
-  background-color: white;
-  display: flex;
-  border-radius: 30px;
-}
-
-.logo-dialog {
-  width: 55.6px;
-  height: 66.48px;
-}
-
-h2 {
-  font-size: clamp(47px, 4vw, 61px);
-  color: white;
-  margin: 0px;
-  padding: 0px;
-}
-
-.dialog-text {
-  font-size: 27px;
-  font-weight: 400;
-  color: white;
-  text-align: left;
-}
-
-.dialo-text-seperator {
-  width: 90px;
-  border: 1px solid #29abe2;
-  border-radius: 9px;
-}
-
-.unknown-user {
-  margin-top: 204px;
-  margin-left: clamp(27px, 3vw, 83px);
-  width: 120px;
-  height: 120px;
-}
-
-.cross {
-  width: 13.15px;
-  height: 13.15px;
-}
-
-.close-cross {
-  display: flex;
-  width: 32px;
-  height: 32px;
-  position: absolute;
-  top: 45px;
-  right: 45px;
-  justify-content: center;
-  align-items: center;
-}
-
-.close-cross:hover {
-  cursor: pointer;
-  background-color: #eeeeee;
-  border-radius: 15px;
-}
-
-.dialog-content-right {
-  margin-left: clamp(40px, 3vw, 72px);
-  margin-right: 18px;
-  display: flex;
-  flex-direction: column;
-}
-
-.input-fields-contacts {
-  width: 422px;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  justify-content: space-between;
-  margin-top: 137px;
-}
-
-.input-name {
-  width: 422px;
+.input-background {
+  width: 100%;
   background-size: 16px;
   background-position: 380px 17px;
   background-repeat: no-repeat;
+}
+
+.input-name-img {
   background-image: url(../assets/img/png/person.png);
 }
 
-.input-email {
-  width: 422px;
-  background-size: 20px 20px;
-  background-position: 378px 16px;
-  background-repeat: no-repeat;
+.input-email-img {
   background-image: url(../assets/img/png/mail.png);
 }
 
-.input-phone {
-  width: 422px;
-  background-size: 18px;
-  background-position: 378px 16px;
-  background-repeat: no-repeat;
+.input-phone-img {
   background-image: url(../assets/img/png/call.png);
 }
 
-::placeholder {
-  color: #d1d1d1;
-}
-
-input {
-  font-size: 20px;
-  border: 1px solid lightgrey;
-  border-radius: 10px;
-  padding: 13px 21px 13px 21px;
-  outline: none;
-}
-
-input:focus {
-  border: 1px solid #29abe2;
-}
-
-.button-contacts {
-  display: flex;
-  width: 364px;
-  gap: 10px;
-  justify-content: space-between;
-  padding-top: 48px;
-}
-
-button {
-  height: 55px;
-  border: 1px solid;
-  border-radius: 8px;
-  padding: 16px;
-}
-
-.close-icon-button {
-  width: 14px;
-  height: 14px;
-}
-
-.check-icon-button {
-  width: 24px;
-  height: 24px;
-}
-
-.button-cancel {
-  font-size: 20px;
-  font-weight: 400;
-  width: 126px;
-  gap: 4px;
-  display: flex;
-  color: #2a3647;
-  background-color: white;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.button-cancel:hover {
-  cursor: pointer;
-  border: 1px solid #29abe2;
-  color: #29abe2;
-  box-shadow: 0px 8px 5px 0px #0000001a;
-}
-
-.button-cancel:hover .close-icon-button {
-  stroke: #29abe2;
-}
-
-.button-create {
-  font-size: 21px;
-  font-weight: 700;
-  width: 214px;
-  color: white;
-  background-color: #2a3647;
-  display: flex;
-  gap: 4px;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.button-create:hover {
-  cursor: pointer;
-  background-color: #29abe2;
-  box-shadow: 0px 8px 5px 0px #0000001a;
-}
-
-.button-save {
-  font-size: 21px;
-  font-weight: 700;
-  width: 111px;
-  color: white;
-  background-color: #2a3647;
-  display: flex;
-  gap: 4px;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.button-save:hover {
-  cursor: pointer;
-  background-color: #29abe2;
-  box-shadow: 0px 8px 5px 0px #0000001a;
-}
-
-.button-delete-save {
-  padding-top: 48px;
-  display: flex;
-  width: 249px;
-  height: 57px;
-  gap: 10px;
-  justify-content: space-between;
-}
-
-.button-delete {
-  font-size: 20px;
-  font-weight: 400;
-  width: 113px;
-  gap: 4px;
-  display: flex;
-  color: #2a3647;
-  background-color: white;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.button-delete:hover {
-  cursor: pointer;
-  color: #29abe2;
-}
-
-.contact-feedback {
-  height: 74px;
-  padding: 8px 24px;
-  color: #ffffff;
-  border-radius: 20px;
-  background-color: rgb(42, 54, 71);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translateY(100vh);
-  transition: transform 0.5s ease;
-}
-
-.edit-big-letter-circle {
-  display: flex;
-  width: 120px;
-  height: 120px;
-  border-radius: 70px;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 47px;
-  font-weight: 500;
-  margin-left: clamp(27px, 3vw, 83px);
-  margin-top: 204px;
+.error {
+  border-color: red;
 }
 
 .field-alert {
+  height: 20px;
   padding-left: 18px;
   padding-top: 5px;
   text-align: left;
-  height: 12px;
-  font-size: 12px;
-  font-weight: 400;
   line-height: 14.4px;
   font-family: "Poppins";
   color: #ff8190;
 }
 
-.delete-contact {
-  width: 360px;
-  font-size: 20px;
-  background-color: white;
-  padding-block: 48px;
-  border-radius: 30px;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
-}
-
-.delte-contact-button-area {
+.dialog-btns {
   width: 100%;
-  height: 35px;
-  justify-content: space-around;
+  height: 48px;
+  display: flex;
+  gap: 16px;
 }
 
-.delete-btn {
-  height: 100%;
+.icon-cancel {
+  fill: #000000;
 }
 
-.delete-btn:hover {
-  cursor: pointer;
+.contact-link:hover .icon-cancel {
+  fill: #29abe2;
 }
 
-.clear-button {
-  border: 1px solid #2a3647;
-  color: #2a3647;
-  background-color: transparent;
-  font-size: 20px;
-  font-weight: 400;
-  height: 36px;
-  padding: 0px 16px;
-}
+/* -------------------------------------------- */
 
-.clear-button:hover {
-  border-color: #29abe2;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  color: #29abe2;
-  background-color: #ffffff;
-  cursor: pointer;
-}
-
-.clear-button:hover img {
-  content: url(../assets/img/png/clear-button-lightblue.png);
-}
-
-.clear-button:active {
-  background-color: transparent;
-  border-color: #091931;
-  color: #091931;
-  box-shadow: none;
-}
-
-.clear-button:active img {
-  content: url(../assets/img/png/clear-button-darkblue.png);
-}
-
-.d-none {
-  display: none;
-}
-
-.mobile-menu {
-  z-index: 98;
+/* .mobile-menu {
+  z-index: 1000;
   background-color: white;
   bottom: 85px;
   right: 6px;
@@ -598,6 +359,21 @@ button {
   background-color: rgb(245, 246, 247);
   border-radius: 9px;
   padding: 9px 6px 9px 9px;
+} */
+
+/* -------------------------------------------- */
+
+.contact-feedback {
+  height: 74px;
+  padding: 8px 24px;
+  border-radius: 20px;
+  background-color: rgb(42, 54, 71);
+  transform: translateY(100vh);
+  transition: transform 0.5s ease;
+}
+
+.d-none {
+  display: none;
 }
 
 /* -------------------------------------------- */
@@ -618,7 +394,6 @@ button {
 /* -------------------------------------------- */
 /* -------------------------------------------- */
 
-/* 
 @media screen and (max-width: 1240px) {
   .content {
     padding: 0px;
@@ -649,8 +424,12 @@ button {
   }
 }
 
+/* -------------------------------------------- */
+/* -------------------------------------------- */
+/* -------------------------------------------- */
+
 @media screen and (max-width: 1024px) {
-  .dialog-contacts {
+  dialog {
     display: flex;
     width: clamp(290px, 88vw, 396px);
     height: clamp(584px, 67vh, 760px);
@@ -663,7 +442,7 @@ button {
     height: clamp(584px, 67vh, 760px);
     flex-direction: column;
   }
-  
+
   .dialog-left {
     width: clamp(290px, 88vw, 396px);
     height: 352px;
@@ -685,7 +464,7 @@ button {
     align-items: center;
   }
 
-  .unknown-user {
+  .new-user {
     margin-top: -60px;
     margin-left: 0px;
   }
@@ -696,7 +475,7 @@ button {
     border: 3px solid white;
   }
 
-  .input-fields-contacts {
+  .input-fields {
     margin-top: 23px;
     width: 364px;
     gap: 15px;
@@ -761,8 +540,11 @@ button {
   }
 }
 
-@media screen and (max-width: 777px) {
+/* -------------------------------------------- */
+/* -------------------------------------------- */
+/* -------------------------------------------- */
 
+@media screen and (max-width: 777px) {
   .content {
     height: calc(100% - 160px);
     width: 100%;
@@ -783,7 +565,7 @@ button {
     height: 56px;
   }
 
-  .add-contact-title{
+  .add-contact-title {
     display: none;
   }
 
@@ -829,31 +611,29 @@ button {
     width: clamp(270px, 83vw, 95%);
   }
 
-  
-.mobile-menu-btn {
-display: flex;
-  display: none;
-  border-radius: 30px;
-  width: 56px;
-  height: 56px;
-  right: 16px;
-  bottom: 88px;
-  background-color: rgb(41, 53, 71);
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
+  .mobile-menu-btn {
+    display: flex;
+    display: none;
+    border-radius: 30px;
+    width: 56px;
+    height: 56px;
+    right: 16px;
+    bottom: 88px;
+    background-color: rgb(41, 53, 71);
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  }
 
-.mobile-menu-btn:hover {
-  cursor: pointer;
-  background-color: rgb(41, 171, 227);
-}
+  .mobile-menu-btn:hover {
+    cursor: pointer;
+    background-color: rgb(41, 171, 227);
+  }
 
-.mobile-menu-btn:active {
-  background-color: rgb(41, 171, 227);
-}
-
+  .mobile-menu-btn:active {
+    background-color: rgb(41, 171, 227);
+  }
 
   .edit-link {
     display: none;
@@ -893,6 +673,6 @@ display: flex;
   .contacts-info {
     animation: slideInFromRight 0s ease-in;
   }
-} */
+}
 
 /* 1118 Zeilen */
