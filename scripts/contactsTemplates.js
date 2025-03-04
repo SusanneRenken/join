@@ -180,7 +180,7 @@ function generateEditContactDialog(contact) {
             </button>
           </div>
       </div>
-`;
+    `;
 }
 
 /**

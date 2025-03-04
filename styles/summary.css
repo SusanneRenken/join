@@ -1,10 +1,9 @@
 body {
   background-color: #f5f6f7;
 }
-.content{
+.content {
   margin-top: clamp(19px, 9vh, 96px);
 }
-
 
 .d-flex {
   display: flex;
@@ -270,6 +269,6 @@ span {
   font-size: clamp(24px, 5vw, 36px);
 }
 
-.d-none{
+.d-none {
   display: none;
 }
