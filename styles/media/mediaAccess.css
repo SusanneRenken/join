@@ -22,22 +22,21 @@
     transform: none;
   }
 
-  .access-window {    
+  .access-window {
     padding-block: clamp(28px, 5vw, 48px);
     padding-inline: clamp(16px, 8vw, 115px);
     border-radius: 30px;
     box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
   }
 
-  .window-login{
+  .window-login {
     width: clamp(285px, 90vw, 652px);
   }
 
-  .window-signup{
+  .window-signup {
     width: clamp(285px, 90vw, 598px);
     margin-left: clamp(0px, 18vw, 60px);
   }
-
 }
 
 @media (max-width: 888px) {
@@ -47,7 +46,7 @@
 }
 
 @media (max-width: 777px) {
-  input{
+  input {
     padding-right: 48px;
   }
 
@@ -62,7 +61,7 @@
     left: clamp(8px, 5vw, 38px);
   }
 
-  .window-signup{
+  .window-signup {
     width: clamp(285px, 90vw, 598px);
     margin-left: 0px;
     margin-top: clamp(0px, 9vw, 80px);
@@ -77,7 +76,7 @@
     right: auto;
   }
 
-  .change-access button{
+  .change-access button {
     font-size: clamp(16px, 3vw, 20px);
   }
 
@@ -89,33 +88,33 @@
     gap: clamp(24px, 8vw, 32px);
   }
 
-  .access-headline{
+  .access-headline {
     gap: clamp(10px, 3vw, 16px);
   }
 
-  .content-area{
+  .content-area {
     gap: clamp(12px, 3vw, 16px);
   }
 
-  .top12-right21{
+  .top12-right21 {
     top: 10px;
     right: 16px;
   }
 
-  .input-space-login{
+  .input-space-login {
     gap: clamp(16px, 5vw, 32px);
   }
 
-  .input-space-login input{
+  .input-space-login input {
     height: clamp(40px, 7vw, 48px);
     font-size: clamp(16px, 5vw, 20px);
   }
 
-  .input-space-signup{
+  .input-space-signup {
     gap: clamp(16px, 5vw, 24px);
   }
 
-  .input-space-signup input{
+  .input-space-signup input {
     height: clamp(40px, 7vw, 48px);
     font-size: clamp(16px, 5vw, 20px);
   }
@@ -146,7 +145,7 @@
     left: clamp(16px, 6vw, 48px);
   }
 
-  .signup-btn{
+  .signup-btn {
     height: clamp(40px, 7vw, 48px);
     font-size: clamp(16px, 3vw, 20px);
   }

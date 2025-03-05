@@ -44,7 +44,7 @@ function resetSignupAlert() {
 
 /**
  * Adds a new user to the database.
- * 
+ *
  * @param {string} email - The user's email
  * @param {string} name - The user's full name
  * @param {string} password - The user's password
@@ -63,7 +63,7 @@ async function addUser(email, name, password, initials) {
 
 /**
  * Creates a user data object with default values.
- * 
+ *
  * @param {string} name - The user's full name
  * @param {string} initials - The user's initials
  * @param {string} email - The user's email address

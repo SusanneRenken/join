@@ -4,7 +4,6 @@
  * @param {number} taskId - Id of the opened task
  */
 async function openSingleTask(taskId) {
-  
   let tasks = await fetchData("tasks");
   let singleTask = tasks.find((task) => task.id === taskId);
   let categoryColor = singleTask.category.replace(/\s+/g, "").toLowerCase();
@@ -13,7 +12,7 @@ async function openSingleTask(taskId) {
   displaySingleTask(singleTask, categoryColor);
   displaySingleAssinees(singleTask, contacts);
   displaySingleSubtasks(singleTask.subtasks, taskId);
- 
+
   toggleOverlay("board_task_overlay");
 }
 
@@ -29,10 +28,7 @@ function displaySingleTask(singleTask, categoryColor) {
   let singleTaskArea = document.getElementById(`single_task`);
   singleTaskArea.innerHTML = "";
 
-  singleTaskArea.innerHTML += generateSingleTasks(
-    singleTask,
-    categoryColor
-  );
+  singleTaskArea.innerHTML += generateSingleTasks(singleTask, categoryColor);
 }
 
 /**
@@ -141,9 +137,7 @@ function displaySingleSubtasks(subtasks, taskId) {
 async function updateSubtaskStatus(taskId, subId) {
   toggleCheckButton(`task_${taskId}_subtask_${subId}`, "button");
 
-  let checkButton = document.getElementById(
-    `task_${taskId}_subtask_${subId}`
-  );
+  let checkButton = document.getElementById(`task_${taskId}_subtask_${subId}`);
   let isChecked = checkButton.src.includes("true");
 
   let tasks = await fetchData("tasks");
@@ -173,19 +167,13 @@ function openDeleteDialog(taskId) {
  */
 async function deleteTask(taskId) {
   let users = await fetchData("users");
-
-  if (taskId >= 1 && taskId <= 10) {
-    await deleteTaskOnlyforUser(taskId, users);
-  } else {
-    await deleteTaskforAllUsers(taskId, users);
-  }
-
+  await deleteTaskOnlyforUser(taskId, users);
+  await deleteTaskforAllUsers(taskId, users);
   deleteTaskInLocalStorage(taskId);
-
   await showSuccessfullyDelete();
   toggleOverlay("board_delete_overlay");
   toggleOverlay("board_task_overlay");
-  window.location.reload();
+  updateTasksOnBoard();
 }
 
 /**
@@ -280,5 +268,3 @@ function showSuccessfullyDelete() {
     }, 50);
   });
 }
-
-

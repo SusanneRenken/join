@@ -1,10 +1,8 @@
-
 function validateContactInputs(email, name) {
   let isEmailValid = validateEmail(email);
   let isNameValid = validateName(name);
 
-  let isValid =
-    isEmailValid && isNameValid;
+  let isValid = isEmailValid && isNameValid;
 
   if (!isValid) {
     throw new Error("Error in validation");
@@ -22,7 +20,7 @@ function validateContactInputs(email, name) {
 function validateEmail(email) {
   let emailField = document.getElementById("contact_email");
   let noticeField = document.getElementById("field_alert_email");
-  
+
   if (!checkEmailFormat(email, noticeField, emailField)) {
     return false;
   }
@@ -68,7 +66,7 @@ function validateName(name) {
   if (!checkNameCharacters(name, noticeField, nameField)) {
     isValidName = false;
   }
-  
+
   return isValidName;
 }
 
@@ -107,8 +105,6 @@ function checkNameCharacters(name, noticeField, nameField) {
   }
   return true;
 }
-
-
 
 /**
  * Checks if the legal acceptance checkbox is checked.

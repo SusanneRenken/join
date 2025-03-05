@@ -150,7 +150,7 @@
 }
 
 @media screen and (max-width: 777px) {
-  .board {    
+  .board {
     height: calc(100vh - 160px);
     padding-inline: 16px;
     margin-bottom: 80px;

@@ -120,7 +120,7 @@ function validateName(name, noticeField) {
   if (!checkNameCharacters(name, noticeField, nameField)) {
     isValidName = false;
   }
-  
+
   return isValidName;
 }
 

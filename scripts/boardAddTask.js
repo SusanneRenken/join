@@ -1,16 +1,16 @@
 /**
  * This function opens the add task overlay
- * 
+ *
  * @param {string} status - of location
  */
 function openAddTask(status) {
-  toggleOverlay('board_addtask_overlay');
+  toggleOverlay("board_addtask_overlay");
   taskStatus = status;
 }
 
 /**
- * This function opens the edit window 
- * 
+ * This function opens the edit window
+ *
  * @param {number} taskId - Id of the task the user has clicked
  */
 function openEditDialog(taskId) {
@@ -23,14 +23,16 @@ function openEditDialog(taskId) {
   document.getElementById("dividing_bar").classList.add("d-none");
   document.getElementById("content_order").classList.remove("content-order");
   document.getElementById("content_order").classList.add("edit-content-order");
-  document.getElementById('bottom_button_order').classList.add('edit-bottom-button-order');
-  document.getElementById('create_button_div').classList.add('edit-ok-button');
+  document
+    .getElementById("bottom_button_order")
+    .classList.add("edit-bottom-button-order");
+  document.getElementById("create_button_div").classList.add("edit-ok-button");
   editTaskButton.innerHTML = editTaskTemplate(taskId);
 }
 
 /**
  * This function gets all informations of the clicked task
- * 
+ *
  * @param {number} taskId -Id of the task the user has clicked
  */
 async function taskValuesToEditField(taskId) {
@@ -47,7 +49,7 @@ async function taskValuesToEditField(taskId) {
 
 /**
  * This function puts the values into the elements
- * 
+ *
  * @param {array} singleTask - is the array of the clicked task
  */
 function setTaskBasicValues(singleTask) {
@@ -59,7 +61,7 @@ function setTaskBasicValues(singleTask) {
 
 /**
  * This function puts the user to the task
- * 
+ *
  * @param {array} singleTask - is the array of the clicked task
  */
 function setTaskUser(singleTask) {
@@ -70,7 +72,7 @@ function setTaskUser(singleTask) {
 
 /**
  * This function sets all selected contacts to the task
- * 
+ *
  * @param {array} singleTask - is the array of the clicked task
  * @param {numberObject} contacts - all selected contact ids
  * @returns - stops the function
@@ -96,7 +98,7 @@ function setTaskContacts(singleTask, contacts) {
 
 /**
  * This function sets the priority to the task
- * 
+ *
  * @param {array} singleTask - is the array of the clicked task
  */
 function setTaskPriority(singleTask) {
@@ -105,7 +107,7 @@ function setTaskPriority(singleTask) {
 
 /**
  * This function sets then category to the task
- * 
+ *
  * @param {array} singleTask - is the array of the clicked task
  */
 function setTaskCategory(singleTask) {
@@ -116,7 +118,7 @@ function setTaskCategory(singleTask) {
 
 /**
  * This function sets all subtasks to the task
- * 
+ *
  * @param {array} singleTask - is the array of the clicked task
  */
 function setTaskSubtasks(singleTask) {
@@ -134,7 +136,7 @@ function setTaskSubtasks(singleTask) {
 
 /**
  * This function enables the edit button
- * 
+ *
  * @param {number} taskId -id of the task
  */
 function enableEditButton(taskId) {
@@ -149,7 +151,7 @@ function enableEditButton(taskId) {
 
 /**
  * This function gets the Input values
- * 
+ *
  * @returns - the values as key
  */
 function getInputFields() {
@@ -161,7 +163,7 @@ function getInputFields() {
 
 /**
  * This function gets the Category value
- * 
+ *
  * @returns - the inner text of the element
  */
 function getCategory() {
@@ -170,7 +172,7 @@ function getCategory() {
 
 /**
  * This function checks if the elements are filled and valid
- * 
+ *
  * @param {string} input - key for the title and date value
  * @param {string} category - key for the category text
  * @returns - true or false of completion
@@ -179,13 +181,15 @@ function isFormValid(input, category) {
   return (
     input.input !== "" &&
     input.date !== "" &&
-    (category === "Technical Task" || category === "User Story" || category === "Tutorial")
+    (category === "Technical Task" ||
+      category === "User Story" ||
+      category === "Tutorial")
   );
 }
 
 /**
  * This function handles through the valid form
- * 
+ *
  * @param {number} taskId - Id of the task
  */
 function handleValidForm(taskId) {
@@ -200,7 +204,7 @@ function handleInvalidForm() {
 
 /**
  * This function gathers all data to edit the task
- * 
+ *
  * @param {number} taskId - Id of the task
  */
 async function editTask(taskId) {
@@ -215,13 +219,18 @@ async function editTask(taskId) {
 
 /**
  * This function updates all data
- * 
+ *
  * @param {Object} taskData - all inputs of the task an chnages
  * @param {number} taskId - Id of the task
- * @param {number} userTaskId - user id 
+ * @param {number} userTaskId - user id
  * @param {string} currenttaskStatus - current status of the task
  */
-async function updateTaskContent(taskData, taskId, userTaskId, currenttaskStatus) {
+async function updateTaskContent(
+  taskData,
+  taskId,
+  userTaskId,
+  currenttaskStatus
+) {
   await putEditTasksContent(
     taskData.title,
     taskData.description,
@@ -236,7 +245,7 @@ async function updateTaskContent(taskData, taskId, userTaskId, currenttaskStatus
 
 /**
  * This function handles the completion after editing a task
- * 
+ *
  * @param {number} taskId - Id of the task
  */
 async function handleTaskEditCompletion(taskId) {
@@ -255,9 +264,9 @@ function toggleTaskOverlays() {
 }
 
 /**
- * This function checks if a user is preset to the task 
- * 
- * @returns - the user id 
+ * This function checks if a user is preset to the task
+ *
+ * @returns - the user id
  */
 function userTest() {
   if (userId[0]) {
@@ -271,11 +280,11 @@ function userTest() {
 
 /**
  * This function puts all informations of the task together
- * 
+ *
  * @param {string} title - key of input value of the title
  * @param {string} description - key of input value of the description
  * @param {number} dueDate - key of selected date
- * @param {number} taskId - key of Id of the task 
+ * @param {number} taskId - key of Id of the task
  * @param {number} assignedTo - key of Id of all selcted assigned
  * @param {string} categorySeleced - key of text of the selected category
  * @param {number} userTaskId - key of the user Id
@@ -307,23 +316,24 @@ async function putEditTasksContent(
 
 /**
  * This function gets all subtasks if edited
- * 
+ *
  * @param {number} taskId - Id of the task
- * @returns - the subtasks 
+ * @returns - the subtasks
  */
 async function getEditSubtasks(taskId) {
   let tasks = await fetchData("tasks");
   let editSingleTask = tasks.find((task) => task.id === taskId);
-  let filteredSubtasks = editSingleTask.subtasks?.filter(data => data !== null) || [];
+  let filteredSubtasks =
+    editSingleTask.subtasks?.filter((data) => data !== null) || [];
   if (subTasks.length === 0) return [];
-  return subTasks.map((subName, index) => 
+  return subTasks.map((subName, index) =>
     createSubtaskObject(subName, index, filteredSubtasks)
   );
 }
 
 /**
- * This function creates the subtask as object 
- * 
+ * This function creates the subtask as object
+ *
  * @param {string} subName - input value of the subtasks
  * @param {number} index - array location of the subtasks
  * @param {boolean} filteredSubtasks - subtask status
@@ -336,7 +346,7 @@ function createSubtaskObject(subName, index, filteredSubtasks) {
   return {
     subTaskName: subName,
     subId: index + 1,
-    done: foundSubtask ? foundSubtask.done : false
+    done: foundSubtask ? foundSubtask.done : false,
   };
 }
 

@@ -71,21 +71,21 @@ body {
   gap: 32px;
 }
 
-.window-login{
+.window-login {
   width: 652px;
 }
 
-.window-signup{
+.window-signup {
   width: 598px;
 }
 
-.arrow{
-    position: absolute;
-    top: 64px;
-    left: 48px;
+.arrow {
+  position: absolute;
+  top: 64px;
+  left: 48px;
 }
 
-.access-headline{
+.access-headline {
   gap: 16px;
 }
 
@@ -95,30 +95,30 @@ body {
   background-color: rgb(41, 171, 226);
 }
 
-.content-area{
+.content-area {
   gap: 16px;
 }
 
-.top12-right21{
+.top12-right21 {
   top: 12px;
   right: 21px;
 }
 
-.input-space-login{
+.input-space-login {
   gap: 32px;
 }
 
-.input-space-signup{
+.input-space-signup {
   gap: 24px;
 }
 
-.remember{
+.remember {
   padding-left: 39px;
   display: flex;
   align-items: center;
 }
 
-.login-buttons{
+.login-buttons {
   width: 322px;
   height: 48px;
   display: flex;
@@ -126,25 +126,25 @@ body {
   align-items: center;
 }
 
-.access-button{
+.access-button {
   height: 100%;
 }
 
-.guest-button{
+.guest-button {
   font-weight: 700;
 }
 
-.link-privacy-policy{
+.link-privacy-policy {
   color: rgb(41, 171, 226);
 }
 
-.link-privacy-policy:hover{
+.link-privacy-policy:hover {
   cursor: pointer;
   font-weight: 500;
   text-decoration: underline;
 }
 
-.signup-btn{
+.signup-btn {
   height: 48px;
 }
 
@@ -168,7 +168,7 @@ body {
   opacity: 1;
 }
 
-.signup-message{
+.signup-message {
   height: 74px;
   padding: 8px 24px;
   border-radius: 20px;

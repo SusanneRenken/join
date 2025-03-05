@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="../styles/assets.css" />
     <link rel="stylesheet" href="../styles/desktopTemplate.css" />
     <link rel="stylesheet" href="../styles/contacts.css" />
-    <!-- <link rel="stylesheet" href="../styles/media.css" /> -->
-    <!-- <link rel="stylesheet" href="../styles/media/mediaContacts.css" /> -->
+    <link rel="stylesheet" href="../styles/media.css" />
+    <link rel="stylesheet" href="../styles/media/mediaContacts.css" />
     <link rel="stylesheet" href="../styles/media/mediaDesktopTemplate.css" />
     <script src="../script.js"></script>
     <script src="../scripts/contacts.js"></script>
@@ -28,7 +28,7 @@
   <body onload="renderContacts()">
     <div id="desktop_template"></div>
 
-    <div class="contacts-content">
+    <div id="contacts_content" class="contacts-content">
       <div id="contact_box" class="contact-box d-flex-column-center">
         <button
           onclick="toggleOverlay('dialog_contacts_overlay')"
@@ -72,20 +72,28 @@
         class="dialog-add-contact"
         onclick="bubblingPrevention(event)"
       >
+        <div
+          class="close-cross little-button d-flex-center wh-24"
+          onclick="toggleOverlay('dialog_contacts_overlay')"
+        >
+          <img src="../assets/img/png/close.png" alt="" />
+        </div>
         <div class="dialog-left">
           <img
             class="logo-dialog"
             src="../assets/img/png/Join logo vector.png"
             alt=""
           />
-          <div class="d-flex-column gap-16">
+          <div class="dialog-text-content d-flex-column gap-16">
             <div class="dialog-headline font-w-700 font-c-white">
               Add contact
             </div>
+
+            <div class="dialog-text-seperator"></div>
+
             <span class="dialog-text font-c-white"
               >Tasks are better with a team!</span
             >
-            <div class="dialo-text-seperator"></div>
           </div>
         </div>
 
@@ -98,13 +106,6 @@
         </div>
 
         <div class="dialog-right d-flex-column">
-          <div
-            class="close-cross little-button d-flex-center wh-24"
-            onclick="toggleOverlay('dialog_contacts_overlay')"
-          >
-            <img src="../assets/img/png/close.png" alt="" />
-          </div>
-
           <div class="input-fields d-flex-column gap-16">
             <div>
               <input
@@ -187,7 +188,7 @@
         <div class="font-w-700 font-c-66-82-110">
           Delete contact permanently?
         </div>
-        <div class="delte-permanently-button-area  d-flex-center">
+        <div class="delte-permanently-button-area d-flex-center">
           <div class="delete-btn" id="delete_yes_btn_contact"></div>
           <button
             class="clear-button"

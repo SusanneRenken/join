@@ -176,12 +176,10 @@ function toggleOverlay(section) {
   refOverlay.classList.toggle("d-none");
 
   if (!refOverlay.classList.contains("d-none")) {
-    document.body.style.overflow = "hidden";
     setTimeout(() => {
       refOverlay.classList.add("active", "visible");
     }, 50);
   } else {
-    document.body.style.overflow = "auto";
     refOverlay.classList.remove("active", "visible");
   }
 }

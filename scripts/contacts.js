@@ -1,6 +1,5 @@
 /**
- * Loads and renders the content of the contact list.
- * This function groups the contacts by their initials and displays them in the UI.
+ * Renders the contact list.
  */
 async function renderContacts() {
   let contactList = await getContactList();
@@ -9,10 +8,7 @@ async function renderContacts() {
 }
 
 /**
- * Groups the contacts by their initials.
- * This function filters the active user's contacts and groups them based on the first letter
- * of their initials.
- * @returns {Object} An object containing the contacts grouped by initials.
+ * Groups contacts by their initials.
  */
 async function getContactList() {
   let userContacts = await filterUserContacts();
@@ -30,9 +26,7 @@ async function getContactList() {
 }
 
 /**
- * Filters the contacts of the currently active user.
- * This function loads the contacts from the database and filters only those that belong to the active user.
- * @returns {Array} A list of the filtered contacts of the active user.
+ * Filters the contacts of the active user.
  */
 async function filterUserContacts() {
   let contacts = await fetchData("contacts");
@@ -45,10 +39,8 @@ async function filterUserContacts() {
 }
 
 /**
- * Renders the grouped contacts in the contact list.
- * This function sorts the initials, renders a letter box for each initial, and displays
- * the corresponding contacts.
- * @param {Object} contactList - An object containing the contacts grouped by initials.
+ * Renders the grouped contact list.
+ * @param {Object} contactList - Contacts grouped by initials.
  */
 function renderContactsList(contactList) {
   let contactListContainer = document.getElementById("contact_list");
@@ -59,8 +51,8 @@ function renderContactsList(contactList) {
 }
 
 /**
- * Initializes and displays the information of the active user in the contact list.
- * @param {HTMLElement} contactList - The HTML element of the contact list.
+ * Initializes the active user display in the contact list.
+ * @param {HTMLElement} contactListContainer - The HTML element of the contact list.
  */
 function initActiveUser(contactListContainer) {
   activeUser.id = 0;
@@ -75,20 +67,24 @@ function initActiveUser(contactListContainer) {
   );
 }
 
+/**
+ * Initializes the display of contacts.
+ * @param {Object} contactList - Contacts grouped by initials.
+ * @param {HTMLElement} contactListContainer - The HTML element of the contact list.
+ */
 function initContacts(contactList, contactListContainer) {
   let sortedInitials = Object.keys(contactList).sort();
 
   sortedInitials.forEach((initial) => {
     initLetterBox(initial, contactListContainer);
-
     renderContactsByInitial(contactList[initial], contactListContainer);
   });
 }
 
 /**
- * Initializes a letter box in the contact list.
- * @param {string} initial - The starting letter of the initials.
- * @param {HTMLElement} contactList - The HTML element of the contact list.
+ * Creates a letter box in the contact list.
+ * @param {string} initial - The initial letter for grouping.
+ * @param {HTMLElement} contactListContainer - The HTML element of the contact list.
  */
 function initLetterBox(initial, contactListContainer) {
   let letterBoxHtml = generateLetterBox(initial);
@@ -96,9 +92,9 @@ function initLetterBox(initial, contactListContainer) {
 }
 
 /**
- * Renders all contacts that belong to a specific initial.
- * @param {Array} contacts - The contacts grouped under a specific initial.
- * @param {HTMLElement} contactList - The HTML element of the contact list.
+ * Renders contacts for a specific initial.
+ * @param {Array} contacts - List of contacts for the given initial.
+ * @param {HTMLElement} contactListContainer - The HTML element of the contact list.
  */
 function renderContactsByInitial(contacts, contactListContainer) {
   contacts.forEach((contact) => {
@@ -116,11 +112,9 @@ function renderContactsByInitial(contacts, contactListContainer) {
 }
 
 /**
- * Limits the length of a text to a maximum length.
- * If the text is longer than the specified maximum length, it is truncated and appended with "...".
- * @param {string} text - The text to be limited.
- * @param {number} [maxLength=20] - The maximum length of the text.
- * @returns {string} The processed text.
+ * Limits the length of a text.
+ * @param {string} text - The text to limit.
+ * @param {number} [maxLength=15] - The maximum length.
  */
 function limitTextLength(text, maxLength = 15) {
   if (text.length > maxLength) {
@@ -130,10 +124,8 @@ function limitTextLength(text, maxLength = 15) {
 }
 
 /**
- * Displays the information of a contact on the desktop.
- * This function loads the contact data and shows it in the contact info area.
- * If the screen width is less than 777px, the mobile view will be displayed instead.
- * @param {number} contactId - The ID of the contact whose information should be displayed.
+ * Displays the contact information.
+ * @param {number} contactId - The ID of the contact.
  */
 async function displayContactInfo(contactId) {
   let contact = await getContact(contactId);
@@ -147,10 +139,8 @@ async function displayContactInfo(contactId) {
 }
 
 /**
- * Retrieves the contact data based on the contact ID.
- * This function distinguishes between the active user and a regular contact.
- * @param {number} contactId - The ID of the contact to be retrieved.
- * @returns {Object} The data of the contact.
+ * Retrieves contact data by ID.
+ * @param {number} contactId - The ID of the contact.
  */
 async function getContact(contactId) {
   if (contactId === 0) {
@@ -162,6 +152,10 @@ async function getContact(contactId) {
   }
 }
 
+/**
+ * Applies specific styles to the active user's initials.
+ * @param {Object} contact - The contact data.
+ */
 function designeUserInitial(contact) {
   if (contact.id === 0) {
     document
@@ -172,9 +166,8 @@ function designeUserInitial(contact) {
 }
 
 /**
- * Highlights the currently selected contact in the contact list.
- * This function sets the background color of the selected contact and visually highlights it.
- * @param {Object} contact - The contact to be highlighted.
+ * Highlights the selected contact.
+ * @param {Object} contact - The contact to highlight.
  */
 function highlightContact(contact) {
   let contactsContainer = document.getElementsByClassName("contact");
@@ -185,20 +178,16 @@ function highlightContact(contact) {
   document.getElementById(`contact${contact.id}`).classList.add("is-selected");
 }
 
+/**
+ * Toggles the display of contact information.
+ */
 function toggleContactInfo() {
-  let contactListContainer = document.getElementById("contact_box");
-  let contactContentContainer = document.getElementById("contact_info");
-  contactListContainer.classList.toggle("handle-display");
-  contactContentContainer.classList.toggle("is-shown");
+  let container = document.getElementById("contacts_content");
+  container.classList.toggle("shifted");
 }
 
-//---------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------
-
 /**
- * Clears all inputs in the form and removes any error displays.
+ * Clears all inputs and error messages in the form.
  */
 function clearAddContactForm() {
   let nameInput = document.getElementById("contact_name");
@@ -212,9 +201,9 @@ function clearAddContactForm() {
 }
 
 /**
- * Removes the error message and error styling from the input field.
- * @param {HTMLElement} inputElement - The input field for which to reset the error.
- * @param {string} alertElementId - The ID of the element displaying the error message.
+ * Removes error messages and styles from an input field.
+ * @param {HTMLElement} inputElement - The input field.
+ * @param {string} alertElementId - The ID of the error message element.
  */
 function clearError(inputElement, alertElementId) {
   let alertElement = document.getElementById(alertElementId);
@@ -222,6 +211,9 @@ function clearError(inputElement, alertElementId) {
   inputElement.classList.remove("error");
 }
 
+/**
+ * Creates a new contact.
+ */
 async function createContact() {
   resetAlert(
     "contact_name",
@@ -236,9 +228,16 @@ async function createContact() {
   let initials = getContactInitials(nameInput);
 
   await createContactProcess(nameInput, emailInput, phoneInput, initials);
-  window.location.reload();
+  renderContacts();
 }
 
+/**
+ * Resets error alerts in the contact form.
+ * @param {string} inputName - The ID of the name input field.
+ * @param {string} inputEmail - The ID of the email input field.
+ * @param {string} alertName - The ID of the name error element.
+ * @param {string} alertEmail - The ID of the email error element.
+ */
 function resetAlert(inputName, inputEmail, alertName, alertEmail) {
   let nameInputContent = document.getElementById(inputName);
   let emailInputContent = document.getElementById(inputEmail);
@@ -247,6 +246,13 @@ function resetAlert(inputName, inputEmail, alertName, alertEmail) {
   clearError(emailInputContent, alertEmail);
 }
 
+/**
+ * Processes the creation of a new contact.
+ * @param {string} nameInput - The contact's name.
+ * @param {string} emailInput - The contact's email.
+ * @param {string} phoneInput - The contact's phone number.
+ * @param {string} initials - The contact's initials.
+ */
 async function createContactProcess(
   nameInput,
   emailInput,
@@ -265,9 +271,11 @@ async function createContactProcess(
 }
 
 /**
- * Adds a new contact and updates the user interface.
- * This function creates a new contact, adds it to the active user, and renders the
- * updated contact list.
+ * Adds a new contact.
+ * @param {string} nameInput - The contact's name.
+ * @param {string} emailInput - The contact's email.
+ * @param {string} phoneInput - The contact's phone number.
+ * @param {string} initials - The contact's initials.
  */
 async function addContact(nameInput, emailInput, phoneInput, initials) {
   let contactId = await getNewId("contacts");
@@ -278,8 +286,12 @@ async function addContact(nameInput, emailInput, phoneInput, initials) {
 }
 
 /**
- * Posts a new contact to the database and returns the contact ID.
- * @returns {number} The ID of the newly created contact.
+ * Posts a new contact to the database.
+ * @param {string} name - The contact's name.
+ * @param {string} email - The contact's email.
+ * @param {string} phone - The contact's phone number.
+ * @param {number} contactId - The new contact's ID.
+ * @param {string} initials - The contact's initials.
  */
 async function postNewContact(name, email, phone, contactId, initials) {
   let contactData = {
@@ -295,8 +307,7 @@ async function postNewContact(name, email, phone, contactId, initials) {
 }
 
 /**
- * Generates a random color in a dark shade.
- * @returns {string} A hexadecimal color code.
+ * Generates a random dark hexadecimal color.
  */
 function generateRandomColor() {
   let darkLetters = "0123456789ABC";
@@ -308,10 +319,8 @@ function generateRandomColor() {
 }
 
 /**
- * Adds a contact to the user and saves it in the database.
- * This function checks if the user already has the contact and adds it if it does not exist.
- * @param {number} contactId - The ID of the contact to be added.
- * @param {Object} activeUser - The currently logged-in user.
+ * Adds a contact to the active user.
+ * @param {number} contactId - The ID of the contact to add.
  */
 async function addContactToUser(contactId) {
   let activeUser = JSON.parse(localStorage.getItem("activeUser"));
@@ -328,8 +337,11 @@ async function addContactToUser(contactId) {
     }
   }
 }
-//-----------------------------------------------------------------------------------
 
+/**
+ * Opens a dialog displaying a success message.
+ * @param {string} operation - The type of operation ("created", "deleted", "edit").
+ */
 function openDialogSuccessfully(operation) {
   return new Promise((resolve) => {
     let overlay = document.getElementById("succesfully_created");
@@ -348,11 +360,10 @@ function openDialogSuccessfully(operation) {
   });
 }
 
-//---------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------
-
+/**
+ * Opens the edit contact dialog.
+ * @param {number} contactId - The ID of the contact to edit.
+ */
 async function openEditContact(contactId) {
   toggleOverlay("dialog_edit_overlay");
   let contact = await getContact(contactId);
@@ -362,13 +373,20 @@ async function openEditContact(contactId) {
   getEditContactData(contact);
 }
 
+/**
+ * Loads the edit contact form.
+ * @param {Object} contact - The contact data.
+ */
 function loadEditContactForm(contact) {
   let editForm = document.getElementById("dialog_edit_contacts_overlay");
   editForm.innerHTML = generateEditContactDialog(contact);
 }
 
+/**
+ * Populates the edit contact form with contact data.
+ * @param {Object} contact - The contact data.
+ */
 async function getEditContactData(contact) {
-
   let name = document.getElementById("input_edit_name");
   let email = document.getElementById("input_edit_email");
   let phone = document.getElementById("input_edit_phone");
@@ -382,15 +400,9 @@ async function getEditContactData(contact) {
   phone.value = contact.phone;
 }
 
-//---------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------
-
 /**
- * opens the delete window and adds the "YES" button
- *
- * @param {number} contactId - Contact Id
+ * Opens the delete dialog and adds the "YES" button.
+ * @param {number} contactId - The ID of the contact to delete.
  */
 function openDeleteDialog(contactId) {
   toggleOverlay("contact_delete_overlay");
@@ -400,40 +412,33 @@ function openDeleteDialog(contactId) {
 }
 
 /**
- * Deletes a contact if the contact ID is not 0.
- * This function checks if the contact ID is 0 (indicating that the active user cannot be deleted).
- * It deletes the contact and updates the display of contacts.
- * @param {number} contactId - The ID of the contact to be deleted.
+ * Deletes a contact and refreshes the contact list.
+ * @param {number} contactId - The ID of the contact to delete.
  */
 async function deleteContact(contactId) {
   await deleteContactInData(contactId);
   await openDialogSuccessfully("deleted");
   document.getElementById("contact_info_box").innerHTML = "";
-  window.location.reload();
+  toggleOverlay("contact_delete_overlay");
+  renderContacts();
 }
 
 /**
- * Deletes a contact from user data.
- * This function determines whether the contact should be deleted only for the user or for all users,
- * and performs the appropriate deletion actions.
- * @param {number} contactId - The ID of the contact to be deleted.
+ * Deletes all data of a contact.
+ * @param {number} contactId - The ID of the contact to delete.
  */
 async function deleteContactInData(contactId) {
   let users = await fetchData("users");
-  if (contactId >= 1 && contactId <= 10) {
-    await deleteContactOnlyforUser(contactId, users);
-  } else {
-    await deleteContactforAllUsers(contactId, users);
-  }
+  await deleteContactOnlyforUser(contactId, users);
+  await deleteContactforAllUsers(contactId, users);
   await deleteContactFromTasks(contactId);
   deleteContactInLocalStorage(contactId);
 }
 
 /**
- * Deletes a contact only for the active user.
- * This function removes the contact from the active user's contact list.
- * @param {number} contactId - The ID of the contact to be deleted.
- * @param {Array} users - The list of all users.
+ * Deletes a contact only from the active user's list.
+ * @param {number} contactId - The ID of the contact.
+ * @param {Array} users - Array of all users.
  */
 async function deleteContactOnlyforUser(contactId, users) {
   if (activeUser.id === 0) {
@@ -453,8 +458,7 @@ async function deleteContactOnlyforUser(contactId, users) {
 
 /**
  * Deletes a contact from all tasks.
- * This function removes the contact ID from the list of assigned users for all tasks.
- * @param {number} contactId - The ID of the contact to be deleted.
+ * @param {number} contactId - The ID of the contact.
  */
 async function deleteContactFromTasks(contactId) {
   let allTasks = await fetchData("tasks");
@@ -471,10 +475,9 @@ async function deleteContactFromTasks(contactId) {
 }
 
 /**
- * Deletes a contact for all users.
- * This function deletes the contact from the database and removes it from the contact lists of all users.
- * @param {number} contactId - The ID of the contact to be deleted.
- * @param {Array} users - The list of all users.
+ * Deletes a contact from all users' data.
+ * @param {number} contactId - The ID of the contact.
+ * @param {Array} users - Array of all users.
  */
 async function deleteContactforAllUsers(contactId, users) {
   await deleteData("contacts", contactId);
@@ -489,9 +492,8 @@ async function deleteContactforAllUsers(contactId, users) {
 }
 
 /**
- * Deletes a contact from the local storage of the active user.
- * This function removes the contact ID from the list of contacts in Local Storage.
- * @param {number} contactId - The ID of the contact to be deleted.
+ * Removes a contact from the active user's local storage.
+ * @param {number} contactId - The ID of the contact.
  */
 function deleteContactInLocalStorage(contactId) {
   let activeUser = JSON.parse(localStorage.getItem("activeUser"));
@@ -501,14 +503,9 @@ function deleteContactInLocalStorage(contactId) {
   localStorage.setItem("activeUser", JSON.stringify(activeUser));
 }
 
-//---------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------
-
 /**
- * Edits a contact's information and updates it in the database.
- * @param {number} contactId - The ID of the contact being edited.
+ * Edits a contact's information.
+ * @param {number} contactId - The ID of the contact to edit.
  */
 async function editContact(contactId) {
   resetAlert(
@@ -536,10 +533,18 @@ async function editContact(contactId) {
   }
 
   await openDialogSuccessfully("edit");
-
-  window.location.reload();
+  await displayContactInfo(contactId);
+  toggleOverlay("dialog_edit_overlay");
+  renderContacts();
 }
 
+/**
+ * Processes editing of the active user's data.
+ * @param {string} name - The user's name.
+ * @param {string} email - The user's email.
+ * @param {string} phone - The user's phone number.
+ * @param {string} initials - The user's initials.
+ */
 async function editUserProcess(name, email, phone, initials) {
   let activeUser = JSON.parse(localStorage.getItem("activeUser"));
   let userData = {
@@ -559,6 +564,14 @@ async function editUserProcess(name, email, phone, initials) {
   }
 }
 
+/**
+ * Processes editing of a contact's data.
+ * @param {string} name - The contact's name.
+ * @param {string} email - The contact's email.
+ * @param {string} phone - The contact's phone number.
+ * @param {string} initials - The contact's initials.
+ * @param {number} contactId - The ID of the contact.
+ */
 async function editContactProcess(name, email, phone, initials, contactId) {
   let contact = await getContact(contactId);
 
@@ -575,6 +588,10 @@ async function editContactProcess(name, email, phone, initials, contactId) {
   }
 }
 
+/**
+ * Opens the mobile menu for a contact.
+ * @param {number} contactId - The ID of the contact.
+ */
 function openMobileMenu(contactId) {
   toggleOverlay("dialog_mobilemenue_overlay");
   let menuContainer = document.getElementById("mobile_menu");

@@ -25,6 +25,10 @@
 }
 
 @media screen and (max-width: 777px) {
+  body {
+    height: calc(100% - 160px);
+  }
+
   .content {
     width: 100%;
     margin-top: 80px;

@@ -70,27 +70,26 @@ function filterSoughtTaskToRender(tasksToRender) {
  */
 function getSoughtTask() {
   let soughtedTaskDesktop = document.getElementById("sought_task").value;
-  let soughtedTaskMobile =
-    document.getElementById("sought_task_mobile").value;
+  let soughtedTaskMobile = document.getElementById("sought_task_mobile").value;
   return (soughtedTaskDesktop || soughtedTaskMobile).toLowerCase();
 }
 
 /**
  * User feedback for no task found.
- * 
+ *
  * @param {Object} tasksToRender - all filtered user tasks
  */
-function noTaskFound(tasksToRender){
+function noTaskFound(tasksToRender) {
   let noTaskField = document.getElementById("task_not_found");
   let kanbanField = document.getElementById("kanban_board");
 
-  noTaskField.classList.add('d-none');
-  kanbanField.classList.remove('d-none');
+  noTaskField.classList.add("d-none");
+  kanbanField.classList.remove("d-none");
 
   if (tasksToRender.length == 0) {
-    noTaskField.classList.remove('d-none');
-    kanbanField.classList.add('d-none');
-  }  
+    noTaskField.classList.remove("d-none");
+    kanbanField.classList.add("d-none");
+  }
 }
 
 /**
@@ -209,9 +208,8 @@ function displayAssigneesForTask(task, contacts) {
   let assignedField = document.getElementById(`assignees_task_${task.id}`);
   assignedField.innerHTML = "";
   let maxDisplayed = determineMaxDisplayed(task);
-  let validContacts = contacts.filter(
-    (contact) =>
-      activeUser.contacts.includes(contact.id)
+  let validContacts = contacts.filter((contact) =>
+    activeUser.contacts.includes(contact.id)
   );
 
   if (task.assigned) {

@@ -1,4 +1,7 @@
 @media screen and (max-width: 1440px) {
+  .content {
+    padding: 30px 16px 0px;
+  }
   .summary {
     padding-inline: clamp(9px, 9vw, 96px);
   }
@@ -20,12 +23,17 @@
   }
 }
 
+@media screen and (max-width: 860px) {
+  h1 {
+    font-size: 47px;
+  }
+}
+
 @media screen and (max-width: 777px) {
   .content {
     height: calc(100% - 160px);
     width: 100%;
     margin: 80px 0px 192px;
-    padding: 30px 16px 0px;
   }
 
   .content-tasks {
@@ -38,10 +46,6 @@
     flex-direction: column;
     gap: 16px;
     padding-bottom: clamp(18px, 5vw, 40px);
-  }
-
-  h1 {
-    font-size: 47px;
   }
 
   h2 {
@@ -90,9 +94,3 @@
     margin-left: 21px;
   }
 }
-
-/* @media screen and (max-height: 900px) {
-  .greeting {
-    display: none;
-  } */
-/* } */

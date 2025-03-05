@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="../styles/media/mediaBoard.css" />
     <link rel="stylesheet" href="../styles/addTask.css" />
     <link rel="stylesheet" href="../styles/addTaskButtons.css" />
-    <link rel="stylesheet" href="../styles/media/mediaBoardTask.css">
+    <link rel="stylesheet" href="../styles/media/mediaBoardTask.css" />
 
     <script src="../script.js"></script>
     <script src="../scripts/desktopTemplate.js"></script>
@@ -48,7 +48,11 @@
               type="text"
               placeholder="Find Task"
             />
-            <button class="input-button" id="sought_button" onclick="updateTasksOnBoard()">
+            <button
+              class="input-button"
+              id="sought_button"
+              onclick="updateTasksOnBoard()"
+            >
               <img
                 class="magnifying-glass"
                 src="../assets/img/png/magnifying-glass-default.png"
@@ -58,9 +62,9 @@
           </div>
 
           <button
-            class="btn-add-task" onclick="initTemplateAddTask('add_task_template', true); openAddTask('todo')"
+            class="btn-add-task"
+            onclick="initTemplateAddTask('add_task_template', true); openAddTask('todo')"
           >
-            
             <div class="wh-32 d-flex-center">
               <img src="../assets/img/png/add.png" alt="add task button" />
             </div>
@@ -75,7 +79,11 @@
           type="text"
           placeholder="Find Task"
         />
-        <button class="input-button" id="sought_button" onclick="updateTasksOnBoard()">
+        <button
+          class="input-button"
+          id="sought_button"
+          onclick="updateTasksOnBoard()"
+        >
           <img
             class="magnifying-glass"
             src="../assets/img/png/magnifying-glass-default.png"
@@ -84,8 +92,9 @@
         </button>
       </div>
 
-      <div id="task_not_found" class="task-not-found d-flex-center d-none">No task found</div>
-
+      <div id="task_not_found" class="task-not-found d-flex-center d-none">
+        No task found
+      </div>
 
       <div id="kanban_board" class="kanban-board">
         <div class="w-100 d-flex-column gap-12">
@@ -178,9 +187,7 @@
         id="single_task"
         class="single-task"
         onclick="bubblingPrevention(event)"
-      >  
-        
-    </div>
+      ></div>
     </section>
 
     <section
@@ -192,9 +199,7 @@
         class="delete-permanently d-flex-column-center gap-32"
         onclick="bubblingPrevention(event)"
       >
-        <div class=" font-w-700 font-c-66-82-110">
-          Delete task permanently?
-        </div>
+        <div class="font-w-700 font-c-66-82-110">Delete task permanently?</div>
         <div class="delte-permanently-button-area d-flex-center">
           <div class="delete-btn" id="delete_yes_btn"></div>
           <button
@@ -207,7 +212,10 @@
       </div>
     </section>
 
-    <section id="successfully_delete_task" class="overlay-delete d-flex-center d-none">
+    <section
+      id="successfully_delete_task"
+      class="overlay-delete d-flex-center d-none"
+    >
       <div class="delete-message d-flex-center font-s-20 font-c-white">
         You delete the task permanently
       </div>
@@ -218,13 +226,23 @@
       id="edit_task_overlay"
       onclick="toggleOverlay('edit_task_overlay')"
     >
-      <div onclick="bubblingPrevention(event)" class="edit-task-board-click" id="edit_task_board_click">
+      <div
+        onclick="bubblingPrevention(event)"
+        class="edit-task-board-click"
+        id="edit_task_board_click"
+      >
         <div
           id="edit_task_board"
           class="single-edit-task content-overlay pos-rel"
           onclick="closeTaskIfOutside(event)"
         >
-          <div id="edit_overflow" class="edit-overflow"><div onclick="changeSubtasksImagesClick(event)" class="pos-rel" id="edit_task_template"></div></div>
+          <div id="edit_overflow" class="edit-overflow">
+            <div
+              onclick="changeSubtasksImagesClick(event)"
+              class="pos-rel"
+              id="edit_task_template"
+            ></div>
+          </div>
           <div
             onclick="toggleOverlay('edit_task_overlay')"
             class="close-add-task-button d-flex-center"
@@ -240,13 +258,20 @@
       id="board_addtask_overlay"
       onclick="toggleOverlay('board_addtask_overlay')"
     >
-      <div onclick="bubblingPrevention(event)" class="add-task-board-click" id="add_task_board_click">
+      <div
+        onclick="bubblingPrevention(event)"
+        class="add-task-board-click"
+        id="add_task_board_click"
+      >
         <div
           id="add_task_board"
           class="add-task-board content-overlay pos-rel"
           onclick="closeTaskIfOutside(event)"
         >
-          <div onclick=" changeSubtasksImagesClick(event)" id="add_task_template"></div>
+          <div
+            onclick=" changeSubtasksImagesClick(event)"
+            id="add_task_template"
+          ></div>
           <div
             onclick="toggleOverlay('board_addtask_overlay')"
             class="close-add-task-button d-flex-center"
@@ -256,6 +281,5 @@
         </div>
       </div>
     </section>
-    
   </body>
 </html>

@@ -97,7 +97,7 @@
   border-radius: 10px;
 }
 
-.task-not-found{
+.task-not-found {
   width: 100%;
   height: 48px;
   background-color: rgb(231, 231, 231);
@@ -231,7 +231,7 @@
   padding-right: 8px;
 }
 
-.singel-task-close-btn{
+.singel-task-close-btn {
   position: absolute;
   top: 24px;
   right: 36px;
@@ -326,7 +326,6 @@
   height: 35px;
   justify-content: space-around;
 }
-
 
 .delete-message {
   height: 74px;

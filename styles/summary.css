@@ -1,9 +1,6 @@
 body {
   background-color: #f5f6f7;
 }
-.content {
-  margin-top: clamp(19px, 9vh, 96px);
-}
 
 .d-flex {
   display: flex;
@@ -25,10 +22,6 @@ body {
 .seperator-grey {
   border: 1px solid #d1d1d1;
   height: 102px;
-}
-
-h1 {
-  font-size: clamp(47px, 3vw, 61px);
 }
 
 h2 {

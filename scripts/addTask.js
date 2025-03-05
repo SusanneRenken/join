@@ -9,7 +9,7 @@ let selectedButton = "medium";
 /**This function opens a Dialog after creating a Task */
 async function openAddTaskDialogFeedback() {
   let overlayFeedback = document.getElementById("task_added_overlay");
-  overlayFeedback.innerHTML ="";
+  overlayFeedback.innerHTML = "";
   overlayFeedback.innerHTML = taskAddedToBoard();
   await sleep(10);
   let slidingDiv = document.getElementById("task_added_overlay");
@@ -18,7 +18,7 @@ async function openAddTaskDialogFeedback() {
 
 /**
  * This function sets a delays between functions
- * 
+ *
  * @param {number} ms - This variable is the time of the delay in miliseconds
  * @returns - the Timeout
  */
@@ -28,7 +28,7 @@ function sleep(ms) {
 
 /**
  * This function is getting id´s from elements
- * 
+ *
  * @returns - all variables set
  */
 function getTaskFormData() {
@@ -50,10 +50,10 @@ async function handleTaskCreationCompletion() {
 
 /**
  * This function is mapping through the Array subTasks
- * 
- * @returns - an Object 
+ *
+ * @returns - an Object
  */
-function getSubtasks() {  
+function getSubtasks() {
   return subTasks.map((subName, index) => ({
     subTaskName: subName,
     subId: index + 1,
@@ -62,8 +62,8 @@ function getSubtasks() {
 }
 
 /**
- * This function renders the active User and all contacts 
- * 
+ * This function renders the active User and all contacts
+ *
  * @param {string} contacts - is a variable with all informations about the Contacts from the Database
  */
 function displayContacts(contacts) {
@@ -79,13 +79,13 @@ function displayContacts(contacts) {
 
 /**
  * This function toggles Color and Icon if you select a Contact from Assigned to
- * 
- * @param {StringId} CheckButtonId - The Id for Checkmark 
+ *
+ * @param {StringId} CheckButtonId - The Id for Checkmark
  * @param {String} CheckTaskButton - The String to locate if its true
  * @param {StringId} bgChange - The Id for Background Color switch
- * @param {NumberId} contactId - The Contact Id 
+ * @param {NumberId} contactId - The Contact Id
  */
-function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {  
+function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {
   toggleCheckButton(CheckButtonId, CheckTaskButton);
   let colorChange = document.getElementById(bgChange);
   colorChange.classList.toggle("assigned-color-change");
@@ -100,11 +100,11 @@ function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {
 
 /**
  * This function toggles Color and Icon if you select the User from Assigned to
- * 
- * @param {StringId} CheckButtonId - The Id for Checkmark 
+ *
+ * @param {StringId} CheckButtonId - The Id for Checkmark
  * @param {String} CheckTaskButton - The String to locate if its true
  * @param {StringId} bgChange - The Id for Background Color switch
- * @param {NumberId} activUserId - The active User Id 
+ * @param {NumberId} activUserId - The active User Id
  */
 function addUserToTask(CheckButtonId, CheckTaskButton, bgChange, activUserId) {
   toggleCheckButton(CheckButtonId, CheckTaskButton);
@@ -121,8 +121,8 @@ function addUserToTask(CheckButtonId, CheckTaskButton, bgChange, activUserId) {
 
 /**
  * This function proves if the Contact is selected or not
- * 
- * @param {NumberId} contactId - is the contact Id 
+ *
+ * @param {NumberId} contactId - is the contact Id
  */
 function addContactAssigned(contactId) {
   if (!selectedContacts.some((contact) => contact.contactId === contactId)) {
@@ -133,8 +133,8 @@ function addContactAssigned(contactId) {
 
 /**
  * This function proves if the active User is selected or not
- * 
- * @param {NumberId} activUserId - is the active User Id 
+ *
+ * @param {NumberId} activUserId - is the active User Id
  */
 function addUserAssigned(activUserId) {
   if (!userId.some((user) => user.activUserId === activUserId)) {
@@ -145,7 +145,7 @@ function addUserAssigned(activUserId) {
 
 /**
  * This function removes the selected Contact if you onclick it agian
- * 
+ *
  * @param {number} index - is the length of the Array
  */
 function removeContactAssigned(index) {
@@ -157,7 +157,7 @@ function removeContactAssigned(index) {
 
 /**
  * This function removes the selected User if you onclick it agian
- * 
+ *
  * @param {number} index - is the length of the Array
  */
 function removeUserAssigned(index) {
@@ -180,7 +180,7 @@ function updateSelectedUserDisplay() {
 
 /**
  * This function updates the Contact Icon shown after select or remove from assigned to
- * 
+ *
  * @param {number} newContacts - Those are the Id Numbers of all Contacts
  * @param {number} selectedList - Those are the Id Numbers of all selected Contacts
  */
@@ -205,7 +205,7 @@ function searchContact() {
 
 /**
  * This function handles the selected Priority
- * 
+ *
  * @param {string} priority - is the Priority the User has selected
  */
 function handleSelectedPriority(priority) {
@@ -214,7 +214,7 @@ function handleSelectedPriority(priority) {
 
 /**
  * This function sets the selected Category after onclick
- * 
+ *
  * @param {string} category - is the Text the User has selected in Category
  */
 function selectCategory(category) {
@@ -225,7 +225,7 @@ function selectCategory(category) {
 
 /**
  * This function saves the Input the User has made at Subtasks
- *  
+ *
  * @param {number} index - is the Index Number of the Array
  */
 function saveInput(index) {
@@ -241,7 +241,7 @@ function saveInput(index) {
 
 /**
  * This function opens the edit Field to edit the Subtasks
- * 
+ *
  * @param {string} li - is the current list Element
  * @param {number} index - is the Id of the selected Subtask to edit
  */
@@ -258,7 +258,7 @@ function editSubtask(li, index) {
 
 /**
  * This function proves if there are allready changes in the Array or not
- * 
+ *
  * @param {number} index - is the Id of the selected Subtask to edit
  */
 function handlePreviousEdit(index) {
@@ -269,7 +269,7 @@ function handlePreviousEdit(index) {
 
 /**
  * This function allows the User to submit Input with the Enter key
- * 
+ *
  * @param {string} event - location of enter event
  * @param {number} index - Id of the event Element
  * @returns - boolean of true or false
@@ -286,7 +286,7 @@ function checkEnterKey(event, index) {
 
 /**
  * This function handles the Inputfield of focus and proves if the Element is empty
- * 
+ *
  * @param {string} li - is the current list Element
  * @param {number} index - is the Id of the selected Subtask to edit
  * @returns - the removeSubtask function
@@ -303,7 +303,7 @@ function handleInputBlur(li, index) {
 
 /**
  *This function saves all changes after editing a subtask
- *  
+ *
  * @param {ElementId} subtasksInput - is the Inputfield on focus
  * @param {NumberId} index - is the Id of the Element
  */
@@ -314,11 +314,11 @@ function saveChanges(subtasksInput, index) {
 
 /**
  * This function removes Subtasks from the List
- * 
+ *
  * @param {number} index - is the Id of the selected Subtask to edit
  */
 function removeSubtask(index) {
-  deleteSubtask(index) 
+  deleteSubtask(index);
   subTasks.splice(index, 1);
 }
 
@@ -389,7 +389,7 @@ function resetrequiredCategory() {
   let categoryValue = document.getElementById("category");
   let category = document.getElementById("category_contant");
   let alertCategory = document.getElementById("category_field_alert");
-  if ((categoryValue.innerText === "Technical Task" || "User Story")) {
+  if (categoryValue.innerText === "Technical Task" || "User Story") {
     category.classList.remove("alert-border");
     alertCategory.classList.add("d-none");
     category.classList.add("category-container");
@@ -398,11 +398,15 @@ function resetrequiredCategory() {
 
 /**
  * This function checks a click event and activates closing functions
- * 
+ *
  * @param {string} event - locates the event
  */
 function closeTaskIfOutside(event) {
-  if (event.target.id === 'add_task_board'||'edit_task_board'||'add_task_content') {
+  if (
+    event.target.id === "add_task_board" ||
+    "edit_task_board" ||
+    "add_task_content"
+  ) {
     closeSelect();
     closeSelectCategory();
   }
