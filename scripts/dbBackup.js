@@ -253,11 +253,11 @@ let dbBackupContacts = [
     phone: 1734216923,
   },
   {
-    color: "#ED4F01",
-    email: "Kaljuzhin@gmail.com",
+    color: "#4ab862",
+    email: "Hund@gmail.com",
     id: 3,
-    initials: "AK",
-    name: "Alex Kaljuzhin",
+    initials: "RH",
+    name: "Rieke Hund",
     phone: 12341234,
   },
   {
@@ -277,7 +277,7 @@ let dbBackupContacts = [
     phone: 12341234,
   },
   {
-    color: "#59C248",
+    color: "#ED4F01",
     email: "Mauer@gmail.com",
     id: 6,
     initials: "EM",
@@ -309,11 +309,11 @@ let dbBackupContacts = [
     phone: 12341234,
   },
   {
-    color: "#FD5B4F",
-    email: "Kovac@gmail.com",
+    color: "#dd1d1d",
+    email: "Sina@gmail.com",
     id: 10,
-    initials: "KK",
-    name: "Kevin Kovac",
+    initials: "SH",
+    name: "Sina Herzlich",
     phone: 12341234,
   },
 ];
