@@ -1,6 +1,6 @@
 .contacts-content {
   position: fixed;
-  height: 100%;
+  height: calc(100% - 96px);
   width: calc(100% - 232px);
   margin-left: 232px;
   margin-top: 96px;
